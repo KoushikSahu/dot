@@ -1,0 +1,7 @@
+{
+    // snippets
+    "snippets.userSnippetsDirectory": "~/.vim/snippets",
+    // diagnostics by ale
+    "diagnostic.displayByAle": true
+}
+

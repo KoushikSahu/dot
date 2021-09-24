@@ -1,0 +1,33 @@
+#!/bin/bash
+
+if [[ $# -eq 0 ]]; then
+    echo "[usage] stress_test wrong_solution"
+else
+    if [[ ! -a gen.cpp ]]; then
+        echo "[error] generator file not present!"
+    elif [[ ! -a brute.cpp ]]; then
+        echo "[error] brute force file not present!"
+    else
+        echo -ne "[processing] compiling generator...\\r\e[K"
+        g++ -std=c++17 gen.cpp -o gen.out
+        echo -e "[\u2714] compiled generator"
+        echo -ne "[processing] compiling brute force...\\r\e[K"
+        g++ -std=c++17 brute.cpp -o brute.out
+        echo -e "[\u2714] compiled brute force"
+        echo -ne "[processing] compiling wrong solution...\\r\e[K"
+        g++ -std=c++17 $1 -o sol.out
+        echo -e "[\u2714] compiled wrong solution"
+        for (( i = 1; ; ++i )); do
+            echo "seed: $i"
+            ./gen.out $i > test_in
+            diff -w <(./sol.out < test_in) <(./brute.out < test_in) || break
+        done
+        echo "Testcase: "
+        cat test_in
+        echo "Expected output: "
+        ./brute.out < test_in
+        echo "Output received: "
+        ./sol.out < test_in
+    fi
+fi
+
