@@ -96,7 +96,7 @@ inoremap <A-j> <Esc>:m .+1<CR>==gi
 inoremap <A-k> <Esc>:m .-2<CR>==gi
 vnoremap <A-j> :m '>+1<CR>gv=gv
 vnoremap <A-k> :m '<-2<CR>gv=gv
-imap <C-H> <C-W>
+inoremap <silent> <C-H> <C-R>=AutoPairsDelete()<CR><C-W>
 nnoremap <C-P> :Files <CR>
 nnoremap <silent> <leader>q :call ToggleQuickFix()<CR>
 nnoremap <Leader>t :bel term ++rows=10<CR>
@@ -147,6 +147,10 @@ nnoremap <leader>dc :call vimspector#Continue()<CR>
 nnoremap <leader>dbp :call vimspector#ToggleBreakpoint()<CR>
 nnoremap <leader>dcbp :call vimspector#ToggleConditionalBreakpoint()<CR>
 nnoremap <leader>drc :call vimspector#RunToCursor()<CR>
+
+" auto pairs settings
+let g:AutoPairsMapCh = 0
+let g:AutoPairsMapBS = 0
 
 " coc settings
 let g:coc_global_extensions = ['coc-sh', 'coc-clangd', 'coc-html', 'coc-tsserver', 'coc-json', 'coc-markdownlint', 'coc-pyright', 'coc-snippets', 'coc-vimlsp', 'coc-prettier']
@@ -318,17 +322,31 @@ nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
 " WSL yank and paste support 
-set clipboard+=unnamedplus
-let g:clipboard = {
-            \   'name': 'win32yank-wsl',
-            \   'copy': {
-                \      '+': 'win32yank.exe -i --crlf',
-                \      '*': 'win32yank.exe -i --crlf',
-                \    },
-            \   'paste': {
-                \      '+': 'win32yank.exe -o --lf',
-                \      '*': 'win32yank.exe -o --lf',
-                \   },
-            \   'cache_enabled': 0,
-            \ }
+set clipboard=unnamedplus
+
+autocmd TextYankPost * call system('win32yank.exe -i --crlf', @")
+
+function! Paste(mode)
+    let @" = system('win32yank.exe -o --lf')
+    return a:mode
+endfunction
+
+map <expr> p Paste('p')
+map <expr> P Paste('P')
+
+autocmd TextYankPost * call YankDebounced()
+
+function! Yank(timer)
+    call system('win32yank.exe -i --crlf', @")
+    redraw!
+endfunction
+
+let g:yank_debounce_time_ms = 500
+let g:yank_debounce_timer_id = -1
+
+function! YankDebounced()
+    let l:now = localtime()
+    call timer_stop(g:yank_debounce_timer_id)
+    let g:yank_debounce_timer_id = timer_start(g:yank_debounce_time_ms, 'Yank')
+endfunction
 
