@@ -30,6 +30,7 @@ Plugin 'neoclide/coc.nvim'
 Plugin 'xuyuanp/nerdtree-git-plugin'
 Plugin 'dense-analysis/ale'
 Plugin 'flazz/vim-colorschemes'
+Plugin 'jiangmiao/auto-pairs'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -54,10 +55,10 @@ let mapleader=" "
 syntax on
 set number 
 set relativenumber
-set tabstop=4
-set shiftwidth=4
+set tabstop=2
+set shiftwidth=2
 set expandtab
-set softtabstop=4
+set softtabstop=2
 set mouse=a
 set ruler
 set autoindent
@@ -68,7 +69,7 @@ set timeoutlen=1000
 set ttimeoutlen=5
 set backspace=indent,eol,start
 set clipboard=unnamedplus
-set shiftwidth=4
+set shiftwidth=2
 set hlsearch
 set cursorline
 
@@ -95,14 +96,14 @@ inoremap <A-j> <Esc>:m .+1<CR>==gi
 inoremap <A-k> <Esc>:m .-2<CR>==gi
 vnoremap <A-j> :m '>+1<CR>gv=gv
 vnoremap <A-k> :m '<-2<CR>gv=gv
-imap <C-H> <C-W>
+inoremap <silent> <C-H> <C-R>=AutoPairsDelete()<CR><C-W>
 nnoremap <C-P> :Files <CR>
 nnoremap <silent> <leader>q :call ToggleQuickFix()<CR>
 nnoremap <Leader>t :bel term ++rows=10<CR>
 tnoremap <Leader>t <c-w>:q!<CR>
 
 " compilation and build key bindings
-autocmd filetype cpp nnoremap <leader>b :<C-U>AsyncRun g++ -O2 -DLOCAL -std=c++17 -Wshadow -Wall -Wextra -Wno-unused-result -static %:r.cpp -o %:r.out<CR>
+autocmd filetype cpp nnoremap <leader>b :<C-U>AsyncRun g++ -O2 -DLOCAL -std=c++20 -Wshadow -Wall -Wextra -Wno-unused-result -static %:r.cpp -o %:r.out<CR>
 autocmd filetype cpp nnoremap <leader>r :<C-U>AsyncRun -mode=terminal -pos=right -cols=30 ./%:r.out<CR>
 autocmd filetype python nnoremap <leader>b :<C-U>AsyncRun python3 -m py_compile %:r.py<CR>
 autocmd filetype python nnoremap <leader>r :<C-U>AsyncRun -mode=terminal -pos=right -cols=30 python3 %:r.py<CR>
@@ -136,7 +137,10 @@ highlight ALEErrorLine ctermbg=DarkRed
 highlight ALESignColumnWithErrors ctermbg=DarkRed ctermfg=White
 
 " coc settings
-let g:coc_global_extensions = ['coc-sh', 'coc-clangd', 'coc-html', 'coc-tsserver', 'coc-json', 'coc-markdownlint', 'coc-pyright', 'coc-snippets', 'coc-vimlsp', 'coc-prettier']
+let g:coc_global_extensions = ['coc-sh', 'coc-clangd', 'coc-html', 'coc-tsserver', 'coc-json', 'coc-markdownlint', 'coc-pyright', 'coc-snippets', 'coc-vimlsp', 'coc-prettier', 'coc-css']
+
+" autopair settings
+let g:AutoPairsMapCh = 0
 
 " Set internal encoding of vim, not needed on neovim, since coc.nvim using some
 " unicode characters in the file autoload/float.vim
