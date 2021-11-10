@@ -179,7 +179,7 @@ bar {
 }
 
 # wallpaper 
-exec_always feh --bg-fill ~/Pictures/wallpapers/buildings.jpg
+exec_always feh --bg-fill ~/Pictures/Wallpapers/i3-wallpaper.jpg
 
 # gaps
 smart_borders on
