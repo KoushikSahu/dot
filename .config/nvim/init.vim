@@ -1,6 +1,5 @@
 call plug#begin('~/.config/nvim/plugged')
 
-Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'jesseleite/vim-noh'
 Plug 'jiangmiao/auto-pairs'
