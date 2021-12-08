@@ -1,0 +1,5 @@
+{
+    "snippets.userSnippetsDirectory": "~/.config/nvim/snips",
+    "diagnostic.virtualText": true
+}
+
