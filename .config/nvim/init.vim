@@ -23,10 +23,10 @@ call plug#end()
 
 " leader mapping
 nnoremap <SPACE> <Nop>
-let mapleader=" "
+let mapleader="\<Space>"
 
 " editor settings
-syntax on
+syntax enable
 set clipboard=unnamedplus
 set relativenumber
 set cursorline
@@ -42,7 +42,7 @@ set smartcase
 set backspace=indent,eol,start
 
 " keybindings
-nmap <leader>y ggvGy
+nmap <leader>y ggVGy
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
