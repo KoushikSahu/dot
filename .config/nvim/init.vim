@@ -18,6 +18,7 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'vim-airline/vim-airline'
 Plug 'xuyuanp/nerdtree-git-plugin'
+Plug 'airblade/vim-gitgutter'
 
 call plug#end()
 
@@ -55,11 +56,10 @@ vnoremap <A-j> :m '>+1<CR>gv=gv
 vnoremap <A-k> :m '<-2<CR>gv=gv
 nnoremap <C-P> :Files <CR>
 inoremap <silent> <C-H> <C-R>=AutoPairsDelete()<CR><C-W>
-nnoremap <silent> <leader>q :call ToggleQuickFix()<CR>
 
 " compilation and build key bindings
-autocmd filetype cpp nnoremap <leader>b :<C-U>AsyncRun -mode=terminal -pos=bottom -rows=10 g++ -O2 -DLOCAL -std=c++20 -Wshadow -Wall -Wextra -Wno-unused-result -static %:r.cpp -o %:r.out<CR>
-autocmd filetype cpp nnoremap <leader>r :<C-U>AsyncRun -mode=terminal -pos=right -cols=30 for ((i = 1; ; ++i)); do echo "CASE $i:"; /usr/bin/time -f "[CPU time: \%U sec]" ./%:r.out; echo ''; done<CR>
+autocmd filetype cpp nnoremap <leader>b :<C-U>AsyncRun -mode=terminal -pos=bottom -rows=10 g++ -O2 -DLOCAL -std=c++20 -Wshadow -Wall -Wextra -Wno-unused-result -static %:r.cpp<CR>
+autocmd filetype cpp nnoremap <leader>r :<C-U>AsyncRun -mode=terminal -pos=right -cols=30 for ((i = 1; ; ++i)); do echo "CASE $i:"; /usr/bin/time -f "[CPU time: \%U sec]" ./a.out; echo ''; done<CR>
 autocmd filetype python nnoremap <leader>b :<C-U>AsyncRun -mode=terminal -pos=bottom -rows=10 python3 -m py_compile %:r.py<CR>
 autocmd filetype python nnoremap <leader>r :<C-U>AsyncRun -mode=terminal -pos=right -cols=30 python3 %:r.py<CR>
 autocmd filetype java nnoremap <leader>b :<C-U>AsyncRun -mode=terminal -pos=bottom -rows=10 javac %:r.java<CR>
