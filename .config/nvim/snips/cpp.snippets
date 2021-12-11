@@ -1,4 +1,4 @@
-snippet bits
+snippet bits? CP template without testcase number
 #include <bits/stdc++.h>
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
@@ -63,7 +63,7 @@ int main(){
 
 endsnippet
 
-snippet cp
+snippet cp? CP tempate with testcase numbers
 #include <bits/stdc++.h>
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
@@ -129,7 +129,7 @@ int main(){
 
 endsnippet
 
-snippet gen
+snippet gen? generator program for making stress test testcases
 #include <bits/stdc++.h>
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
@@ -146,6 +146,62 @@ int main(int argc, char* argv[]){
 	${1}
 	return 0;
 }
+
+endsnippet
+
+snippet combinatorics? useful combinatorics algorithms
+class Combinatorics{
+	public:
+		Combinatorics(int mod) : mod(mod) {
+			precomputeInverse();
+			precomputeFactorialInverse();
+			precomputeFactorial();
+		}
+
+		ll factorial(int x){
+			assert(x<N);
+			return fact[x];
+		}
+
+		ll inverse_factorial(int x){
+			assert(x<N);
+			return fact_inverse[x];
+		}
+
+		ll nCr(ll n, ll r){
+			if(r>n) return 0;
+			assert(n<N && r<N);
+			ll ans = (((fact[n]*fact_inverse[r])%mod)*fact_inverse[n-r])%mod;
+			return ans;
+		}
+
+		ll nPr(ll n, ll r){
+			if(r>n) return 0;
+			assert(n<N && r<N);
+			ll ans = (fact[n]*fact_inverse[n-r])%mod;
+			return ans;
+		}
+
+	private:
+		int mod;
+		static const int N=1e6+5;
+		array<ll, N> fact, inverse, fact_inverse;
+
+		void precomputeInverse(){
+			inverse[0] = inverse[1] = 1;
+			for(int i=2; i<N; i++) inverse[i] = inverse[mod%i]*(mod - mod/i)%mod;
+		}
+
+		void precomputeFactorialInverse(){
+			fact_inverse[0] = fact_inverse[1] = 1;
+			for(int i=2; i<N; i++) fact_inverse[i] = (fact_inverse[i-1]*inverse[i])%mod;
+		}
+
+		void precomputeFactorial(){
+			fact[0] = 1;
+			for(int i=1; i<N; i++) fact[i] = (i*fact[i-1])%mod; 
+		}
+};
 
 endsnippet
 
