@@ -1,4 +1,4 @@
-snippet bits? CP template without testcase number
+snippet bits CP template without testcase number
 #include <bits/stdc++.h>
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
@@ -63,7 +63,7 @@ int main(){
 
 endsnippet
 
-snippet cp? CP tempate with testcase numbers
+snippet cp CP tempate with testcase numbers
 #include <bits/stdc++.h>
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
@@ -129,7 +129,7 @@ int main(){
 
 endsnippet
 
-snippet gen? generator program for making stress test testcases
+snippet gen generator program for making stress test testcases
 #include <bits/stdc++.h>
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
@@ -149,7 +149,7 @@ int main(int argc, char* argv[]){
 
 endsnippet
 
-snippet combinatorics? useful combinatorics algorithms
+snippet combinatorics useful combinatorics algorithms
 class Combinatorics{
 	public:
 		Combinatorics(int mod) : mod(mod) {
@@ -200,6 +200,99 @@ class Combinatorics{
 		void precomputeFactorial(){
 			fact[0] = 1;
 			for(int i=1; i<N; i++) fact[i] = (i*fact[i-1])%mod; 
+		}
+};
+
+endsnippet
+
+snippet segmenttree "segment tree implementation for CP"
+template <typename T>
+class SegmentTree {
+	public:
+    SegmentTree(int len, T* arr, function<T(T, T)> func, T init) : n(len), fn(func), init(init) {
+      st.resize(2*len);
+      for(int i=len; i<2*len; i++) st[i] = arr[i-len];
+      build();
+    }
+
+    SegmentTree(int len, vector<T> arr, function<T(T, T)> func, T init) : n(len), fn(func), init(init) {
+      st.resize(2*len);
+      for(int i=len; i<2*len; i++) st[i] = arr[i-len];
+      build();
+    }
+
+    void update(size_t idx, T val){
+      for(st[idx+=n]=val; idx>1; idx>>=1) st[idx>>1] = fn(st[idx], st[idx^1]);
+    }
+
+    T query(size_t l, size_t r){
+      r++;
+      T res = init;
+      for(l+=n, r+=n; l<r; l>>=1, r>>=1){
+        if(l&1) res = fn(res, st[l++]);
+        if(r&1) res = fn(res, st[--r]);
+      }
+      return res;
+    }
+
+  private:
+    size_t n;
+    T init;
+    vector<T> st;
+    function<T(T, T)> fn;
+
+    void build(){
+      for(int i=n-1; i>0; i--) st[i] = fn(st[i<<1], st[(i<<1)|1]);
+    }
+
+};
+
+endsnippet
+
+snippet sparsetable "spare table implementation for CP"
+template<class T>
+class SparseTable{
+	public:
+		SparseTable(size_t len, T* arr, function<T(T, T)> func){
+			n = len;
+			fn = func;
+      a.resize(n);
+      for(int i=0; i<n; i++) a[i] = arr[i];
+      st.resize(n);
+      for(int i=0; i<n; i++) st[i] = vector<T>(K, 0);
+			build();
+		}
+    
+    SparseTable(size_t len, vector<T> arr, function<T(T, T)> func){
+			n = len;
+			fn = func;
+      a.resize(n);
+      for(int i=0; i<n; i++) a[i] = arr[i];
+      st.resize(n);
+      for(int i=0; i<n; i++) st = vector<int>(K, 0);
+			build();
+    }
+
+		T query(int l, int r){
+      assert(l<=r);
+			int j = log2(r-l+1);
+			return fn(st[l][j], st[r-(1<<j)+1][j]);
+		}
+
+	private:
+    static const int K = 25;
+		int n;
+    vector<T> a;
+    function<T(T, T)> fn;
+    vector<vector<T>> st;
+
+		void build(){
+			for(int i=0; i<n; i++) st[i][0] = a[i];
+			for(int j=1; j<=K; j++){
+				for(int i=0; i+(1<<j)-1<n; i++){
+					st[i][j] = fn(st[i][j-1], st[i+(1<<(j-1))][j-1]);
+				}
+			}
 		}
 };
 
