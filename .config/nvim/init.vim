@@ -1,5 +1,6 @@
 call plug#begin('~/.config/nvim/plugged')
 
+Plug 'airblade/vim-gitgutter'
 Plug 'honza/vim-snippets'
 Plug 'jesseleite/vim-noh'
 Plug 'jiangmiao/auto-pairs'
@@ -18,7 +19,11 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'vim-airline/vim-airline'
 Plug 'xuyuanp/nerdtree-git-plugin'
-Plug 'airblade/vim-gitgutter'
+Plug 'yggdroot/indentline'
+Plug 'rodrigore/coc-tailwind-intellisense', {'do': 'npm install'}
+Plug 'iamcco/markdown-preview.nvim'
+Plug 'bluz71/vim-nightfly-guicolors'
+Plug 'vim-airline/vim-airline-themes'
 
 call plug#end()
 
@@ -41,6 +46,7 @@ set autoindent
 set smarttab
 set smartcase
 set backspace=indent,eol,start
+set termguicolors
 
 " keybindings
 nmap <leader>y ggVGy
@@ -74,8 +80,9 @@ nnoremap <C-n> :NERDTreeToggle<CR>
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
 
-" gruvbox settings
-colorscheme gruvbox
+" colorscheme settings
+"colorscheme gruvbox
+colorscheme nightfly
 
 " asyncrun settings
 let g:asyncrun_open = 8
