@@ -3,8 +3,6 @@ call plug#begin('~/.config/nvim/plugged')
 Plug 'airblade/vim-gitgutter'
 Plug 'honza/vim-snippets'
 Plug 'jiangmiao/auto-pairs'
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
 Plug 'kshenoy/vim-signature'
 Plug 'morhetz/gruvbox'
 Plug 'neovim/nvim-lspconfig'
@@ -32,6 +30,10 @@ Plug 'hrsh7th/nvim-cmp'
 Plug 'SirVer/ultisnips'
 Plug 'quangnguyen30192/cmp-nvim-ultisnips'
 Plug 'glepnir/lspsaga.nvim'
+Plug 'glepnir/dashboard-nvim'
+Plug 'flazz/vim-colorschemes'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
 
 call plug#end()
 
@@ -68,7 +70,6 @@ inoremap <A-j> <Esc>:m .+1<CR>==gi
 inoremap <A-k> <Esc>:m .-2<CR>==gi
 vnoremap <A-j> :m '>+1<CR>gv=gv
 vnoremap <A-k> :m '<-2<CR>gv=gv
-nnoremap <C-P> :Files <CR>
 inoremap <silent> <C-H> <C-R>=AutoPairsDelete()<CR><C-W>
 
 " compilation and build key bindings
@@ -83,6 +84,15 @@ autocmd filetype javascript nnoremap <leader>r :<C-U>AsyncRun -mode=terminal -po
 
 " nerdtree settings
 nnoremap <C-n> :NERDTreeToggle<CR>
+
+" dashboard-nvim settings
+let g:dashboard_default_executive ='telescope'
+
+" telescope settings
+nnoremap <C-P> <cmd>Telescope find_files<cr>
+nnoremap <C-F> <cmd>Telescope live_grep<cr>
+nnoremap <leader>fb <cmd>Telescope buffers<cr>
+nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 
 " airline settings
 let g:airline#extensions#tabline#enabled = 1
@@ -126,9 +136,6 @@ require'nvim-treesitter.configs'.setup {
     enable = true,
     additional_vim_regex_highlighting = false,
   },
-  indent = {
-    enable = true
-  }
 }
 EOF
 

@@ -298,3 +298,41 @@ class SparseTable{
 
 endsnippet
 
+snippet scc "strongly connected components implementation for CP"
+void dfs_order(int u, vector<int>* g, bool* seen, vector<int>& order){
+  seen[u] = true;
+  for(int v: g[u]){
+    if(!seen[v]) dfs_order(v, g, seen, order);
+  }
+  order.push_back(u);
+}
+
+void dfs_scc(int u, vector<int>* gr, bool* seen, vector<int>& scc){
+  seen[u] = true;
+  scc.push_back(u);
+  for(int v: gr[u]){
+    if(!seen[v]) dfs_scc(v, gr, seen, scc);
+  }
+}
+
+vector<vector<int>> scc(int n, vector<int>* g, vector<int>* gr){
+  vector<int> order;
+  bool seen[n];
+  fill(seen, seen+n, false);
+  for(int i=0; i<n; i++){
+    if(!seen[i]) dfs_order(i, g, seen, order);
+  }
+  reverse(order.begin(), order.end());
+  fill(seen, seen+n, false);
+  vector<vector<int>> sccs;
+  for(int i=0; i<n; i++){
+    if(!seen[i]){
+      vector<int> scc;
+      dfs_scc(i, gr, seen, scc);
+      sccs.push_back(scc);
+    }
+  }
+  return sccs;
+}
+
+endsnippet
