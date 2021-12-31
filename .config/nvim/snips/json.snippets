@@ -1,0 +1,24 @@
+snippet pydbg "python debugging configuration for vimspector"
+{
+  "configurations": {
+    "<name>: Launch": {
+      "adapter": "debugpy",
+      "filetypes": [ "python" ],
+      "configuration": {
+        "name": "<name>: Launch",
+        "type": "python",
+        "request": "launch",
+        "cwd": "<working directory>",
+        "python": "/path/to/python/interpreter/to/use",
+        "stopOnEntry": true,
+        "console": "externalTerminal",
+        "debugOptions": [],
+        "program": "<path to main python file>"
+      }
+    }
+    ...
+  }
+}
+
+endsnippet
+

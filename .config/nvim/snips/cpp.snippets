@@ -325,7 +325,7 @@ vector<vector<int>> scc(int n, vector<int>* g, vector<int>* gr){
   reverse(order.begin(), order.end());
   fill(seen, seen+n, false);
   vector<vector<int>> sccs;
-  for(int i=0; i<n; i++){
+  for(int i: order){
     if(!seen[i]){
       vector<int> scc;
       dfs_scc(i, gr, seen, scc);
