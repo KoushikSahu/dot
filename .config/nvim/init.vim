@@ -53,7 +53,6 @@ set softtabstop=2
 set expandtab
 set ruler
 set autoindent
-set smarttab
 set smartcase
 set backspace=indent,eol,start
 set termguicolors
@@ -73,9 +72,9 @@ vnoremap <A-k> :m '<-2<CR>gv=gv
 inoremap <silent> <C-H> <C-R>=AutoPairsDelete()<CR><C-W>
 
 " compilation and build key bindings
-autocmd filetype cpp nnoremap <leader>b :<C-U>AsyncRun -mode=terminal -pos=bottom -rows=10 g++ -O2 -DLOCAL -std=c++20 -Wshadow -Wall -Wextra -Wno-unused-result -static %:r.cpp<CR>
+autocmd filetype cpp nnoremap <leader>b :<C-U>AsyncRun -mode=terminal -pos=bottom -rows=10 g++ -O2 -DLOCAL -std=c++20 -Wshadow -Wall -Wextra -Wno-unused-result -static -g %:r.cpp<CR>
 autocmd filetype cpp nnoremap <leader>r :<C-U>AsyncRun -mode=terminal -pos=right -cols=30 for ((i = 1; ; ++i)); do echo "CASE $i:"; /usr/bin/time -f "[CPU time: \%U sec]" ./a.out; echo ''; done<CR>
-autocmd filetype python nnoremap <leader>b :<C-U>AsyncRun -mode=terminal -pos=bottom -rows=10 python3 -m py_compile %:r.py<CR>
+autocmd filetype python nnoremap <leader>b :<C-U>AsyncRun -mode=terminal -pos=bottom -rows=10 python3 -m mypy %:r.py<CR>
 autocmd filetype python nnoremap <leader>r :<C-U>AsyncRun -mode=terminal -pos=right -cols=30 python3 %:r.py<CR>
 autocmd filetype java nnoremap <leader>b :<C-U>AsyncRun -mode=terminal -pos=bottom -rows=10 javac %:r.java<CR>
 autocmd filetype java nnoremap <leader>r :<C-U>AsyncRun -mode=terminal -pos=right -cols=30 java Main<CR>
@@ -93,6 +92,19 @@ nnoremap <C-P> <cmd>Telescope find_files<cr>
 nnoremap <C-F> <cmd>Telescope live_grep<cr>
 nnoremap <leader>fb <cmd>Telescope buffers<cr>
 nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+lua <<EOF
+local actions = require("telescope.actions")
+
+require("telescope").setup({
+    defaults = {
+        mappings = {
+            i = {
+                ["<esc>"] = actions.close,
+            },
+        },
+    },
+})
+EOF
 
 " airline settings
 let g:airline#extensions#tabline#enabled = 1
@@ -111,7 +123,6 @@ let g:asyncrun_stdin = 1
 let g:AutoPairsMapCh = 0
 
 " markdown-preview settings
-let g:mkdp_browser = "microsoft-edge-stable"
 
 " vimspector settings
 let g:vimspector_enable_mappings = 'HUMAN'
@@ -147,7 +158,7 @@ keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
 keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
 keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
 keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+-- keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
 keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
 keymap('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
 keymap('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
@@ -173,8 +184,8 @@ vnoremap <silent> <leader>ca :<C-U>Lspsaga range_code_action<CR>
 "nnoremap <silent> gs :Lspsaga signature_help<CR>
 "nnoremap <silent> gr :Lspsaga rename<CR>
 "nnoremap <silent> gd :Lspsaga preview_definition<CR>
-nnoremap <silent> <leader>t :Lspsaga open_floaterm<CR>
-tnoremap <silent> <leader>t <C-\><C-n>:Lspsaga close_floaterm<CR>
+"nnoremap <silent> <leader>t :Lspsaga open_floaterm<CR>
+"tnoremap <silent> <leader>t <C-\><C-n>:Lspsaga close_floaterm<CR>
 
 " lspinstall settings
 lua <<EOF

@@ -1,8 +1,27 @@
 snippet py "basic python script template"
 import math, statistics, collections
 
+"""
+	Author: Koushik Sahu
+	Created: `date +%Y-%m-%d\ %H:%M` IST
+"""
+
 if __name__ == '__main__':
 	${1}
+
+endsnippet
+
+snippet pyrightconfig "configuration for pyright language server"
+{
+  "pythonVersion": "",
+  "pythonPlatform": "",
+
+  "executionEnvironments": [
+    {
+      "root": "."
+    }
+  ]
+}
 
 endsnippet
 
