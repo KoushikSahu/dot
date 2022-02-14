@@ -34,6 +34,7 @@ Plug 'glepnir/dashboard-nvim'
 Plug 'flazz/vim-colorschemes'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
+Plug 'p00f/cphelper.nvim'
 
 call plug#end()
 
@@ -73,7 +74,8 @@ inoremap <silent> <C-H> <C-R>=AutoPairsDelete()<CR><C-W>
 
 " compilation and build key bindings
 autocmd filetype cpp nnoremap <leader>b :<C-U>AsyncRun -mode=terminal -pos=bottom -rows=10 g++ -O2 -DLOCAL -std=c++20 -Wshadow -Wall -Wextra -Wno-unused-result -static -g %:r.cpp<CR>
-autocmd filetype cpp nnoremap <leader>r :<C-U>AsyncRun -mode=terminal -pos=right -cols=30 for ((i = 1; ; ++i)); do echo "CASE $i:"; /usr/bin/time -f "[CPU time: \%U sec]" ./a.out; echo ''; done<CR>
+"autocmd filetype cpp nnoremap <leader>r :<C-U>AsyncRun -mode=terminal -pos=right -cols=30 for ((i = 1; ; ++i)); do echo "CASE $i:"; /usr/bin/time -f "[CPU time: \%U sec]" ./a.out; echo ''; done<CR>
+autocmd filetype cpp nnoremap <leader>r :<C-U>AsyncRun -mode=terminal -pos=right -cols=30 /usr/bin/time -f "[CPU time: \%U sec]" ./a.out<CR>
 autocmd filetype python nnoremap <leader>b :<C-U>AsyncRun -mode=terminal -pos=bottom -rows=10 python3 -m mypy %:r.py<CR>
 autocmd filetype python nnoremap <leader>r :<C-U>AsyncRun -mode=terminal -pos=right -cols=30 python3 %:r.py<CR>
 autocmd filetype java nnoremap <leader>b :<C-U>AsyncRun -mode=terminal -pos=bottom -rows=10 javac %:r.java<CR>
@@ -260,4 +262,14 @@ lua <<EOF
     -- capabilities = capabilities
   -- }
 EOF
+
+" cphelper settings
+let g:cphdir = '/home/koushik/cp'
+let g:cpp_compile_command = 'g++ -g -Wall -Wextra -Wno-unused-result -Wconversion -static -O2 -std=c++20 solution.cpp -o cpp.out'
+nnoremap <leader>l :CphReceive <CR>
+nnoremap <leader>t :CphTest <CR>
+
+" indentline settings
+let g:indentLine_char = '┊'
+"let g:indentLine_char = '|'
 
