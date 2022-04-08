@@ -14,12 +14,8 @@ Plug 'skywind3000/asyncrun.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
-Plug 'vim-airline/vim-airline'
 Plug 'xuyuanp/nerdtree-git-plugin'
-Plug 'yggdroot/indentline'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
-Plug 'bluz71/vim-nightfly-guicolors'
-Plug 'vim-airline/vim-airline-themes'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'williamboman/nvim-lsp-installer'
 Plug 'hrsh7th/cmp-nvim-lsp'
@@ -30,16 +26,21 @@ Plug 'hrsh7th/nvim-cmp'
 Plug 'SirVer/ultisnips'
 Plug 'quangnguyen30192/cmp-nvim-ultisnips'
 Plug 'glepnir/lspsaga.nvim'
-Plug 'flazz/vim-colorschemes'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'MunifTanjim/nui.nvim'
 Plug 'xeluxee/competitest.nvim'
-Plug 'mhinz/vim-startify'
 Plug 'chipsenkbeil/distant.nvim'
 Plug 'jamestthompson3/nvim-remote-containers'
 Plug 'sindrets/diffview.nvim'
 Plug 'ray-x/lsp_signature.nvim'
+Plug 'marko-cerovac/material.nvim'
+Plug 'nvim-lualine/lualine.nvim'
+Plug 'kyazdani42/nvim-web-devicons'
+Plug 'akinsho/bufferline.nvim'
+Plug 'mhinz/vim-startify'
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'lukas-reineke/indent-blankline.nvim'
 
 call plug#end()
 
@@ -53,13 +54,15 @@ set clipboard=unnamedplus
 set relativenumber
 set cursorline
 set mouse=a
-set tabstop=2
-set shiftwidth=2
-set softtabstop=2
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
 set expandtab
 set ruler
 set autoindent
 set smartcase
+set smartindent
+set smarttab
 set backspace=indent,eol,start
 set termguicolors
 set hidden
@@ -101,23 +104,20 @@ lua <<EOF
 local actions = require("telescope.actions")
 
 require("telescope").setup({
-    defaults = {
-        mappings = {
-            i = {
-                ["<esc>"] = actions.close,
+defaults = {
+    mappings = {
+        i = {
+            ["<esc>"] = actions.close,
             },
         },
     },
 })
 EOF
 
-" airline settings
-let g:airline#extensions#tabline#enabled = 1
-let g:airline_powerline_fonts = 1
-
 " colorscheme settings
-colorscheme gruvbox
-"colorscheme nightfly
+" colorscheme gruvbox
+let g:material_style = 'deep ocean'
+colorscheme material
 
 " asyncrun settings
 let g:asyncrun_open = 8
@@ -148,10 +148,19 @@ set foldmethod=expr
 set foldexpr=nvim_treesitter#foldexpr()
 lua <<EOF
 require'nvim-treesitter.configs'.setup {
-  highlight = {
-    enable = true,
-    additional_vim_regex_highlighting = false,
-  },
+    highlight = {
+        enable = true,
+        additional_vim_regex_highlighting = false,
+    },
+    incremental_selection = {
+        enable = true,
+        keymaps = {
+            init_selection = "gnn",
+            node_incremental = "grn",
+            scope_incremental = "grc",
+            node_decremental = "grm",
+        },
+    },
 }
 EOF
 
@@ -196,8 +205,8 @@ vnoremap <silent> <leader>ca :<C-U>Lspsaga range_code_action<CR>
 lua <<EOF
 local lsp_installer = require("nvim-lsp-installer")
 lsp_installer.on_server_ready(function(server)
-    local opts = {}
-    server:setup(opts)
+local opts = {}
+server:setup(opts)
 end)
 EOF
 
@@ -205,65 +214,51 @@ EOF
 set completeopt=menu,menuone,noselect
 
 lua <<EOF
-  -- Setup nvim-cmp.
-  local cmp = require'cmp'
+local cmp = require'cmp'
 
-  cmp.setup({
+cmp.setup({
     snippet = {
-      -- REQUIRED - you must specify a snippet engine
-      expand = function(args)
-        -- vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
-        -- require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
-        -- require('snippy').expand_snippet(args.body) -- For `snippy` users.
-        vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
-      end,
+            expand = function(args)
+            vim.fn["UltiSnips#Anon"](args.body)
+            end,
     },
     mapping = {
-      ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
-      ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
-      ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
-      ['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
-      ['<C-e>'] = cmp.mapping({
-        i = cmp.mapping.abort(),
-        c = cmp.mapping.close(),
-      }),
-      ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-      ["<Tab>"] = cmp.mapping.select_next_item({behavior=cmp.SelectBehavior.Insert}),
-      ["<S-Tab>"] = cmp.mapping.select_prev_item({behavior=cmp.SelectBehavior.Insert}),
+        ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
+        ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
+        ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
+        ['<C-y>'] = cmp.config.disable, 
+        ['<C-e>'] = cmp.mapping({
+            i = cmp.mapping.abort(),
+            c = cmp.mapping.close(),
+        }),
+        ['<CR>'] = cmp.mapping.confirm({ select = true }), 
+        ["<Tab>"] = cmp.mapping.select_next_item({behavior=cmp.SelectBehavior.Insert}),
+        ["<S-Tab>"] = cmp.mapping.select_prev_item({behavior=cmp.SelectBehavior.Insert}),
     },
     sources = cmp.config.sources({
-      { name = 'nvim_lsp' },
-      -- { name = 'vsnip' }, -- For vsnip users.
-      -- { name = 'luasnip' }, -- For luasnip users.
-      { name = 'ultisnips' }, -- For ultisnips users.
-      -- { name = 'snippy' }, -- For snippy users.
-    }, {
-      { name = 'buffer' },
-    })
-  })
+            { name = 'nvim_lsp' },
+            { name = 'ultisnips' }, 
+        }, {
+            { name = 'buffer' },
+        }
+    )
+})
 
-  -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
-  cmp.setup.cmdline('/', {
+cmp.setup.cmdline('/', {
     sources = {
-      { name = 'buffer' }
+        { name = 'buffer' }
     }
-  })
+})
 
-  -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
-  cmp.setup.cmdline(':', {
+cmp.setup.cmdline(':', {
     sources = cmp.config.sources({
-      { name = 'path' }
+        { name = 'path' }
     }, {
-      { name = 'cmdline' }
+        { name = 'cmdline', keyword_pattern=[[\!\@<!\w*]]}
     })
-  })
+})
 
-  -- Setup lspconfig.
-  local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
-  -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
-  -- require('lspconfig')[<lsp-server>].setup {
-    -- capabilities = capabilities
-  -- }
+local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 EOF
 
 " competitest settings
@@ -271,69 +266,65 @@ nnoremap <leader>l :CompetiTestReceive <CR>
 nnoremap <leader>t :CompetiTestRun <CR>
 lua <<EOF
 require('competitest').setup {
-  compile_command = {
-    cpp       = { exec = 'g++',           args = {'-O2', '-g', '-Wall', '-Wextra', '-Wno-unused-result', '-Wconversion', '-static', '-std=c++20', '$(FNAME)'} },
-  },
-  run_command = {
-    cpp       = { exec = './a.out' },
-  },
+    compile_command = {
+        cpp       = { exec = 'g++',           args = {'-O2', '-g', '-Wall', '-Wextra', '-Wno-unused-result', '-Wconversion', '-static', '-std=c++20', '$(FNAME)'} },
+    },
+    run_command = {
+        cpp       = { exec = './a.out' },
+    },
 }
 EOF
-
-" indentline settings
-let g:indentLine_char = '┊'
-"let g:indentLine_char = '|'
 
 " lsp signature settings
 lua <<EOF
 cfg = {
-  debug = false, -- set to true to enable debug logging
-  log_path = vim.fn.stdpath("cache") .. "/lsp_signature.log", -- log dir when debug is on
-  -- default is  ~/.cache/nvim/lsp_signature.log
-  verbose = false, -- show debug line number
+    debug = false, -- set to true to enable debug logging
+    log_path = vim.fn.stdpath("cache") .. "/lsp_signature.log", -- log dir when debug is on
+    -- default is  ~/.cache/nvim/lsp_signature.log
+    verbose = false, -- show debug line number
 
-  bind = true, -- This is mandatory, otherwise border config won't get registered.
-               -- If you want to hook lspsaga or other signature handler, pls set to false
-  doc_lines = 10, -- will show two lines of comment/doc(if there are more than two lines in doc, will be truncated);
-                 -- set to 0 if you DO NOT want any API comments be shown
-                 -- This setting only take effect in insert mode, it does not affect signature help in normal
-                 -- mode, 10 by default
+    bind = true, -- This is mandatory, otherwise border config won't get registered.
+    -- If you want to hook lspsaga or other signature handler, pls set to false
+    doc_lines = 10, -- will show two lines of comment/doc(if there are more than two lines in doc, will be truncated);
+    -- set to 0 if you DO NOT want any API comments be shown
+    -- This setting only take effect in insert mode, it does not affect signature help in normal
+    -- mode, 10 by default
 
-  floating_window = true, -- show hint in a floating window, set to false for virtual text only mode
+    floating_window = true, -- show hint in a floating window, set to false for virtual text only mode
 
-  floating_window_above_cur_line = true, -- try to place the floating above the current line when possible Note:
-  -- will set to true when fully tested, set to false will use whichever side has more space
-  -- this setting will be helpful if you do not want the PUM and floating win overlap
+    floating_window_above_cur_line = true, -- try to place the floating above the current line when possible Note:
+    -- will set to true when fully tested, set to false will use whichever side has more space
+    -- this setting will be helpful if you do not want the PUM and floating win overlap
 
-  floating_window_off_x = 1, -- adjust float windows x position.
-  floating_window_off_y = 1, -- adjust float windows y position.
+    floating_window_off_x = 1, -- adjust float windows x position.
+    floating_window_off_y = 1, -- adjust float windows y position.
 
 
-  fix_pos = false,  -- set to true, the floating window will not auto-close until finish all parameters
-  hint_enable = true, -- virtual hint enable
-  hint_prefix = "🐼 ",  -- Panda for parameter
-  hint_scheme = "String",
-  hi_parameter = "LspSignatureActiveParameter", -- how your parameter will be highlight
-  max_height = 12, -- max height of signature floating_window, if content is more than max_height, you can scroll down
-                   -- to view the hiding contents
-  max_width = 80, -- max_width of signature floating_window, line will be wrapped if exceed max_width
-  handler_opts = {
-    border = "rounded"   -- double, rounded, single, shadow, none
-  },
+    fix_pos = false,  -- set to true, the floating window will not auto-close until finish all parameters
+    hint_enable = true, -- virtual hint enable
+    hint_prefix = "🐼 ",  -- Panda for parameter
+    hint_scheme = "String",
+    hi_parameter = "LspSignatureActiveParameter", -- how your parameter will be highlight
+    max_height = 12, -- max height of signature floating_window, if content is more than max_height, you can scroll down
+    -- to view the hiding contents
+    max_width = 80, -- max_width of signature floating_window, line will be wrapped if exceed max_width
+    handler_opts = {
+        border = "rounded"   -- double, rounded, single, shadow, none
+    },
 
-  always_trigger = false, -- sometime show signature on new line or in middle of parameter can be confusing, set it to false for #58
+    always_trigger = false, -- sometime show signature on new line or in middle of parameter can be confusing, set it to false for #58
 
-  auto_close_after = nil, -- autoclose signature float win after x sec, disabled if nil.
-  extra_trigger_chars = {}, -- Array of extra characters that will trigger signature completion, e.g., {"(", ","}
-  zindex = 200, -- by default it will be on top of all floating windows, set to <= 50 send it to bottom
+    auto_close_after = nil, -- autoclose signature float win after x sec, disabled if nil.
+    extra_trigger_chars = {}, -- Array of extra characters that will trigger signature completion, e.g., {"(", ","}
+    zindex = 200, -- by default it will be on top of all floating windows, set to <= 50 send it to bottom
 
-  padding = '', -- character to pad on left and right of signature can be ' ', or '|'  etc
+    padding = '', -- character to pad on left and right of signature can be ' ', or '|'  etc
 
-  transparency = nil, -- disabled by default, allow floating win transparent value 1~100
-  shadow_blend = 36, -- if you using shadow as border use this set the opacity
-  shadow_guibg = 'Black', -- if you using shadow as border use this set the color e.g. 'Green' or '#121315'
-  timer_interval = 200, -- default timer check interval set to lower value if you want to reduce latency
-  toggle_key = nil -- toggle signature on and off in insert mode,  e.g. toggle_key = '<M-x>'
+    transparency = nil, -- disabled by default, allow floating win transparent value 1~100
+    shadow_blend = 36, -- if you using shadow as border use this set the opacity
+    shadow_guibg = 'Black', -- if you using shadow as border use this set the color e.g. 'Green' or '#121315'
+    timer_interval = 200, -- default timer check interval set to lower value if you want to reduce latency
+    toggle_key = nil -- toggle signature on and off in insert mode,  e.g. toggle_key = '<M-x>'
 }
 
 -- recommended:
@@ -344,3 +335,50 @@ require'lsp_signature'.setup(cfg) -- no need to specify bufnr if you don't use t
 require'lsp_signature'.on_attach(cfg, bufnr) -- no need to specify bufnr if you don't use toggle_key
 EOF
 
+" lualine settings
+lua << END
+require('lualine').setup()
+END
+
+" bufferline settings
+lua << EOF
+require("bufferline").setup{}
+EOF
+
+" vim startify settings
+let g:startify_custom_header = [
+            \ "",
+            \ "       __                _                  __             __ _       _     _ _ _ _            ",
+            \ "     /\ \\ \\___  _____   _(_)_ __ ___        / /  __ _      / /(_) __ _| |__ (_) (_) |_ _   _    ",
+            \ "    /  \\/ / _ \\/ _ \\ \\ / / | '_ ` _ \\     / /  / _` |    / / | |/ _` | '_ \\| | | | __| | | |   ",
+            \ "   / /\\  /  __/ (_) \\ V /| | | | | | |   / /__| (_| |   / /__| | (_| | |_) | | | | |_| |_| |   ",
+            \ "   \\_\\ \\/ \\___|\\___/ \\_/ |_|_| |_| |_|   \\____/\\__,_|___\\____/_|\\__,_|_.__/|_|_|_|\\__|\\__, |   ",
+            \ "                                                   |_____|                            |___/    ",
+            \ "                            [ Author: Koushik Sahu (La_Liablity) ]                         ",
+            \ "                            [        Good luck, have fun!        ]                         ",
+            \]
+let g:startify_custom_footer = [
+            \ '   +------------------------------------------- +',
+            \ '   |       Talk is cheap Show me the code       |',
+            \ '   |             ~ Linus Torvalds               |',
+            \ '   |                                            |',
+            \ '   | When something is important enough, you do |',
+            \ '   | it even if the odds are not in your favour |',
+            \ '   |                ~ Elon Musk                 |',
+            \ '   |                                            |',
+            \ '   |            Github: KoushikSahu             |',
+            \ '   +------------------------------------------- +',
+            \]
+
+" indent-blankline settings
+lua<<EOF
+vim.opt.list = true
+vim.opt.listchars:append("space:⋅")
+vim.opt.listchars:append("eol:↴")
+
+require("indent_blankline").setup {
+    space_char_blankline = " ",
+    show_current_context = true,
+    show_current_context_start = true,
+}
+EOF
