@@ -1,6 +1,6 @@
 call plug#begin('~/.config/nvim/plugged')
 
-Plug 'airblade/vim-gitgutter'
+Plug 'lewis6991/gitsigns.nvim'
 Plug 'honza/vim-snippets'
 Plug 'jiangmiao/auto-pairs'
 Plug 'kshenoy/vim-signature'
@@ -32,7 +32,8 @@ Plug 'MunifTanjim/nui.nvim'
 Plug 'xeluxee/competitest.nvim'
 Plug 'chipsenkbeil/distant.nvim'
 Plug 'jamestthompson3/nvim-remote-containers'
-Plug 'sindrets/diffview.nvim'
+"Plug 'sindrets/diffview.nvim'
+Plug 'kdheepak/lazygit.nvim'
 Plug 'ray-x/lsp_signature.nvim'
 Plug 'marko-cerovac/material.nvim'
 Plug 'nvim-lualine/lualine.nvim'
@@ -41,6 +42,8 @@ Plug 'akinsho/bufferline.nvim'
 Plug 'mhinz/vim-startify'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'lukas-reineke/indent-blankline.nvim'
+Plug 'APZelos/blamer.nvim'
+Plug 'jose-elias-alvarez/null-ls.nvim'
 
 call plug#end()
 
@@ -382,3 +385,28 @@ require("indent_blankline").setup {
     show_current_context_start = true,
 }
 EOF
+
+" null-ls setup
+lua<<EOF
+require("null-ls").setup({
+    sources = {
+        require("null-ls").builtins.formatting.astyle,
+        require("null-ls").builtins.formatting.autopep8,
+        require("null-ls").builtins.formatting.cmake_format,
+        require("null-ls").builtins.formatting.markdownlint,
+        require("null-ls").builtins.formatting.pg_format,
+        require("null-ls").builtins.formatting.prettierd,
+        require("null-ls").builtins.formatting.rustywind,
+        require("null-ls").builtins.formatting.stylua
+    }
+})
+EOF
+
+" gitsigns settings
+lua<<EOF
+require('gitsigns').setup()
+EOF
+
+" lazygit settings
+nnoremap <silent> <leader>gg :LazyGit<CR>
+
