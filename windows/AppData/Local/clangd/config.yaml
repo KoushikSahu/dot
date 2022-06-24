@@ -1,0 +1,6 @@
+CompileFlags:
+  Add: 
+    - "--target=x86_64-w64-mingw32"
+    - "--include-directory=C:\\ProgramData\\chocolatey\\lib\\mingw\\tools\\install\\mingw64\\include\\c++\\11.2.0\\x86_64-w64-mingw32"
+    - "--include-directory=C:\\ProgramData\\chocolatey\\lib\\mingw\\tools\\install\\mingw64\\include\\c++\\11.2.0"
+    - "--include-directory=C:\\ProgramData\\chocolatey\\lib\\mingw\\tools\\install\\mingw64\\x86_64-w64-mingw32\\include"
