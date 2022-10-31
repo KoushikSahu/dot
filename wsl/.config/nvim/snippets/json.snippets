@@ -1,0 +1,45 @@
+snippet pydbg "python debugging configuration for vimspector"
+  {
+    "configurations": {
+      "<name>: Launch": {
+        "adapter": "debugpy",
+        "filetypes": [ "python" ],
+        "configuration": {
+          "name": "<name>: Launch",
+          "type": "python",
+          "request": "launch",
+          "cwd": "<working directory>",
+          "python": "/path/to/python/interpreter/to/use",
+          "stopOnEntry": true,
+          "console": "externalTerminal",
+          "debugOptions": [],
+          "program": "<path to main python file>"
+        }
+      }
+      ...
+    }
+  }
+
+snippet cppdbg "cpp debugging configuration for vimspector"
+  {
+    "configurations": {
+      "Launch": {
+        "adapter": "vscode-cpptools",
+        "filetypes": [ "cpp", "c", "objc", "rust" ], // optional
+        "configuration": {
+          "request": "launch",
+          "program": "<path to binary>",
+          // ...
+          "MIMode": "gdb",
+          "setupCommands": [
+            {
+              "description": "Enable pretty-printing for gdb",
+              "text": "-enable-pretty-printing",
+              "ignoreFailures": true
+            }
+          ]
+        }
+      }
+    }
+  }
+
