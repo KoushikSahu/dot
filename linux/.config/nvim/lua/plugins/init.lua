@@ -34,15 +34,17 @@ return require('packer').startup(function()
   -- autoclose brackets
   use 'jiangmiao/auto-pairs'
 
-  -- lsp
+  -- lsp, linters, formatters
   use {
-    "williamboman/nvim-lsp-installer",
-    "neovim/nvim-lspconfig",
-    "hrsh7th/cmp-nvim-lsp",
+    'williamboman/mason.nvim',
+    'williamboman/mason-lspconfig.nvim',
+    'neovim/nvim-lspconfig',
+    'hrsh7th/cmp-nvim-lsp',
     'hrsh7th/cmp-buffer',
     'hrsh7th/cmp-path',
     'hrsh7th/cmp-cmdline',
-    'hrsh7th/nvim-cmp'
+    'hrsh7th/nvim-cmp',
+    'jose-elias-alvarez/null-ls.nvim'
   }
 
   -- snippets

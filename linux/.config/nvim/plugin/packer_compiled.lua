@@ -9,23 +9,26 @@ vim.api.nvim_command('packadd packer.nvim')
 
 local no_errors, error_msg = pcall(function()
 
-  local time
-  local profile_info
-  local should_profile = false
-  if should_profile then
-    local hrtime = vim.loop.hrtime
-    profile_info = {}
-    time = function(chunk, start)
-      if start then
-        profile_info[chunk] = hrtime()
-      else
-        profile_info[chunk] = (hrtime() - profile_info[chunk]) / 1e6
-      end
+_G._packer = _G._packer or {}
+_G._packer.inside_compile = true
+
+local time
+local profile_info
+local should_profile = false
+if should_profile then
+  local hrtime = vim.loop.hrtime
+  profile_info = {}
+  time = function(chunk, start)
+    if start then
+      profile_info[chunk] = hrtime()
+    else
+      profile_info[chunk] = (hrtime() - profile_info[chunk]) / 1e6
     end
-  else
-    time = function(chunk, start) end
   end
-  
+else
+  time = function(chunk, start) end
+end
+
 local function save_profiles(threshold)
   local sorted_times = {}
   for chunk_name, time_taken in pairs(profile_info) do
@@ -38,8 +41,10 @@ local function save_profiles(threshold)
       results[i] = elem[1] .. ' took ' .. elem[2] .. 'ms'
     end
   end
+  if threshold then
+    table.insert(results, '(Only showing plugins that took longer than ' .. threshold .. ' ms ' .. 'to load)')
+  end
 
-  _G._packer = _G._packer or {}
   _G._packer.profile_output = results
 end
 
@@ -110,7 +115,7 @@ _G.packer_plugins = {
     url = "https://github.com/saadparwaiz1/cmp_luasnip"
   },
   ["competitest.nvim"] = {
-    config = { "\27LJ\2\n„\2\0\0\6\0\r\0\0176\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\b\0005\3\6\0005\4\3\0005\5\4\0=\5\5\4=\4\a\3=\3\t\0025\3\v\0005\4\n\0=\4\a\3=\3\f\2B\0\2\1K\0\1\0\16run_command\1\0\0\1\0\1\texec\f./a.out\20compile_command\1\0\0\bcpp\1\0\0\targs\1\n\0\0\b-O2\a-g\n-Wall\f-Wextra\23-Wno-unused-result\17-Wconversion\f-static\15-std=c++20\r$(FNAME)\1\0\1\texec\bg++\nsetup\16competitest\frequire\0" },
+    config = { "\27LJ\2\2„\2\0\0\5\0\r\0\0176\0\0\0'\1\1\0B\0\2\0029\0\2\0005\1\b\0005\2\6\0005\3\3\0005\4\4\0=\4\5\3=\3\a\2=\2\t\0015\2\v\0005\3\n\0=\3\a\2=\2\f\1B\0\2\1K\0\1\0\16run_command\1\0\0\1\0\1\texec\f./a.out\20compile_command\1\0\0\bcpp\1\0\0\targs\1\n\0\0\b-O2\a-g\n-Wall\f-Wextra\23-Wno-unused-result\17-Wconversion\f-static\15-std=c++20\r$(FNAME)\1\0\1\texec\bg++\nsetup\16competitest\frequire\0" },
     loaded = true,
     path = "/home/koushik/.local/share/nvim/site/pack/packer/start/competitest.nvim",
     url = "https://github.com/xeluxee/competitest.nvim"
@@ -120,10 +125,25 @@ _G.packer_plugins = {
     path = "/home/koushik/.local/share/nvim/site/pack/packer/start/lazygit.nvim",
     url = "https://github.com/kdheepak/lazygit.nvim"
   },
+  ["lsp-zero.nvim"] = {
+    loaded = true,
+    path = "/home/koushik/.local/share/nvim/site/pack/packer/start/lsp-zero.nvim",
+    url = "https://github.com/VonHeikemen/lsp-zero.nvim"
+  },
   ["lualine.nvim"] = {
     loaded = true,
     path = "/home/koushik/.local/share/nvim/site/pack/packer/start/lualine.nvim",
     url = "https://github.com/nvim-lualine/lualine.nvim"
+  },
+  ["mason-lspconfig.nvim"] = {
+    loaded = true,
+    path = "/home/koushik/.local/share/nvim/site/pack/packer/start/mason-lspconfig.nvim",
+    url = "https://github.com/williamboman/mason-lspconfig.nvim"
+  },
+  ["mason.nvim"] = {
+    loaded = true,
+    path = "/home/koushik/.local/share/nvim/site/pack/packer/start/mason.nvim",
+    url = "https://github.com/williamboman/mason.nvim"
   },
   ["material.nvim"] = {
     loaded = true,
@@ -140,15 +160,15 @@ _G.packer_plugins = {
     path = "/home/koushik/.local/share/nvim/site/pack/packer/start/nui.nvim",
     url = "https://github.com/MunifTanjim/nui.nvim"
   },
+  ["null-ls.nvim"] = {
+    loaded = true,
+    path = "/home/koushik/.local/share/nvim/site/pack/packer/start/null-ls.nvim",
+    url = "https://github.com/jose-elias-alvarez/null-ls.nvim"
+  },
   ["nvim-cmp"] = {
     loaded = true,
     path = "/home/koushik/.local/share/nvim/site/pack/packer/start/nvim-cmp",
     url = "https://github.com/hrsh7th/nvim-cmp"
-  },
-  ["nvim-lsp-installer"] = {
-    loaded = true,
-    path = "/home/koushik/.local/share/nvim/site/pack/packer/start/nvim-lsp-installer",
-    url = "https://github.com/williamboman/nvim-lsp-installer"
   },
   ["nvim-lspconfig"] = {
     loaded = true,
@@ -171,8 +191,9 @@ _G.packer_plugins = {
     url = "https://github.com/nvim-treesitter/nvim-treesitter"
   },
   ["nvim-web-devicons"] = {
-    loaded = true,
-    path = "/home/koushik/.local/share/nvim/site/pack/packer/start/nvim-web-devicons",
+    loaded = false,
+    needs_bufread = false,
+    path = "/home/koushik/.local/share/nvim/site/pack/packer/opt/nvim-web-devicons",
     url = "https://github.com/kyazdani42/nvim-web-devicons"
   },
   ["packer.nvim"] = {
@@ -210,8 +231,15 @@ _G.packer_plugins = {
 time([[Defining packer_plugins]], false)
 -- Config for: competitest.nvim
 time([[Config for competitest.nvim]], true)
-try_loadstring("\27LJ\2\n„\2\0\0\6\0\r\0\0176\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\b\0005\3\6\0005\4\3\0005\5\4\0=\5\5\4=\4\a\3=\3\t\0025\3\v\0005\4\n\0=\4\a\3=\3\f\2B\0\2\1K\0\1\0\16run_command\1\0\0\1\0\1\texec\f./a.out\20compile_command\1\0\0\bcpp\1\0\0\targs\1\n\0\0\b-O2\a-g\n-Wall\f-Wextra\23-Wno-unused-result\17-Wconversion\f-static\15-std=c++20\r$(FNAME)\1\0\1\texec\bg++\nsetup\16competitest\frequire\0", "config", "competitest.nvim")
+try_loadstring("\27LJ\2\2„\2\0\0\5\0\r\0\0176\0\0\0'\1\1\0B\0\2\0029\0\2\0005\1\b\0005\2\6\0005\3\3\0005\4\4\0=\4\5\3=\3\a\2=\2\t\0015\2\v\0005\3\n\0=\3\a\2=\2\f\1B\0\2\1K\0\1\0\16run_command\1\0\0\1\0\1\texec\f./a.out\20compile_command\1\0\0\bcpp\1\0\0\targs\1\n\0\0\b-O2\a-g\n-Wall\f-Wextra\23-Wno-unused-result\17-Wconversion\f-static\15-std=c++20\r$(FNAME)\1\0\1\texec\bg++\nsetup\16competitest\frequire\0", "config", "competitest.nvim")
 time([[Config for competitest.nvim]], false)
+
+_G._packer.inside_compile = false
+if _G._packer.needs_bufread == true then
+  vim.cmd("doautocmd BufRead")
+end
+_G._packer.needs_bufread = false
+
 if should_profile then save_profiles() end
 
 end)
