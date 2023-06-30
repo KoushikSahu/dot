@@ -20,7 +20,7 @@ return require('packer').startup(function()
   }
 
   -- bufferline
-  use {'akinsho/bufferline.nvim', tag = "v2.*", requires = 'kyazdani42/nvim-web-devicons'}
+  use {'akinsho/bufferline.nvim', tag = "v2.*", requires = 'nvim-tree/nvim-web-devicons'}
 
   -- file explorer
   use {
@@ -34,23 +34,29 @@ return require('packer').startup(function()
   -- autoclose brackets
   use 'jiangmiao/auto-pairs'
 
-  -- lsp, linters, formatters
+  -- lsp, linters, formatters, autocompletion
   use {
-    'williamboman/mason.nvim',
-    'williamboman/mason-lspconfig.nvim',
-    'neovim/nvim-lspconfig',
-    'hrsh7th/cmp-nvim-lsp',
-    'hrsh7th/cmp-buffer',
-    'hrsh7th/cmp-path',
-    'hrsh7th/cmp-cmdline',
-    'hrsh7th/nvim-cmp',
-    'jose-elias-alvarez/null-ls.nvim'
-  }
-
-  -- snippets
-  use{
-    'L3MON4D3/LuaSnip',
-    'saadparwaiz1/cmp_luasnip'
+    'VonHeikemen/lsp-zero.nvim',
+    branch = 'v2.x',
+    requires = {
+      -- LSP Support
+      {'neovim/nvim-lspconfig'},             -- Required
+      {                                      -- Optional
+        'williamboman/mason.nvim',
+        run = function()
+          pcall(vim.cmd, 'MasonUpdate')
+        end,
+      },
+      {'williamboman/mason-lspconfig.nvim'}, -- Optional
+  
+      -- Autocompletion
+      {'hrsh7th/nvim-cmp'},     -- Required
+      {'hrsh7th/cmp-nvim-lsp'}, -- Required
+      {'L3MON4D3/LuaSnip'},     -- Required
+      {'github/copilot.vim'},
+      {'saadparwaiz1/cmp_luasnip'},
+      {'ray-x/lsp_signature.nvim'}
+    }
   }
 
   -- comments

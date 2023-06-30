@@ -7,4 +7,3 @@ map("n", "<leader>dl", "<Plug>VimspectorStepInto")
 map("n", "<leader>dk", "<Plug>VimspectorStepOut")
 map("n", "<leader>dc", "<Plug>VimspectorContinue")
 map("n", "<leader>dh", "<Plug>VimspectorRunToCursor")
-
