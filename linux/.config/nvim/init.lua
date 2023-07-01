@@ -1,4 +1,5 @@
 require('settings')
+require('settings.suppress')
 
 require('keybindings')
 require('keybindings.competitest')
@@ -7,6 +8,8 @@ require('keybindings.nvim-tree')
 require('keybindings.telescope')
 require('keybindings.vimspector')
 require('keybindings.undotree')
+require('keybindings.symbols-outline')
+require('keybindings.trouble')
 
 require('plugins')
 require('plugins.auto-pairs')
@@ -22,4 +25,7 @@ require('plugins.vimspector')
 require('plugins.nvim-cmp')
 require('plugins.bufferline')
 require('plugins.indent-blankline')
+require('plugins.null-ls')
+require('plugins.mason-null-ls')
+require('plugins.gitsigns')
 

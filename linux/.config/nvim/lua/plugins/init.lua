@@ -107,5 +107,73 @@ return require('packer').startup(function()
   -- undo tree
   use 'mbbill/undotree'
 
+  -- breadcurmbs
+  use ({
+    "utilyre/barbecue.nvim",
+    tag = "*",
+    requires = {
+      "SmiteshP/nvim-navic",
+      "nvim-tree/nvim-web-devicons", -- optional dependency
+    },
+    config = function()
+      require("barbecue").setup()
+    end,
+  })
+
+  -- cursor highlighting
+  use 'RRethy/vim-illuminate'
+
+  -- shows colors for hex values
+  use {
+    'norcalli/nvim-colorizer.lua',
+    config = function() require'colorizer'.setup() end
+  }
+
+  -- symbols
+  use {
+    'simrat39/symbols-outline.nvim',
+    config = function() require'symbols-outline'.setup() end
+  }
+
+  -- preview definitions, references and implementations
+  use {
+    'rmagatti/goto-preview',
+    config = function()
+      require('goto-preview').setup {
+        default_mappings = true,
+      }
+    end
+  }
+
+  -- error and fix list
+  use {
+    'folke/trouble.nvim',
+    requires = 'nvim-tree/nvim-web-devicons',
+    config = function() require("trouble").setup {} end
+  }
+
+  -- todo comments
+  use {
+    'folke/todo-comments.nvim',
+    requires = 'nvim-lua/plenary.nvim',
+    config = function() require("todo-comments").setup {} end
+  }
+
+  -- null ls with mason
+  use{
+    'jose-elias-alvarez/null-ls.nvim',
+    config = function()
+      require("null-ls").setup({
+        sources = {}
+      })
+    end
+  }
+  use {
+    'jay-babu/mason-null-ls.nvim',
+    requires = {
+      'williamboman/mason.nvim',
+      'jose-elias-alvarez/null-ls.nvim',
+    },
+  }
 end)
 
