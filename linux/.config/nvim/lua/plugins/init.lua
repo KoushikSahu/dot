@@ -9,27 +9,30 @@ return require('packer').startup(function()
 
   -- colorschemes
   use 'marko-cerovac/material.nvim'
+  use 'eddyekofo94/gruvbox-flat.nvim'
 
-  -- autodetect all indentation options
+  -- for indentations
   use 'tpope/vim-sleuth'
+  use "lukas-reineke/indent-blankline.nvim"
 
   -- statusline
   use {
     'nvim-lualine/lualine.nvim',
-    requires = { 'kyazdani42/nvim-web-devicons', opt = true }
+    requires = { 'nvim-tree/nvim-web-devicons', opt = true }
   }
 
   -- bufferline
-  use {'akinsho/bufferline.nvim', tag = "v2.*", requires = 'nvim-tree/nvim-web-devicons'}
+  use {'akinsho/bufferline.nvim', tag = "*", requires = 'nvim-tree/nvim-web-devicons'}
 
   -- file explorer
   use {
-    'kyazdani42/nvim-tree.lua',
+    'nvim-tree/nvim-tree.lua',
     requires = {
-      'kyazdani42/nvim-web-devicons', -- optional, for file icons
+      'nvim-tree/nvim-web-devicons', -- optional, for file icons
     },
     tag = 'nightly' -- optional, updated every week. (see issue #1193)
   }
+  use 'nvim-tree/nvim-web-devicons'
 
   -- autoclose brackets
   use 'jiangmiao/auto-pairs'
@@ -73,6 +76,7 @@ return require('packer').startup(function()
 
   -- git integrations
   use 'kdheepak/lazygit.nvim'
+  use 'lewis6991/gitsigns.nvim'
 
   -- search help
   use {
@@ -99,6 +103,9 @@ return require('packer').startup(function()
       },
     } end
   }
+
+  -- undo tree
+  use 'mbbill/undotree'
 
 end)
 
