@@ -3,6 +3,7 @@ map('n', '<leader>t', ':CompetiTestRun <CR>')
 
 return {
   'xeluxee/competitest.nvim',
+  cmd = {'CompetiTestRun', 'CompetiTestReceive'},
   dependencies = 'MunifTanjim/nui.nvim',
   config = function() require'competitest'.setup{
     compile_command = {

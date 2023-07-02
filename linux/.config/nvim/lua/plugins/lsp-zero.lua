@@ -24,7 +24,7 @@ return {
 
       -- And you can configure cmp even more, if you want to.
       local cmp = require('cmp')
-      local cmp_action = require('lsp-zero.cmp').action() 
+      local cmp_action = require('lsp-zero.cmp').action()
 
       cmp.setup({
         sources = {

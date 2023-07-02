@@ -5,6 +5,7 @@ vim.o.foldexpr = 'nvim_treesitter#foldexpr()'
 return {
   'nvim-treesitter/nvim-treesitter',
   build = ':TSUpdate',
+  event = { "BufReadPre", "BufNewFile", "BufEnter" },
   config = function ()
     require'nvim-treesitter.configs'.setup {
       highlight = {

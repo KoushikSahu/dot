@@ -42,5 +42,9 @@ return {
         enable = false
       },
     }
+  end,
+  event = { "BufReadPre", "BufNewFile", "BufEnter" },
+  cond = function()
+    return vim.fn.finddir(".git", ".;") ~= ""
   end
 }

@@ -10,4 +10,5 @@ map("n", "<leader>dh", "<Plug>VimspectorRunToCursor")
 
 return {
   'puremourning/vimspector',
+  event = { "BufReadPre", "BufNewFile", "BufEnter" },
 }

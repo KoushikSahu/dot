@@ -1,5 +1,6 @@
 return {
   'ray-x/lsp_signature.nvim',
+  event = "LspAttach",
   config = function()
     local cfg = {
       floating_window_off_x = 5, -- adjust float windows x position.
