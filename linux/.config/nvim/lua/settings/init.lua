@@ -1,5 +1,8 @@
 local set = vim.opt
 
+-- fast loadup
+vim.loader.enable()
+
 -- core editor options
 set.clipboard = "unnamedplus"
 set.mouse = "a"

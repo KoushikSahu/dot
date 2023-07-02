@@ -1,31 +1,11 @@
+-- required to be loaded before plugin configurations
 require('settings')
+require('settings.plugins')
+require('settings.keybindings')
+
+require('lazy').setup('plugins')
+
+-- required to be loaded after plugin configurations
+require('settings.colorscheme')
 require('settings.suppress')
-
-require('keybindings')
-require('keybindings.competitest')
-require('keybindings.lazygit')
-require('keybindings.nvim-tree')
-require('keybindings.telescope')
-require('keybindings.vimspector')
-require('keybindings.undotree')
-require('keybindings.symbols-outline')
-require('keybindings.trouble')
-
-require('plugins')
-require('plugins.auto-pairs')
-require('plugins.lsp-zero')
-require('plugins.lsp_signature')
-require('plugins.lualine')
-require('plugins.LuaSnip')
-require('plugins.colorscheme')
-require('plugins.nvim-tree')
-require('plugins.telescope')
-require('plugins.treesitter')
-require('plugins.vimspector')
-require('plugins.nvim-cmp')
-require('plugins.bufferline')
-require('plugins.indent-blankline')
-require('plugins.null-ls')
-require('plugins.mason-null-ls')
-require('plugins.gitsigns')
 
