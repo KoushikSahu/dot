@@ -1,5 +1,5 @@
-map('n', '<leader>l', ':CompetiTestReceive <CR>')
-map('n', '<leader>t', ':CompetiTestRun <CR>')
+map('n', '<leader>cpp', ':CompetiTestReceive testcases<CR>')
+map('n', '<leader>cpr', ':CompetiTestRun <CR>')
 
 return {
   'xeluxee/competitest.nvim',
@@ -12,5 +12,10 @@ return {
     run_command = {
       cpp       = { exec = './a.out' },
     },
+    runner_ui = {
+      interface = 'split',
+    },
+    testcases_directory = "./.nvim",
+    testcases_use_single_file = true,
   } end
 }
