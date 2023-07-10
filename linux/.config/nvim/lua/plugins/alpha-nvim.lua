@@ -42,7 +42,7 @@ return {
       dashboard.button("h", "⏳ Recently opened files", ":Telescope oldfiles <CR>"),
       dashboard.button("b", "🔖 Bookmarks", ":Telescope marks <CR>"),
       dashboard.button("c", "📰 Find word", ":Telescope live_grep <CR>"),
-      dashboard.button("o", "🎨 Colorschemes", ":Telescope colorscheme <CR>"),
+      dashboard.button("o", "🎨 Colorschemes", ":lua require (\"telescope.builtin\").colorscheme { enable_preview = true }<CR>"),
       dashboard.button("p", "🔌 Plugins", ":Lazy <CR>"),
       dashboard.button("x", "❌ Quit Neovim", ":qa <CR>"),
     }
