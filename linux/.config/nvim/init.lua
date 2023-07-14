@@ -7,5 +7,6 @@ require('lazy').setup('plugins')
 
 -- required to be loaded after plugin configurations
 require('settings.colorscheme')
+require('settings.lsp')
 require('settings.suppress')
 
