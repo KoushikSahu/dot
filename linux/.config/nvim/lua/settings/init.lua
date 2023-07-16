@@ -16,6 +16,7 @@ set.relativenumber = true
 set.cursorline = true
 set.ruler = true
 set.termguicolors = true
+set.showmode = false
 
 -- indentations
 set.tabstop = 4
