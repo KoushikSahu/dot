@@ -4,7 +4,7 @@ local keymap = vim.keymap.set
 -- If there is no definition, it will instead be hidden
 -- When you use an action in finder like "open vsplit",
 -- you can use <C-t> to jump back
-keymap("n", "gh", "<cmd>Lspsaga lsp_finder<CR>")
+keymap("n", "gh", "<cmd>Lspsaga finder<CR>")
 
 -- Code action
 keymap({"n","v"}, "<leader>ca", "<cmd>Lspsaga code_action<CR>")
@@ -64,7 +64,7 @@ keymap("n", "]E", function()
 end)
 
 -- Toggle outline
-keymap("n","<leader>o", "<cmd>Lspsaga outline<CR>")
+keymap("n","<leader>s", "<cmd>Lspsaga outline<CR>")
 
 -- Hover Doc
 -- If there is no hover doc,
@@ -86,13 +86,21 @@ keymap("n", "<Leader>ci", "<cmd>Lspsaga incoming_calls<CR>")
 keymap("n", "<Leader>co", "<cmd>Lspsaga outgoing_calls<CR>")
 
 -- Floating terminal
-keymap({"n", "t"}, "<A-d>", "<cmd>Lspsaga term_toggle<CR>")
+keymap({"n", "t"}, "<leader>t", "<cmd>Lspsaga term_toggle<CR>")
 
 return {
     "glepnir/lspsaga.nvim",
     event = "LspAttach",
     config = function()
-        require("lspsaga").setup({})
+      local saga = require("lspsaga")
+      saga.setup({
+        finder = {
+          keys = {
+            toggle_or_open = "<CR>"
+          }
+        }
+      })
+      require("lspsaga.symbol.winbar").get_bar()
     end,
     dependencies = {
       {"nvim-tree/nvim-web-devicons"},
