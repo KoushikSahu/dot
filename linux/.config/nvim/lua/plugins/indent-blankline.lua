@@ -6,11 +6,14 @@ return {
   'lukas-reineke/indent-blankline.nvim',
   event = { "BufReadPre", "BufNewFile" },
   config = function()
-    require("indent_blankline").setup {
-      space_char_blankline = " ",
-      show_current_context = true,
-      show_current_context_start = true,
-      filetype_exclude = {"dashboard"},
+    require("ibl").setup {
+      scope = {
+        enabled = true,
+        show_exact_scope = true,
+        injected_languages = false,
+        highlight = { "Function", "Label" },
+        priority = 500,
+      },
     }
   end
 }
