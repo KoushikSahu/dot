@@ -9,10 +9,6 @@ return {
     require("ibl").setup {
       scope = {
         enabled = true,
-        show_exact_scope = true,
-        injected_languages = false,
-        highlight = { "Function", "Label" },
-        priority = 500,
       },
     }
   end
