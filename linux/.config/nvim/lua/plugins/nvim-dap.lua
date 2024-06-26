@@ -8,6 +8,12 @@ map("n", "<leader>dc", ":DapContinue<CR>")
 
 return {
   {
+    'mfussenegger/nvim-dap',
+    dependencies = {
+      'nvim-neotest/nvim-nio',
+    }
+  },
+  {
     'rcarriga/nvim-dap-ui',
     dependencies = {
       {'mfussenegger/nvim-dap'},

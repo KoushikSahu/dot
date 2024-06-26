@@ -1,9 +1,8 @@
-map('n', '<leader>cpp', ':CompetiTestReceive testcases<CR>')
-map('n', '<leader>cpr', ':CompetiTestRun <CR>')
+map('n', '<leader>cpp', ':CompetiTest receive testcases<CR>')
+map('n', '<leader>cpr', ':CompetiTest run<CR>')
 
 return {
   'xeluxee/competitest.nvim',
-  cmd = {'CompetiTestRun', 'CompetiTestReceive'},
   dependencies = 'MunifTanjim/nui.nvim',
   config = function() require'competitest'.setup{
     compile_command = {

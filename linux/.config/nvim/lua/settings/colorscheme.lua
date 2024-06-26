@@ -1,1 +1,1 @@
-vim.cmd 'colorscheme gruvbox-flat'
+vim.cmd 'colorscheme carbonfox'
