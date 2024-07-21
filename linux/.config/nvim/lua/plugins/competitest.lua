@@ -5,7 +5,7 @@ return {
     'xeluxee/competitest.nvim',
     dependencies = 'MunifTanjim/nui.nvim',
     config = function()
-        require'competitest'.setup {
+        require 'competitest'.setup {
             compile_command = {
                 cpp = {
                     exec = 'g++',
@@ -23,8 +23,8 @@ return {
                 }
             },
             run_command = {
-                cpp = {exec = './a.out'},
-                rust = {exec = './target/$(FNOEXT)'}
+                cpp = { exec = './a.out' },
+                rust = { exec = './target/$(FNOEXT)' }
             },
             -- runner_ui = {
             -- interface = 'split',

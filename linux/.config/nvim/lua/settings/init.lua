@@ -26,4 +26,3 @@ set.softtabstop = 4
 -- highlights
 set.hlsearch = false
 set.incsearch = true
-

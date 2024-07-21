@@ -1,1 +1,1 @@
-vim.cmd 'colorscheme vscode_modern'
+vim.cmd 'colorscheme catppuccin'

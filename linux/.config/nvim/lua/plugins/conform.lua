@@ -12,6 +12,7 @@ return {
     lua = { "luaformatter" },
     python = { "isort", "autopep8" },
     rust = { "rustfmt" },
+    json = { "prettier" },
   },
   config = function()
     vim.api.nvim_create_user_command('FormatDocument', function(details)

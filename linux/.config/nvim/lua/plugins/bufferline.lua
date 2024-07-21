@@ -5,7 +5,7 @@ return {
   config = function()
     local bufferline = require('bufferline')
 
-    bufferline.setup{
+    bufferline.setup {
       options = {
         color_icons = true,
         get_element_icon = function(element)
