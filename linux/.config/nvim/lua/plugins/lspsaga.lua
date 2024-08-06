@@ -86,7 +86,7 @@ keymap("n", "<Leader>ci", "<cmd>Lspsaga incoming_calls<CR>")
 keymap("n", "<Leader>co", "<cmd>Lspsaga outgoing_calls<CR>")
 
 -- Floating terminal
-keymap({ "n", "t" }, "<leader>t", "<cmd>Lspsaga term_toggle<CR>")
+keymap({ "n" }, "<leader>t", "<cmd>Lspsaga term_toggle<CR>")
 
 return {
   "glepnir/lspsaga.nvim",

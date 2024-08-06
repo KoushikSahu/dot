@@ -9,13 +9,20 @@ return {
     -- local omnisharp_bin = "/path/to/omnisharp/OmniSharp.exe"
 
     local config = {
-      handlers = {
-        ["textDocument/definition"] = require('omnisharp_extended').handler,
-      },
       cmd = { omnisharp_bin, '--languageserver', '--hostPID', tostring(pid) },
       -- rest of your settings
     }
 
     require 'lspconfig'.omnisharp.setup(config)
+    vim.api.nvim_create_autocmd("FileType", {
+      pattern = { "cs" },
+      callback = function()
+        vim.schedule(function()
+          map("n", "gd", "<cmd>lua require('omnisharp_extended').lsp_definition()<cr>")
+          map("n", "gi", "<cmd>lua require('omnisharp_extended').lsp_implementation()<cr>")
+          map("n", "gr", "nnoremap gr <cmd>lua require('omnisharp_extended').lsp_references()<cr>")
+        end)
+      end
+    })
   end
 }

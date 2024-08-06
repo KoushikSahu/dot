@@ -5,6 +5,10 @@ return {
       cpp = { 'cpplint' },
       lua = { 'luacheck' },
       python = { 'mypy' },
+      json = { 'jsonlint' },
+      typescript = { 'eslint_d' },
+      javascript = { 'eslint_d' },
+      cs = { 'trivy' },
     }
     vim.api.nvim_create_autocmd({ "BufWritePost" }, {
       callback = function()

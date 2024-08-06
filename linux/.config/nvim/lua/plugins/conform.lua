@@ -10,8 +10,11 @@ return {
     cpp = { "clang-format" },
     javascript = { "prettier" },
     lua = { "luaformatter" },
+    typescript = { "prettier" },
     python = { "isort", "autopep8" },
     rust = { "rustfmt" },
+    cs = { "csharpier" },
+    markdown = { "prettier" },
     json = { "prettier" },
   },
   config = function()

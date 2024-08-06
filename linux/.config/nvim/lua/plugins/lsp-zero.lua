@@ -66,7 +66,9 @@ return {
 
             lsp.on_attach(function(client, bufnr)
                 lsp.default_keymaps({ buffer = bufnr })
-                vim.lsp.inlay_hint.enable(true, { buffer = bufnr })
+                if client.server_capabilities.inlayHintProvider then
+                    vim.lsp.inlay_hint.enable(true, { buffer = bufnr })
+                end
             end)
 
             -- (Optional) Configure lua language server for neovim
