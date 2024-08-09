@@ -6,6 +6,7 @@ return {
     "Tastyep/structlog.nvim",  -- Optional, but highly recommended for debugging
   },
   config = function()
+    require("mason").setup()
     require("csharp").setup {
       lsp = {
         omnisharp = {
@@ -42,5 +43,14 @@ return {
         adapter_name = nil,
       }
     }
+
+    vim.api.nvim_create_autocmd("FileType", {
+      pattern = { "cs" },
+      callback = function()
+        vim.schedule(function()
+          map("n", "<leader>dp", "<cmd>lua require('csharp').debug_project()<cr>")
+        end)
+      end
+    })
   end
 }
