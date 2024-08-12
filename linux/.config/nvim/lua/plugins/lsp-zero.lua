@@ -56,7 +56,7 @@ return {
         dependencies = {
             { 'hrsh7th/cmp-nvim-lsp' }, { 'williamboman/mason-lspconfig.nvim' }, {
                 'williamboman/mason.nvim',
-                build = function() pcall(vim.cmd, 'MasonUpdate') end
+                build = function() pcall(vim.cmd, 'MasonUpdate') end,
             }
         },
         config = function()
@@ -88,6 +88,11 @@ return {
                         return string.gsub(str, "%s*[- ]%s*", "_")
                     end
                 end
+            })
+
+            vim.diagnostic.config({
+                virtual_text = false,
+                underline = true,
             })
 
             lsp.setup()
