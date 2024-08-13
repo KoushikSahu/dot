@@ -20,17 +20,17 @@ keymap("n", "<leader>rn", "<cmd>Lspsaga rename ++project<CR>")
 -- It also supports open/vsplit/etc operations, do refer to "definition_action_keys"
 -- It also supports tagstack
 -- Use <C-t> to jump back
-keymap("n", "gp", "<cmd>Lspsaga peek_definition<CR>")
+-- keymap("n", "gpd", "<cmd>Lspsaga peek_definition<CR>")
 
 -- Go to definition
-keymap("n", "gd", "<cmd>Lspsaga goto_definition<CR>")
+-- keymap("n", "gd", "<cmd>Lspsaga goto_definition<CR>")
 
 -- Peek type definition
 -- You can edit the file containing the type definition in the floating window
 -- It also supports open/vsplit/etc operations, do refer to "definition_action_keys"
 -- It also supports tagstack
 -- Use <C-t> to jump back
-keymap("n", "gt", "<cmd>Lspsaga peek_type_definition<CR>")
+-- keymap("n", "gpt", "<cmd>Lspsaga peek_type_definition<CR>")
 
 -- Go to type definition
 keymap("n", "gt", "<cmd>Lspsaga goto_type_definition<CR>")

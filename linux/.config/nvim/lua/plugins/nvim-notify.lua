@@ -1,5 +1,6 @@
 return {
   'rcarriga/nvim-notify',
+  event = "VimEnter",
   config = function()
     require('notify').setup({
       -- other stuff

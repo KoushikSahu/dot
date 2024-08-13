@@ -5,6 +5,7 @@ return {
     "mfussenegger/nvim-dap",
     "Tastyep/structlog.nvim",  -- Optional, but highly recommended for debugging
   },
+  ft = { 'cs' },
   config = function()
     require("mason").setup()
     require("csharp").setup {

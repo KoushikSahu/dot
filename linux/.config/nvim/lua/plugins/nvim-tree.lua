@@ -2,6 +2,7 @@ map("n", "<C-n>", ":NvimTreeToggle <CR>")
 
 return {
   'nvim-tree/nvim-tree.lua',
+  event = "VimEnter",
   dependencies = {
     'nvim-tree/nvim-web-devicons', -- optional, for file icons
   },

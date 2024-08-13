@@ -6,6 +6,7 @@ map('v', '<leader>f', ':FormatDocument<CR>')
 
 return {
   'stevearc/conform.nvim',
+  event = { "BufReadPre", "BufNewFile", "BufEnter" },
   formatters_by_ft = {
     cpp = { "clang-format" },
     javascript = { "prettier" },

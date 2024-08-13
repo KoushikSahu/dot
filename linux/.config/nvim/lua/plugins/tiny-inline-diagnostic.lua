@@ -1,6 +1,6 @@
 return {
     "rachartier/tiny-inline-diagnostic.nvim",
-    event = "VeryLazy",
+    event = { "BufReadPre", "BufNewFile", "BufEnter" },
     config = function()
         -- Default configuration
         require("tiny-inline-diagnostic").setup({
@@ -27,7 +27,7 @@ return {
             },
             options = {
                 -- Show the source of the diagnostic.
-                show_source = false,
+                show_source = true,
 
                 -- Throttle the update of the diagnostic when moving cursor, in milliseconds.
                 -- You can increase it if you have performance issues.

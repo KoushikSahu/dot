@@ -8,6 +8,7 @@ map('n', '<leader>crp', ':CRProjects<CR>', { noremap = true, silent = false })
 
 return {
     'CRAG666/code_runner.nvim',
+    cmd = { "RunCode", "RunFile", "RunFile tab", "RunProject", "RunClose", "CRFiletype", "CRProjects" },
     config = function()
         require('code_runner').setup({
             filetypes = {
