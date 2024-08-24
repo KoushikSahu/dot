@@ -17,6 +17,7 @@ set.cursorline = true
 set.ruler = true
 set.termguicolors = true
 set.showmode = false
+set.colorcolumn = "80"
 
 -- indentations
 set.tabstop = 4

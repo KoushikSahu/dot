@@ -8,7 +8,7 @@ return {
     {
         'hrsh7th/nvim-cmp',
         event = 'InsertEnter',
-        dependencies = { { 'L3MON4D3/LuaSnip' } },
+        dependencies = { { 'L3MON4D3/LuaSnip' }, { 'hrsh7th/cmp-nvim-lsp-signature-help' } },
         config = function()
             -- Here is where you configure the autocompletion settings.
             -- The arguments for .extend() have the same shape as `manage_nvim_cmp`:
@@ -22,7 +22,7 @@ return {
             local lspkind = require('lspkind')
 
             cmp.setup({
-                sources = { { name = 'nvim_lsp' }, { name = 'luasnip' } },
+                sources = { { name = 'nvim_lsp' }, { name = 'luasnip' }, { name = 'nvim_lsp_signature_help' } },
                 mapping = cmp.mapping.preset.insert({
                     ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
                     ['<C-Space>'] = cmp.mapping.complete(),

@@ -6,7 +6,7 @@ return {
   dependencies = {
     'nvim-tree/nvim-web-devicons', -- optional, for file icons
   },
-  tag = 'nightly',                 -- optional, updated every week. (see issue #1193)
+  -- tag = 'nightly',                 -- optional, updated every week. (see issue #1193)
   config = function()
     require("nvim-tree").setup({
       update_focused_file = {

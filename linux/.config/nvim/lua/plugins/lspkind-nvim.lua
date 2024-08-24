@@ -1,6 +1,5 @@
 return {
   'onsails/lspkind.nvim',
-  event = "LspAttach",
   config = function()
     local lspkind = require('lspkind')
     local cmp = require('cmp')
