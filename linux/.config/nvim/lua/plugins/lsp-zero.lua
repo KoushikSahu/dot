@@ -24,7 +24,7 @@ return {
             cmp.setup({
                 sources = { { name = 'nvim_lsp' }, { name = 'luasnip' }, { name = 'nvim_lsp_signature_help' } },
                 mapping = cmp.mapping.preset.insert({
-                    ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+                    ['<CR>'] = cmp.mapping.confirm({ select = false }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
                     ['<C-Space>'] = cmp.mapping.complete(),
                     ['<C-f>'] = cmp_action.luasnip_jump_forward(),
                     ['<C-b>'] = cmp_action.luasnip_jump_backward()

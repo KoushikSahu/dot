@@ -23,4 +23,4 @@ map("v", "<A-j>", ":m '>+1<CR>gv=gv", { silent = true })
 map("v", "<A-k>", ":m '<-2<CR>gv=gv", { silent = true })
 
 -- using ctrl backspace to delete previous words
-map("i", "<C-H>", "<C-R>=AutoPairsDelete()<CR><C-W>", { silent = true })
+map("i", "<C-H>", "<C-W>", { silent = true })

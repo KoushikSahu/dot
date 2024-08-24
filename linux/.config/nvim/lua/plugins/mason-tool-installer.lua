@@ -23,12 +23,10 @@ return {
         "luaformatter",
         "mypy",
         "netcoredbg",
-        "omnisharp",
         "prettier",
         "pyright",
         "rust-analyzer",
         "rustfmt",
-        "trivy",
         "vtsls",
       },
 
