@@ -1,7 +1,6 @@
 map('n', '<leader>tr', '<cmd>lua require("neotest").run.run()<CR>')
 map('n', '<leader>ts', '<cmd>lua require("neotest").run.stop()<CR>')
 map('n', '<leader>tf', '<cmd>lua require("neotest").run.run(vim.fn.expand("%"))<CR>')
-map('n', '<leader>td', '<cmd>lua require("neotest").run.run({strategy = "dap"})<CR>')
 map('n', '<leader>ta', '<cmd>lua require("neotest").run.attach()<CR>')
 map('n', '<leader>te', '<cmd>lua require("neotest").summary.toggle()<CR>')
 map('n', '<leader>to', '<cmd>lua require("neotest").output.open()<CR>')
