@@ -12,6 +12,10 @@ return {
       update_focused_file = {
         enable = true,
       },
+      view = {
+        side = "right",
+        width = 50,
+      }
     })
   end,
 }
