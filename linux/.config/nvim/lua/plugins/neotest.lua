@@ -4,6 +4,7 @@ map('n', '<leader>tf', '<cmd>lua require("neotest").run.run(vim.fn.expand("%"))<
 map('n', '<leader>ta', '<cmd>lua require("neotest").run.attach()<CR>')
 map('n', '<leader>te', '<cmd>lua require("neotest").summary.toggle()<CR>')
 map('n', '<leader>to', '<cmd>lua require("neotest").output.open()<CR>')
+map('n', '<leader>tdc', '<cmd>lua require("neotest").run.run({strategy = "dap"})<CR>')
 
 return {
   {
@@ -24,7 +25,7 @@ return {
               -- See https://github.com/microsoft/debugpy/wiki/Debug-configuration-settings for values
               args = {justMyCode = false },
               -- Enter the name of your dap adapter, the default value is netcoredbg
-              adapter_name = "netcoredbg"
+              adapter_name = "coreclr"
             },
             -- Let the test-discovery know about your custom attributes (otherwise tests will not be picked up)
             -- Note: Only custom attributes for non-parameterized tests should be added here. See the support note about parameterized tests
