@@ -69,6 +69,26 @@ return {
                     console = 'integratedTerminal',
                 },
             }
+            
+            -- c#
+            local netcoredbg_path = "C:\\Users\\koushiksahu\\Downloads\\netcoredbg-win64\\netcoredbg\\netcoredbg.exe"
+            dap.adapters.netcoredbg = {
+                type = 'executable',
+                command = netcoredbg_path,
+                args = { '--interpreter=vscode' },
+            }
+            dap.configurations.cs = {
+                {
+                    name = 'Launch .NET Core',
+                    type = 'netcoredbg',
+                    request = 'launch',
+                    program = function()
+                        return vim.fn.input('Path to dll: ', vim.fn.getcwd() .. '/', 'file')
+                    end,
+                    cwd = "${workspaceFolder}/src/Service",
+                },
+            }
+
             -- keybindings
             vim.keymap.set("n", "<leader>dc", dap.continue, { noremap = true, silent = true })
             vim.keymap.set("n", "<leader>de", dap.terminate, { noremap = true, silent = true })
