@@ -57,6 +57,12 @@ return {
             { 'hrsh7th/cmp-nvim-lsp' }, { 'williamboman/mason-lspconfig.nvim' }, {
                 'williamboman/mason.nvim',
                 build = function() pcall(vim.cmd, 'MasonUpdate') end,
+            }, {
+                'nvim-java/nvim-java',
+                ft = 'java',
+                config = function()
+                    require('java').setup()
+                end
             }
         },
         config = function()
@@ -80,6 +86,8 @@ return {
                 capabilities = require("cmp_nvim_lsp").default_capabilities(),
                 cmd = { "clangd", "--offset-encoding=utf-16" }
             }
+
+            require("lspconfig").jdtls.setup({})
 
             vim.api.nvim_create_autocmd("LspAttach", {
                 callback = function(ev)
