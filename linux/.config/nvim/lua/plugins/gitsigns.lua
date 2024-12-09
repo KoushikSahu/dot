@@ -81,6 +81,10 @@ return {
 
         -- Text object
         map({'o', 'x'}, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
+
+        vim.api.nvim_exec([[
+          autocmd User GitSignsChanged call fugitive#ReloadStatus()
+        ]], false)
       end
     }
   end,
