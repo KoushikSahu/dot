@@ -30,6 +30,7 @@ snippet cp "template for competitive programming"
 		buf_iter: str::SplitWhitespace<'static>,
 	}
 
+	#[allow(dead_code)]
 	impl<R: BufRead> Scanner<R> {
 		fn new(reader: R) -> Self {
 			Self {
@@ -63,7 +64,7 @@ snippet cp "template for competitive programming"
 				if bytes_read == 0 {
 					return None; // End of file reached
 				}
-				return unsafe { Some(str::from_utf8_unchecked(&self.buf_str).to_owned()) };
+				return unsafe { Some(str::from_utf8_unchecked(&self.buf_str).trim().to_owned()) };
 			}
 		}
 	}
