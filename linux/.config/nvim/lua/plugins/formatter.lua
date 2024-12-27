@@ -47,7 +47,6 @@ return {
         --     vim.fn.winrestview(pos)
         -- end, { range = true }
         -- )
-
         vim.api.nvim_create_autocmd({ "BufWritePre" }, {
             callback = function()
                 require("conform").format({ lsp_fallback = true, async = false, timeout_ms = 1000 })
