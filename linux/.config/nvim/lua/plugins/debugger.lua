@@ -69,7 +69,7 @@ return {
                     console = 'integratedTerminal',
                 },
             }
-            
+
             -- c#
             local netcoredbg_path = "C:\\Users\\koushiksahu\\Downloads\\netcoredbg-win64\\netcoredbg\\netcoredbg.exe"
             dap.adapters.netcoredbg = {

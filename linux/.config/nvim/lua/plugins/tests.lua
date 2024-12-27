@@ -1,11 +1,3 @@
-map('n', '<leader>tr', '<cmd>lua require("neotest").run.run()<CR>')
-map('n', '<leader>ts', '<cmd>lua require("neotest").run.stop()<CR>')
-map('n', '<leader>tf', '<cmd>lua require("neotest").run.run(vim.fn.expand("%"))<CR>')
-map('n', '<leader>ta', '<cmd>lua require("neotest").run.attach()<CR>')
-map('n', '<leader>te', '<cmd>lua require("neotest").summary.toggle()<CR>')
-map('n', '<leader>to', '<cmd>lua require("neotest").output.open()<CR>')
-map('n', '<leader>tdc', '<cmd>lua require("neotest").run.run({strategy = "dap"})<CR>')
-
 return {
   {
     "nvim-neotest/neotest",
@@ -45,6 +37,14 @@ return {
           })
         }
       })
+
+      map('n', '<leader>tr', '<cmd>lua require("neotest").run.run()<CR>')
+      map('n', '<leader>ts', '<cmd>lua require("neotest").run.stop()<CR>')
+      map('n', '<leader>tf', '<cmd>lua require("neotest").run.run(vim.fn.expand("%"))<CR>')
+      map('n', '<leader>ta', '<cmd>lua require("neotest").run.attach()<CR>')
+      map('n', '<leader>te', '<cmd>lua require("neotest").summary.toggle()<CR>')
+      map('n', '<leader>to', '<cmd>lua require("neotest").output.open()<CR>')
+      map('n', '<leader>tdc', '<cmd>lua require("neotest").run.run({strategy = "dap"})<CR>')
     end
   },
 }

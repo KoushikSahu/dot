@@ -3,11 +3,11 @@ return {
   event = "VimEnter",
   dependencies = {
     { 'nvim-lua/plenary.nvim' }, {
-    "nvim-telescope/telescope-live-grep-args.nvim",
-    -- This will not install any breaking changes.
-    -- For major updates, this must be adjusted manually.
-    version = "^1.0.0"
-  }
+      "molecule-man/telescope-menufacture",
+      -- This will not install any breaking changes.
+      -- For major updates, this must be adjusted manually.
+      version = "^1.0.0"
+    }
   },
   config = function()
     local actions = require("telescope.actions")
@@ -16,9 +16,7 @@ return {
       defaults = { mappings = { i = { ["<esc>"] = actions.close } } }
     })
 
-    map("n", "<C-P>",
-      "<cmd>lua require('telescope.builtin').find_files()<cr>")
-    map("n", "<C-F>",
-      ":lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>")
+    vim.keymap.set('n', '<C-P>', require('telescope').extensions.menufacture.find_files, { silent = true })
+    vim.keymap.set('n', '<C-F>', require('telescope').extensions.menufacture.live_grep, { silent = true })
   end
 }

@@ -1,5 +1,8 @@
 map('n', '<leader>cpp', ':CompetiTest receive testcases<CR>')
 map('n', '<leader>cpr', ':CompetiTest run<CR>')
+map('n', '<leader>cpa', ':CompetiTest add_testcase<CR>')
+map('n', '<leader>cpd', ':CompetiTest delete_testcase<CR>')
+map('n', '<leader>cpe', ':CompetiTest edit_testcase<CR>')
 
 return {
     'xeluxee/competitest.nvim',

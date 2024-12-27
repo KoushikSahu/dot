@@ -4,7 +4,6 @@ require('settings.plugins')
 require('settings.keybindings')
 
 require('lazy').setup('plugins')
-require('mason').setup()
 
 -- required to be loaded after plugin configurations
 require('settings.colorscheme')
