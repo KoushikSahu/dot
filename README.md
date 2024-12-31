@@ -1,4 +1,5 @@
-# Configuration files
+# Dot
 
-Contains configuration files from my linux and windows setups for easy porting of environment to different machine from scratch
+Contains dotfiles from my systems for easy migration of preferred configurations to new machines.
 
+[![Dev setup](https://skillicons.dev/icons?i=linux,windows,neovim)](https://skillicons.dev)
