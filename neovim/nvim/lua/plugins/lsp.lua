@@ -4,10 +4,10 @@ return {
         dependencies = {
             'saghen/blink.cmp',
             'williamboman/mason-lspconfig.nvim', {
-                'nvim-java/nvim-java',
-                ft = 'java',
-                config = function() require('java').setup() end
-            }
+            'nvim-java/nvim-java',
+            ft = 'java',
+            config = function() require('java').setup() end
+        }
         },
         config = function()
             vim.opt.signcolumn = 'yes'
@@ -21,7 +21,14 @@ return {
             vim.api.nvim_create_autocmd('LspAttach', {
                 desc = 'LSP actions',
                 callback = function(event)
-                    local opts = { buffer = event.buf }
+                    local bufnr = event.buf
+                    local client = vim.lsp.get_client_by_id(event.data.client_id)
+
+                    if client.server_capabilities.inlayHintProvider then
+                        vim.lsp.inlay_hint.enable(true, { buffer = bufnr })
+                    end
+
+                    local opts = { buffer = bufnr }
 
                     vim.keymap.set('n', 'K', '<cmd>lua vim.lsp.buf.hover()<cr>',
                         opts)
@@ -70,109 +77,111 @@ return {
                     end,
                     jdtls = function()
                         require("lspconfig").jdtls.setup({})
+                    end,
+                    basedpyright = function()
+                        require("lspconfig").basedpyright.setup({
+                            settings = {
+                                basedpyright = {
+                                    analysis = {
+                                        autoImportCompletions = true,
+                                        diagnosticMode = "workspace"
+                                    }
+                                }
+                            }
+                        })
                     end
                 }
             })
         end
     }, {
-        'saghen/blink.cmp',
-        dependencies = { 'rafamadriz/friendly-snippets', 'L3MON4D3/LuaSnip' },
-        version = '*',
-        opts = {
-            enabled = function()
-                return vim.bo.buftype ~= "prompt" and vim.b.completion ~= false and vim.bo.filetype ~= "DressingInput"
-            end,
+    'saghen/blink.cmp',
+    dependencies = { 'rafamadriz/friendly-snippets', 'L3MON4D3/LuaSnip' },
+    version = '*',
+    opts = {
+        enabled = function()
+            return vim.bo.buftype ~= "prompt" and vim.b.completion ~= false and vim.bo.filetype ~= "DressingInput"
+        end,
 
-            keymap = { preset = 'default', ['<CR>'] = { 'accept', 'fallback' } },
+        keymap = { preset = 'default', ['<CR>'] = { 'accept', 'fallback' } },
 
-            appearance = {
-                use_nvim_cmp_as_default = true,
-                nerd_font_variant = 'normal'
-            },
-
-            snippets = {
-                expand = function(snippet)
-                    require('luasnip').lsp_expand(snippet)
-                end,
-                active = function(filter)
-                    if filter and filter.direction then
-                        return require('luasnip').jumpable(filter.direction)
-                    end
-                end,
-                jump = function(direction)
-                    require('luasnip').jump(direction)
-                end
-            },
-
-            sources = {
-                default = { 'lsp', 'path', 'snippets', 'buffer', 'luasnip' }
-            },
-
-            completion = {
-                keyword = { range = 'full' },
-
-                accept = { auto_brackets = { enabled = false }, },
-
-                list = { selection = 'auto_insert' },
-
-                documentation = { auto_show = true, auto_show_delay_ms = 100 },
-
-                ghost_text = { enabled = true },
-
-                menu = {
-                    draw = {
-                        columns = {
-                            { "label",     "label_description", gap = 1 },
-                            { "kind_icon", "kind" }
-                        }
-                    }
-                }
-            },
-
-            signature = { enabled = true }
+        appearance = {
+            use_nvim_cmp_as_default = true,
+            nerd_font_variant = 'normal'
         },
-        opts_extend = { "sources.default" }
-    }, {
-        'L3MON4D3/LuaSnip',
-        version = 'v2.*',
-        config = function()
-            require('luasnip.loaders.from_snipmate').lazy_load()
-        end
-    }, {
-        'VidocqH/lsp-lens.nvim',
-        event = { "BufReadPre", "BufNewFile", "BufEnter" },
-        config = function() require 'lsp-lens'.setup({}) end
-    }, {
-        'seblj/roslyn.nvim',
-        config = function()
-            require("roslyn").setup({
-                ft = "cs",
-                config = {
-                    settings = {
-                        ["csharp|inlay_hints"] = {
-                            csharp_enable_inlay_hints_for_implicit_object_creation = true,
-                            csharp_enable_inlay_hints_for_implicit_variable_types = true,
-                            csharp_enable_inlay_hints_for_lambda_parameter_types = true,
-                            csharp_enable_inlay_hints_for_types = true,
-                            dotnet_enable_inlay_hints_for_indexer_parameters = true,
-                            dotnet_enable_inlay_hints_for_literal_parameters = true,
-                            dotnet_enable_inlay_hints_for_object_creation_parameters = true,
-                            dotnet_enable_inlay_hints_for_other_parameters = true,
-                            dotnet_enable_inlay_hints_for_parameters = true,
-                            dotnet_suppress_inlay_hints_for_parameters_that_differ_only_by_suffix = true,
-                            dotnet_suppress_inlay_hints_for_parameters_that_match_argument_name = true,
-                            dotnet_suppress_inlay_hints_for_parameters_that_match_method_intent = false
-                        },
-                        ["csharp|code_lens"] = {
-                            dotnet_enable_tests_code_lens = true
-                        },
-                        ["csharp|completion"] = {
-                            dotnet_show_name_completion_suggestions = true,
-                            dotnet_provide_regex_completions = true
-                        }
+
+        snippets = {
+            preset = 'luasnip'
+        },
+
+        sources = {
+            default = { 'snippets', 'lsp', 'path', 'buffer' }
+        },
+
+        completion = {
+            keyword = { range = 'full' },
+
+            accept = { auto_brackets = { enabled = false }, },
+
+            list = { selection = { preselect = false, auto_insert = true } },
+
+            documentation = { auto_show = true, auto_show_delay_ms = 100 },
+
+            ghost_text = { enabled = true },
+
+            menu = {
+                draw = {
+                    columns = {
+                        { "label",     "label_description", gap = 1 },
+                        { "kind_icon", "kind" }
                     }
                 }
-            })
-        end
-    }
+            }
+        },
+
+        signature = { enabled = true },
+    },
+    opts_extend = { "sources.default" }
+}, {
+    'L3MON4D3/LuaSnip',
+    version = 'v2.*',
+    config = function()
+        require('luasnip.loaders.from_snipmate').lazy_load()
+    end
+}, {
+    'VidocqH/lsp-lens.nvim',
+    event = { "BufReadPre", "BufNewFile", "BufEnter" },
+    config = function() require 'lsp-lens'.setup({}) end
+}, {
+    'seblj/roslyn.nvim',
+    config = function()
+        require("roslyn").setup({
+            ft = "cs",
+            config = {
+                settings = {
+                    ["csharp|inlay_hints"] = {
+                        csharp_enable_inlay_hints_for_implicit_object_creation = true,
+                        csharp_enable_inlay_hints_for_implicit_variable_types = true,
+                        csharp_enable_inlay_hints_for_lambda_parameter_types = true,
+                        csharp_enable_inlay_hints_for_types = true,
+                        dotnet_enable_inlay_hints_for_indexer_parameters = true,
+                        dotnet_enable_inlay_hints_for_literal_parameters = true,
+                        dotnet_enable_inlay_hints_for_object_creation_parameters = true,
+                        dotnet_enable_inlay_hints_for_other_parameters = true,
+                        dotnet_enable_inlay_hints_for_parameters = true,
+                        dotnet_suppress_inlay_hints_for_parameters_that_differ_only_by_suffix = true,
+                        dotnet_suppress_inlay_hints_for_parameters_that_match_argument_name = true,
+                        dotnet_suppress_inlay_hints_for_parameters_that_match_method_intent = false
+                    },
+                    ["csharp|code_lens"] = {
+                        dotnet_enable_tests_code_lens = true
+                    },
+                    ["csharp|completion"] = {
+                        dotnet_show_name_completion_suggestions = true,
+                        dotnet_provide_regex_completions = true
+                    }
+                }
+            }
+        })
+    end
+}
 }

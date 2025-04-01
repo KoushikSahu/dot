@@ -89,6 +89,39 @@ return {
                 },
             }
 
+            -- go
+            dap.configurations.go = {
+                {
+                    type = 'delve',
+                    name = 'Delve: Debug',
+                    request = 'launch',
+                    program = '${workspaceFolder}',
+                },
+                {
+                    type = 'delve',
+                    name = 'Delve: Debug (Arguments)',
+                    request = 'launch',
+                    program = '${workspaceFolder}',
+                    args = function()
+                        return vim.split(vim.fn.input('Args: '), ' ')
+                    end,
+                },
+                {
+                    type = 'delve',
+                    name = 'Delve: Debug test',
+                    request = 'launch',
+                    mode = 'test',
+                    program = '${file}',
+                },
+                {
+                    type = 'delve',
+                    name = 'Delve: Debug test (go.mod)',
+                    request = 'launch',
+                    mode = 'test',
+                    program = './${relativeFileDirname}',
+                },
+            }
+
             -- keybindings
             vim.keymap.set("n", "<leader>dc", dap.continue, { noremap = true, silent = true })
             vim.keymap.set("n", "<leader>de", dap.terminate, { noremap = true, silent = true })

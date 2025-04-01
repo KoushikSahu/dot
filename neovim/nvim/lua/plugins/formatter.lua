@@ -3,17 +3,6 @@
 return {
     'stevearc/conform.nvim',
     event = { "BufReadPre", "BufNewFile", "BufEnter" },
-    formatters_by_ft = {
-        cpp = { "clang-format" },
-        javascript = { "prettier" },
-        lua = { "luaformatter" },
-        typescript = { "prettier" },
-        python = { "isort", "autopep8" },
-        rust = { "rustfmt" },
-        cs = { "csharpier" },
-        markdown = { "prettier" },
-        json = { "prettier" },
-    },
     config = function()
         -- vim.api.nvim_create_user_command('FormatDocument', function(details)
         --     local format = require("conform").format
@@ -51,6 +40,25 @@ return {
             callback = function()
                 require("conform").format({ lsp_fallback = true, async = false, timeout_ms = 1000 })
             end,
+        })
+
+        require("conform").setup({
+            formatters_by_ft = {
+                cpp = { "clang-format" },
+                javascript = { "prettier" },
+                lua = { "luaformatter" },
+                typescript = { "prettier" },
+                python = { "isort", "autopep8" },
+                rust = { "rustfmt" },
+                cs = { "csharpier" },
+                markdown = { "prettier" },
+                json = { "prettier" },
+                go = { "gofumpt" },
+            },
+            format_on_save = {
+                timeout_ms = 5000,
+                lsp_format = "fallback",
+            }
         })
     end,
 }
