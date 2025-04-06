@@ -42,29 +42,31 @@ return {
     event = "VeryLazy",
     lazy = false,
     version = false, -- set this if you want to always pull the latest change
-    opts = {
-        provider = "copilot",
-        auto_suggestion_provider = "copilot",
-        copilot = { model = "claude-3.7-sonnet" },
-        behaviour = {
-            enable_cursor_planning_mdoe = true
-        }
-    },
     -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
     build = "make",
     -- build = "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false" -- for windows
+    disabled_tools = {
+        "list_files",
+        "search_files",
+        "read_file",
+        "create_file",
+        "rename_file",
+        "delete_file",
+        "create_dir",
+        "rename_dir",
+        "delete_dir",
+        "bash"
+    },
     dependencies = {
         "stevearc/dressing.nvim", "nvim-lua/plenary.nvim",
         "MunifTanjim/nui.nvim",        --- The below dependencies are optional,
-        "hrsh7th/nvim-cmp",            -- autocompletion for avante commands and mentions
+        -- "hrsh7th/nvim-cmp",            -- autocompletion for avante commands and mentions
         "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
         "zbirenbaum/copilot.lua",      -- for providers='copilot'
         {
-            -- support for image pasting
             "HakonHarnes/img-clip.nvim",
             event = "VeryLazy",
             opts = {
-                -- recommended settings
                 default = {
                     embed_image_as_base64 = false,
                     prompt_for_file_name = false,
@@ -74,11 +76,44 @@ return {
                 }
             }
         }, {
-        -- Make sure to set this up properly if you have lazy=true
         'MeanderingProgrammer/render-markdown.nvim',
         opts = { file_types = { "markdown", "Avante" } },
         ft = { "markdown", "Avante" }
-    }
-    }
+    },
+        {
+            "ravitemer/mcphub.nvim",
+            dependencies = {
+                "nvim-lua/plenary.nvim",
+            },
+            cmd = "MCPHub",
+            -- build = "npm install -g mcp-hub@latest", -- Installs required mcp-hub npm module
+            build = "bundled_build.lua", -- Use this and set use_bundled_binary = true in opts  (see Advanced configuration)
+            config = function()
+                require("mcphub").setup({
+                    use_bundled_binary = true,
+                    auto_approve = true,
+                })
+            end,
+        }
+    },
+    config = function()
+        require("avante").setup({
+            system_prompt = function()
+                local hub = require("mcphub").get_hub_instance()
+                return hub:get_active_servers_prompt()
+            end,
+            custom_tools = function()
+                return {
+                    require("mcphub.extensions.avante").mcp_tool(),
+                }
+            end,
+            provider = "copilot",
+            auto_suggestion_provider = "copilot",
+            copilot = { model = "claude-3.7-sonnet" },
+            behaviour = {
+                enable_cursor_planning_mdoe = true
+            }
+        })
+    end
 }
 }
