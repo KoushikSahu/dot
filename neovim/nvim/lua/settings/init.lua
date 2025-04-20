@@ -9,6 +9,7 @@ set.mouse = "a"
 set.hidden = true
 set.backspace = "indent,eol,start"
 set.wrap = true
+set.ignorecase = true
 
 -- appearance
 set.number = true

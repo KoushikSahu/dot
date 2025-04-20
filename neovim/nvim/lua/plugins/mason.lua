@@ -11,7 +11,6 @@ return {
             require('mason-tool-installer').setup {
                 ensure_installed = {
                     "autopep8",
-                    "basedpyright",
                     "clang-format",
                     "clangd",
                     "codelldb",

@@ -65,14 +65,17 @@ return {
                 },
             })
         end
-    }, {
-        'folke/trouble.nvim',
-        cmd = { 'Trouble' },
-        dependencies = 'nvim-tree/nvim-web-devicons',
-        config = function()
-            require("trouble").setup {}
-
-            map('n', '<leader>tt', '<cmd>Trouble diagnostics toggle focus=true<CR>', { silent = true })
-        end
+    },
+    {
+        "folke/trouble.nvim",
+        opts = {}, -- for default options, refer to the configuration section for custom setup.
+        cmd = "Trouble",
+        keys = {
+            {
+                "<leader>tt",
+                "<cmd>Trouble diagnostics toggle focus=true<cr>",
+                desc = "Diagnostics (Trouble)",
+            },
+        },
     }
 }
