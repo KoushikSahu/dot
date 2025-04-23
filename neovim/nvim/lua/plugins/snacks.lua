@@ -57,7 +57,7 @@ return {
         enabled = function()
           return Snacks.git.get_root() ~= nil
         end,
-        cmd = "git status -sb && git rev-parse --abbrev-ref HEAD",
+        cmd = "git status -sb && git symbolic-ref --short HEAD",
         height = 5,
         padding = 1,
         ttl = 5 * 60,

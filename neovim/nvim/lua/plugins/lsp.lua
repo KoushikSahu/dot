@@ -5,7 +5,11 @@ return {
         dependencies = {
             'saghen/blink.cmp',
             'williamboman/mason-lspconfig.nvim',
-            'nvim-java/nvim-java',
+            {
+                'nvim-java/nvim-java',
+                ft = 'java',
+                config = function() require('java').setup() end
+            }
         },
         config = function()
             vim.opt.signcolumn = 'yes'

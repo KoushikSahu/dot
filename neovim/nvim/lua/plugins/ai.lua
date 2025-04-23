@@ -82,11 +82,7 @@ return {
                 copilot = { model = "claude-3.7-sonnet" },
                 behaviour = {
                     enable_cursor_planning_mode = true
-                },
-                disabled_tools = {
-                    "bash",
-                    "fetch"
-                },
+                }
             })
         end
     }
