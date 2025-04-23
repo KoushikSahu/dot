@@ -1,14 +1,11 @@
 return {
     {
         'neovim/nvim-lspconfig',
+        event = { "BufReadPre", "BufNewFile", "BufEnter" },
         dependencies = {
             'saghen/blink.cmp',
             'williamboman/mason-lspconfig.nvim',
-            {
-                'nvim-java/nvim-java',
-                ft = 'java',
-                config = function() require('java').setup() end
-            }
+            'nvim-java/nvim-java',
         },
         config = function()
             vim.opt.signcolumn = 'yes'
@@ -97,6 +94,7 @@ return {
     },
     {
         'saghen/blink.cmp',
+        event = "LspAttach",
         dependencies = { 'rafamadriz/friendly-snippets', 'L3MON4D3/LuaSnip' },
         version = '*',
         opts = {
@@ -145,19 +143,13 @@ return {
         opts_extend = { "sources.default" }
     },
     {
-        'L3MON4D3/LuaSnip',
-        version = 'v2.*',
-        config = function()
-            require('luasnip.loaders.from_snipmate').lazy_load()
-        end
-    },
-    {
         'VidocqH/lsp-lens.nvim',
         event = { "BufReadPre", "BufNewFile", "BufEnter" },
         config = function() require 'lsp-lens'.setup({}) end
     },
     {
         'seblj/roslyn.nvim',
+        ft = { 'cs' },
         config = function()
             require("roslyn").setup({
                 ft = "cs",
@@ -188,5 +180,11 @@ return {
                 }
             })
         end
+    },
+    {
+        'nvim-java/nvim-java',
+        ft = { 'java' },
+        lazy = true,
+        config = function() require('java').setup() end
     }
 }
