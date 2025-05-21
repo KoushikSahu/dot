@@ -4,12 +4,7 @@ return {
         event = { "BufReadPre", "BufNewFile", "BufEnter" },
         dependencies = {
             'saghen/blink.cmp',
-            'williamboman/mason-lspconfig.nvim',
-            {
-                'nvim-java/nvim-java',
-                ft = 'java',
-                config = function() require('java').setup() end
-            }
+            'mason-org/mason-lspconfig.nvim',
         },
         config = function()
             vim.opt.signcolumn = 'yes'
@@ -99,7 +94,18 @@ return {
     {
         'saghen/blink.cmp',
         event = "LspAttach",
-        dependencies = { 'rafamadriz/friendly-snippets', 'L3MON4D3/LuaSnip' },
+        dependencies = { 'rafamadriz/friendly-snippets',
+            {
+                "L3MON4D3/LuaSnip",
+                -- follow latest release.
+                version = "v2.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
+                -- install jsregexp (optional!).
+                build = "make install_jsregexp",
+                config = function()
+                    require('luasnip.loaders.from_snipmate').lazy_load()
+                end
+            }
+        },
         version = '*',
         opts = {
             enabled = function()
@@ -186,9 +192,6 @@ return {
         end
     },
     {
-        'nvim-java/nvim-java',
-        ft = { 'java' },
-        lazy = true,
-        config = function() require('java').setup() end
+        'mfussenegger/nvim-jdtls'
     }
 }
