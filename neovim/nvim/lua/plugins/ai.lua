@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-=======
-I'll merge the changes from the update into the code while preserving structure, order, comments, and indentation.
-
->>>>>>> Snippet
 return {
     {
         'zbirenbaum/copilot.lua',
