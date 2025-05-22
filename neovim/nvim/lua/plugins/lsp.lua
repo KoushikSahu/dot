@@ -73,7 +73,6 @@ return {
                         }
                     end,
                     jdtls = function()
-                        require("lspconfig").jdtls.setup({})
                     end,
                     basedpyright = function()
                         require("lspconfig").basedpyright.setup({
