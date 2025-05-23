@@ -6,13 +6,21 @@ return {
         config = function()
             require("copilot").setup({
                 suggestion = {
-                    auto_trigger = true,
-                    keymap = {
-                        accept = "<Tab>",
-                    }
+                    enabled = false,
+                },
+                panel = {
+                    enabled = false,
+                },
+                filetypes = {
+                    markdown = true,
+                    help = true
                 }
             })
         end,
+    },
+    {
+        'fang2hou/blink-copilot',
+        after = { "copilot.lua" },
     },
     {
         "yetone/avante.nvim",
