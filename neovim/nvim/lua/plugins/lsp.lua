@@ -105,7 +105,8 @@ return {
                 end
             },
             -- TODO: use suggestion from https://github.com/Saghen/blink.cmp/issues/836 after it is closed
-            'fang2hou/blink-copilot'
+            'fang2hou/blink-copilot',
+            'saghen/blink.compat'
         },
         version = '*',
         opts = {
@@ -125,7 +126,16 @@ return {
             },
 
             sources = {
-                default = { 'snippets', 'lsp', 'path', 'buffer', 'copilot' },
+                default = {
+                    'snippets',
+                    'lsp',
+                    'path',
+                    'buffer',
+                    'copilot',
+                    'avante_commands',
+                    'avante_mentions',
+                    'avante_files'
+                },
 
                 providers = {
                     copilot = {
@@ -147,6 +157,24 @@ return {
                                 },
                             }
                         },
+                    },
+                    avante_commands = {
+                        name = "avante_commands",
+                        module = "blink.compat.source",
+                        score_offset = 90,
+                        opts = {},
+                    },
+                    avante_files = {
+                        name = "avante_files",
+                        module = "blink.compat.source",
+                        score_offset = 100,
+                        opts = {},
+                    },
+                    avante_mentions = {
+                        name = "avante_mentions",
+                        module = "blink.compat.source",
+                        score_offset = 1000,
+                        opts = {},
                     }
                 }
             },
@@ -177,6 +205,7 @@ return {
             },
 
             signature = { enabled = true },
+
         },
         opts_extend = { "sources.default" }
     },
@@ -220,6 +249,7 @@ return {
         end
     },
     {
-        'mfussenegger/nvim-jdtls'
+        'mfussenegger/nvim-jdtls',
+        ft = { 'java' }
     },
 }

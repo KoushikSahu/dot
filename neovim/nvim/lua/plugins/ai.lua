@@ -91,9 +91,13 @@ return {
                 end,
                 provider = "copilot",
                 auto_suggestion_provider = "copilot",
-                copilot = { model = "claude-3.7-sonnet" },
+                copilot = { model = "claude-sonnet-4" },
                 behaviour = {
                     enable_cursor_planning_mode = true
+                },
+                selector = {
+                    provider = "snacks",
+                    provider_opts = {}
                 }
             })
         end
