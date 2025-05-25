@@ -1,3 +1,6 @@
+-- avante relative path hack
+vim.g.root_spec = { { ".git" }, "lsp", "cwd" }
+
 return {
     {
         'zbirenbaum/copilot.lua',
