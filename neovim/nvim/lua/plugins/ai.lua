@@ -94,9 +94,12 @@ return {
                 end,
                 provider = "copilot",
                 auto_suggestion_provider = "copilot",
-                copilot = { model = "claude-sonnet-4" },
+                providers = {
+                    copilot = { model = "claude-sonnet-4" },
+                },
                 behaviour = {
-                    enable_cursor_planning_mode = true
+                    enable_cursor_planning_mode = true,
+                    enable_token_counting = false,
                 },
                 selector = {
                     provider = "snacks",

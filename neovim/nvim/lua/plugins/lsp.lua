@@ -62,6 +62,11 @@ return {
                 -- Replace the language servers listed here
                 -- with the ones you want to install
                 -- ensure_installed = { 'lua_ls', 'rust_analyzer' },
+                automatic_enable = {
+                    exclude = {
+                        'jdtls',
+                    },
+                },
                 handlers = {
                     function(server_name)
                         require('lspconfig')[server_name].setup({})
@@ -71,8 +76,6 @@ return {
                             capabilities = capabilities,
                             cmd = { "clangd", "--offset-encoding=utf-16" }
                         }
-                    end,
-                    jdtls = function()
                     end,
                     basedpyright = function()
                         require("lspconfig").basedpyright.setup({
@@ -212,7 +215,8 @@ return {
     {
         'VidocqH/lsp-lens.nvim',
         event = { "BufReadPre", "BufNewFile", "BufEnter" },
-        config = function() require 'lsp-lens'.setup({}) end
+        config = function() require 'lsp-lens'.setup({}) end,
+        enabled = false
     },
     {
         'seblj/roslyn.nvim',
