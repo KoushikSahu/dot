@@ -4,6 +4,7 @@ return {
   config = function()
     require('quicker').setup({
       edit = {
+        enabled = true,
         autosave = true,
       }
     })

@@ -10,6 +10,8 @@ set.hidden = true
 set.backspace = "indent,eol,start"
 set.wrap = true
 set.ignorecase = true
+set.swapfile = false
+set.autoread = true
 
 -- appearance
 set.number = true
@@ -19,6 +21,7 @@ set.ruler = true
 set.termguicolors = true
 set.showmode = false
 set.colorcolumn = "80"
+set.winborder = "rounded"
 
 -- indentations
 set.tabstop = 4
