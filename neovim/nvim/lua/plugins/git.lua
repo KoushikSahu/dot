@@ -1,6 +1,63 @@
 return {
     {
-        'tpope/vim-fugitive'
+        'tpope/vim-fugitive',
+        config = function()
+            -- Set up keybindings for diffget and diffput with auto-save
+            local function setup_diff_keybindings()
+                -- Function to save all visible buffers
+                local function save_all_visible()
+                    local windows = vim.api.nvim_list_wins()
+                    local saved_buffers = {}
+
+                    for _, win in ipairs(windows) do
+                        local buf = vim.api.nvim_win_get_buf(win)
+                        if not saved_buffers[buf] and vim.api.nvim_buf_get_option(buf, 'modified') then
+                            vim.api.nvim_buf_call(buf, function()
+                                vim.cmd('silent! write')
+                            end)
+                            saved_buffers[buf] = true
+                        end
+                    end
+                end
+
+                -- diffput (dp) - put diff from current buffer to other buffer
+                vim.keymap.set('n', 'dp', function()
+                    vim.cmd('diffput')
+                    save_all_visible()
+                    vim.cmd('call fugitive#ReloadStatus()')
+                end, { desc = 'Diff put and save all visible buffers' })
+
+                -- diffget (do) - get diff from other buffer to current buffer
+                vim.keymap.set('n', 'do', function()
+                    vim.cmd('diffget')
+                    save_all_visible()
+                    vim.cmd('call fugitive#ReloadStatus()')
+                end, { desc = 'Diff get and save all visible buffers' })
+
+                -- Visual mode versions for ranges
+                vim.keymap.set('v', 'dp', function()
+                    vim.cmd("'<,'>diffput")
+                    save_all_visible()
+                    vim.cmd('call fugitive#ReloadStatus()')
+                end, { desc = 'Diff put range and save all visible buffers' })
+
+                vim.keymap.set('v', 'do', function()
+                    vim.cmd("'<,'>diffget")
+                    save_all_visible()
+                    vim.cmd('call fugitive#ReloadStatus()')
+                end, { desc = 'Diff get range and save all visible buffers' })
+            end
+
+            -- Set up keybindings when fugitive is loaded
+            vim.api.nvim_create_autocmd('User', {
+                pattern = 'FugitiveChanged',
+                callback = setup_diff_keybindings,
+                once = false
+            })
+
+            -- Also set up immediately in case we're already in a diff
+            setup_diff_keybindings()
+        end
     },
     {
         'akinsho/git-conflict.nvim',
@@ -23,9 +80,9 @@ return {
                 numhl = false,     -- Toggle with `:Gitsigns toggle_numhl`
                 linehl = false,    -- Toggle with `:Gitsigns toggle_linehl`
                 word_diff = false, -- Toggle with `:Gitsigns toggle_word_diff`
-                watch_gitdir = { follow_files = true },
+                watch_gitdir = { enable = true, follow_files = true },
                 attach_to_untracked = true,
-                current_line_blame = true, -- Toggle with `:Gitsigns toggle_current_line_blame`
+                current_line_blame = false, -- Toggle with `:Gitsigns toggle_current_line_blame`
                 current_line_blame_opts = {
                     virt_text = true,
                     virt_text_pos = 'eol', -- 'eol' | 'overlay' | 'right_align'
