@@ -43,7 +43,7 @@ return {
 
                     -- Enable diagnostic message on all lines.
                     -- /!\ Still an experimental feature, can be slow on big files.
-                    multilines = true,
+                    -- multilines = true,
 
                     overflow = {
                         -- Manage the overflow of the message.
