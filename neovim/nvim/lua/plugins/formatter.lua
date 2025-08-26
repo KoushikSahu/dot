@@ -36,11 +36,16 @@ return {
         --     vim.fn.winrestview(pos)
         -- end, { range = true }
         -- )
-        vim.api.nvim_create_autocmd({ "BufWritePre" }, {
-            callback = function()
-                require("conform").format({ lsp_fallback = true, async = false, timeout_ms = 1000 })
-            end,
-        })
+
+        -- vim.api.nvim_create_autocmd({ "BufWritePre" }, {
+        --     callback = function()
+        --         require("conform").format({ lsp_fallback = true, async = false, timeout_ms = 1000 })
+        --     end,
+        -- })
+
+        vim.keymap.set({ 'n', 'x' }, '<leader>f',
+            '<cmd>lua require("conform").format({ lsp_format = "fallback", async = true })<cr>',
+            { noremap = true, silent = true })
 
         require("conform").setup({
             formatters_by_ft = {
@@ -55,10 +60,10 @@ return {
                 json = { "prettier" },
                 go = { "gofumpt" },
             },
-            format_on_save = {
-                timeout_ms = 400,
-                lsp_format = "fallback",
-            }
+            -- format_on_save = {
+            --     timeout_ms = 400,
+            --     lsp_format = "fallback",
+            -- }
         })
     end,
 }

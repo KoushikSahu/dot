@@ -41,10 +41,10 @@ local config = {
 		'java.base/java.util=ALL-UNNAMED',
 		'--add-opens',
 		'java.base/java.lang=ALL-UNNAMED',
-		'-javaagent:' .. vim.fs.joinpath('/.local/share/nvim/mason/packages/jdtls/lombok.jar'),
+		'-javaagent:' .. vim.fs.joinpath(jdtls_dir, 'lombok.jar'),
 		'-jar',
-		vim.fn.glob(vim.fs.joinpath(mason_dir,
-			'/.local/share/nvim/mason/packages/jdtls/plugins/org.eclipse.equinox.launcher_*.jar')),
+		vim.fn.glob(vim.fs.joinpath(jdtls_dir,
+			'plugins/org.eclipse.equinox.launcher_*.jar')),
 		'-configuration',
 		vim.fs.joinpath(mason_dir, "config_win"),
 		"-data", workspace_dir
