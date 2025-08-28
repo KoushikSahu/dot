@@ -74,8 +74,15 @@ local config = {
 		allow_incremental_sync = true,
 	},
 	init_options = {
-		bundles = {},
+		bundles = {
+			vim.fs.joinpath(vim.fn.stdpath("data"), "mason", "share", "java-debug-adapter", "com.microsoft.java.debug.plugin.jar"),
+		},
 	},
 }
+
+config['on_attach'] = function(client, bufnr)
+	jdtls.setup_dap({ hotcodereplace = 'auto' })
+	require('jdtls.dap').setup_dap_main_class_configs()
+end
 
 require('jdtls').start_or_attach(config)

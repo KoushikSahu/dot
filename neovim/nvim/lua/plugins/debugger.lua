@@ -122,6 +122,17 @@ return {
                 },
             }
 
+            -- java
+            dap.configurations.java = {
+                {
+                    type = 'java',
+                    request = 'attach',
+                    name = "Debug (Attach) - Remote",
+                    hostName = "127.0.0.1",
+                    port = 5005,
+                },
+            }
+
             -- keybindings
             vim.keymap.set("n", "<leader>dc", dap.continue, { noremap = true, silent = true })
             vim.keymap.set("n", "<leader>de", dap.terminate, { noremap = true, silent = true })

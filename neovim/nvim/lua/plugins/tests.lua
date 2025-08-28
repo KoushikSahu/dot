@@ -1,5 +1,19 @@
 return {
   {
+    "rcasia/neotest-java",
+    ft = "java",
+    dependencies = {
+      "mfussenegger/nvim-jdtls",
+      "mfussenegger/nvim-dap",           -- for the debugger
+      "rcarriga/nvim-dap-ui",            -- recommended
+      "theHamsta/nvim-dap-virtual-text", -- recommended
+    },
+  },
+  {
+    "Issafalcon/neotest-dotnet",
+    ft = { "cs", "fs" }
+  },
+  {
     "nvim-neotest/neotest",
     event = "VeryLazy",
     dependencies = {
@@ -7,10 +21,8 @@ return {
       "nvim-lua/plenary.nvim",
       "antoinemadec/FixCursorHold.nvim",
       "nvim-treesitter/nvim-treesitter",
-      {
-        "Issafalcon/neotest-dotnet",
-        ft = { "cs", "fs" }
-      }
+      'vim-test/vim-test',
+      'nvim-neotest/neotest-vim-test',
     },
     config = function()
       require('neotest').setup({
@@ -38,7 +50,9 @@ return {
             -- Note: If neovim is opened from the solution root, using the 'project' setting may sometimes find all nested projects, however,
             --       to locate all test projects in the solution more reliably (if a .sln file is present) then 'solution' is better.
             discovery_root = "project" -- Default
-          })
+          }),
+          -- require("neotest-java"),
+          require("neotest-vim-test")({ ignore_filetypes = { "cs", } }),
         }
       })
 
@@ -49,6 +63,15 @@ return {
       map('n', '<leader>te', '<cmd>lua require("neotest").summary.toggle()<CR>')
       map('n', '<leader>to', '<cmd>lua require("neotest").output.open()<CR>')
       map('n', '<leader>tdc', '<cmd>lua require("neotest").run.run({strategy = "dap"})<CR>')
+    end
+  },
+  {
+    'vim-test/vim-test',
+    dependencies = {
+      'tpope/vim-dispatch'
+    },
+    config = function()
+      vim.g['test#strategy'] = 'dispatch'
     end
   },
 }

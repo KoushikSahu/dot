@@ -216,7 +216,7 @@ return {
         enabled = false
     },
     {
-        'seblj/roslyn.nvim',
+        'seblyng/roslyn.nvim',
         ft = { 'cs' },
         config = function()
             require("roslyn").setup({
@@ -251,6 +251,9 @@ return {
     },
     {
         'mfussenegger/nvim-jdtls',
+        dependencies = {
+            'mfussenegger/nvim-dap'
+        },
         ft = { 'java' }
     },
 }
