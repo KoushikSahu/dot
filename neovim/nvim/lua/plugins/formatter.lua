@@ -59,6 +59,7 @@ return {
                 markdown = { "prettier" },
                 json = { "prettier" },
                 go = { "gofumpt" },
+                kotlin = { "ktfmt" }
             },
             -- format_on_save = {
             --     timeout_ms = 400,

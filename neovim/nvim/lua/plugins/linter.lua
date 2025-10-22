@@ -10,6 +10,7 @@ return {
             typescript = { 'eslint_d' },
             javascript = { 'eslint_d' },
             go = { 'golangcilint' },
+            kotlin = { 'ktlint' }
         }
 
         vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "BufReadPre" }, {

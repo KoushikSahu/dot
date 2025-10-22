@@ -9,21 +9,14 @@ return {
         config = function()
             require("copilot").setup({
                 suggestion = {
-                    enabled = false,
+                    enabled = true,
+                    auto_trigger = true
                 },
                 panel = {
                     enabled = false,
                 },
-                filetypes = {
-                    markdown = true,
-                    help = true
-                }
             })
         end,
-    },
-    {
-        'fang2hou/blink-copilot',
-        after = { "copilot.lua" },
     },
     {
         "yetone/avante.nvim",
@@ -95,7 +88,7 @@ return {
                 provider = "copilot",
                 auto_suggestion_provider = "copilot",
                 providers = {
-                    copilot = { model = "claude-sonnet-4" },
+                    copilot = { model = "claude-sonnet-4.5" },
                 },
                 behaviour = {
                     enable_cursor_planning_mode = true,
@@ -107,5 +100,25 @@ return {
                 }
             })
         end
+    },
+    {
+        "folke/sidekick.nvim",
+        lazy = false,
+        opts = {
+            nes = { enabled = true },
+        },
+        keys = {
+            {
+                "<tab>",
+                function()
+                    -- if there is a next edit, jump to it, otherwise apply it if any
+                    if not require("sidekick").nes_jump_or_apply() then
+                        return "<Tab>" -- fallback to normal tab
+                    end
+                end,
+                expr = true,
+                desc = "Goto/Apply Next Edit Suggestion",
+            },
+        },
     }
 }

@@ -24,11 +24,18 @@ return {
                         '--edition=2021', '-C', 'debug-assertions', '-O',
                         '--out-dir', 'target', '$(FNAME)'
                     }
+                },
+                kotlin = {
+                    exec = 'kotlinc', 
+                    args = {
+                        '$(FNAME)', '-include-runtime', '-d', 'a.jar'
+                    }
                 }
             },
             run_command = {
                 cpp = { exec = './a.out' },
-                rust = { exec = './target/$(FNOEXT)' }
+                rust = { exec = './target/$(FNOEXT)' },
+                kotlin = { exec = 'java', args = { '-jar', 'a.jar' }}
             },
             -- runner_ui = {
             -- interface = 'split',
