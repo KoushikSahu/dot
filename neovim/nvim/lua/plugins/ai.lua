@@ -49,10 +49,10 @@ return {
                     }
                 }
             }, {
-            'MeanderingProgrammer/render-markdown.nvim',
-            opts = { file_types = { "markdown", "Avante" } },
-            ft = { "markdown", "Avante" }
-        },
+                'MeanderingProgrammer/render-markdown.nvim',
+                opts = { file_types = { "markdown", "Avante" } },
+                ft = { "markdown", "Avante" }
+            },
             {
                 "ravitemer/mcphub.nvim",
                 dependencies = {
@@ -88,7 +88,13 @@ return {
                 provider = "copilot",
                 auto_suggestion_provider = "copilot",
                 providers = {
-                    copilot = { model = "claude-sonnet-4.5" },
+                    copilot = { model = "claude-opus-4.5" },
+                },
+                acp_providers = {
+                    ["opencode"] = {
+                        command = "opencode",
+                        args = { "acp" }
+                    }
                 },
                 behaviour = {
                     enable_cursor_planning_mode = true,
@@ -97,7 +103,7 @@ return {
                 selector = {
                     provider = "snacks",
                     provider_opts = {}
-                }
+                },
             })
         end
     },
