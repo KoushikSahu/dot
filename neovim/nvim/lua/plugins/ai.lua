@@ -88,7 +88,7 @@ return {
                 provider = "copilot",
                 auto_suggestion_provider = "copilot",
                 providers = {
-                    copilot = { model = "claude-opus-4.5" },
+                    copilot = { model = "claude-sonnet-4.5" },
                 },
                 acp_providers = {
                     ["opencode"] = {
