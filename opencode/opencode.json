@@ -1,44 +1,22 @@
 {
   "$schema": "https://opencode.ai/config.json",
   "theme": "gruvbox",
-  "model": "github-copilot/claude-opus-4.5",
+  "model": "github-copilot/claude-sonnet-4.5",
   "small_model": "github-copilot/claude-haiku-4.5",
-  "tools": {
-    "todoread": true,
-    "todowrite": true
-  },
+  "tools": {},
   "mcp": {
     "time": {
       "type": "local",
-      "command": ["uvx", "mcp-server-time"],
-      "enabled": true
+      "command": ["uvx", "mcp-server-time"]
     },
     "playwright": {
       "type": "local",
-      "command": ["npx", "-y", "@executeautomation/playwright-mcp-server"],
-      "enabled": true
-    },
-    "git": {
-      "type": "local",
-      "command": ["uvx", "mcp-server-git"],
-      "enabled": true
-    },
-    "sequentialthinking": {
-      "type": "local",
-      "command": [
-        "npx",
-        "-y",
-        "@modelcontextprotocol/server-sequential-thinking"
-      ],
-      "enabled": true
-    },
-    "markdownify": {
-      "type": "local",
-      "command": ["node", "~/.mcphub/servers/markdownify/dist/index.js"],
-      "enabled": false,
-      "environment": {
-        "UV_PATH": "/usr/bin/uv"
-      }
+      "command": ["npx", "-y", "@executeautomation/playwright-mcp-server"]
+    }
+  },
+  "agent": {
+    "plan": {
+      "model": "github-copilot/claude-opus-4.5"
     }
   }
 }
