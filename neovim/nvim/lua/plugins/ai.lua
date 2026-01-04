@@ -97,7 +97,6 @@ return {
                     }
                 },
                 behaviour = {
-                    enable_cursor_planning_mode = true,
                     enable_token_counting = false,
                 },
                 selector = {
