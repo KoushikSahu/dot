@@ -12,6 +12,7 @@ set.wrap = true
 set.ignorecase = true
 set.swapfile = false
 set.autoread = true
+set.smartcase = true
 
 -- appearance
 set.number = true
@@ -22,6 +23,7 @@ set.termguicolors = true
 set.showmode = false
 set.colorcolumn = "80"
 set.winborder = "rounded"
+set.background = "dark"
 
 -- indentations
 set.tabstop = 4
