@@ -8,7 +8,7 @@ return {
     build = ':TSUpdate',
     event = { "BufReadPre", "BufNewFile", "BufEnter" },
     config = function()
-      require 'nvim-treesitter.config'.setup {
+      require 'nvim-treesitter.configs'.setup {
         highlight = {
           enable = true,
           -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
