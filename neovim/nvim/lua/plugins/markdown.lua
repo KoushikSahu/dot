@@ -1,15 +1,17 @@
 return {
     {
-        'MeanderingProgrammer/markdown.nvim',
-        name = 'render-markdown', -- Only needed if you have another plugin named markdown.nvim
-        -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.nvim' },   -- if you use the mini.nvim suite
-        -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.icons' }, -- if you use standalone mini plugins
+        'MeanderingProgrammer/render-markdown.nvim',
         dependencies = {
             'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons'
-        },                 -- if you prefer nvim-web-devicons
-        ft = { 'markdown' }, -- Filetype to attach the plugin
-        config = function() require('render-markdown').setup({}) end
-    }, {
+        },
+        ft = { 'markdown', 'Avante', 'copilot-chat', 'opencode_output' },
+        config = function() require('render-markdown').setup({}) end,
+        opts = {
+            anti_conceal = { enabled = false },
+            file_types = { 'markdown', 'opencode_output' },
+        },
+    },
+    {
         "iamcco/markdown-preview.nvim",
         cmd = {
             "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop"

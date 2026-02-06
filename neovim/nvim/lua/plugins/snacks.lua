@@ -89,6 +89,7 @@ return {
           diagnostics = false,
           git_status = false,
           git_untracked = false,
+          hidden = true,
         }
       }
     },
