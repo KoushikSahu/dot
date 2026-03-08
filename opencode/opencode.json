@@ -2,20 +2,26 @@
   "$schema": "https://opencode.ai/config.json",
   "theme": "gruvbox",
   "default_agent": "plan",
-  "small_model": "github-copilot/claude-haiku-4.5",
+  "small_model": "github-copilot/gpt-5-mini",
   "tools": {},
   "mcp": {
     "time": {
       "type": "local",
       "command": ["uvx", "mcp-server-time"]
+    },
+    "ddg": {
+      "type": "local",
+      "command": ["uvx", "duckduckgo-mcp-server"]
     }
   },
   "agent": {
     "plan": {
-      "model": "github-copilot/claude-opus-4.6"
+      "model": "github-copilot/gpt-5.4",
+      "variant": "high"
     },
     "build": {
-      "model": "github-copilot/claude-sonnet-4.6"
+      "model": "github-copilot/gpt-5.4",
+      "variant": "high"
     }
   }
 }
