@@ -19,11 +19,22 @@ return {
         "sudo-tee/opencode.nvim",
         config = function()
             require("opencode").setup({
+                default_mode = "plan",
                 context = {
                     diagnostics = {
                         enabled = false,
                     },
                 },
+                {
+                    keymap = {
+                        input_window = {
+                            ["<esc>"] = false,
+                        },
+                        output_window = {
+                            ["<esc>"] = false,
+                        }
+                    }
+                }
             })
         end,
         dependencies = {
