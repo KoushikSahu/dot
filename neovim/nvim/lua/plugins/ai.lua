@@ -25,14 +25,12 @@ return {
                         enabled = false,
                     },
                 },
-                {
-                    keymap = {
-                        input_window = {
-                            ["<esc>"] = false,
-                        },
-                        output_window = {
-                            ["<esc>"] = false,
-                        }
+                keymap = {
+                    input_window = {
+                        ["<esc>"] = false,
+                    },
+                    output_window = {
+                        ["<esc>"] = false,
                     }
                 }
             })
