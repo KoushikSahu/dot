@@ -1,5 +1,7 @@
 return {
-    'sindrets/diffview.nvim',
-    event = "VeryLazy",
-    dependencies = { 'lewis6991/gitsigns.nvim' }
+  "esmuellert/codediff.nvim",
+  cmd = "CodeDiff",
+  keys = {
+    { "<leader>cd", "<cmd>CodeDiff<CR>", desc = "Code diff toggle" },
+  },
 }
