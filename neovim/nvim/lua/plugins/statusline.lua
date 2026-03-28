@@ -3,6 +3,6 @@ return {
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     event = "VimEnter",
     config = function()
-        require('lualine').setup { options = { theme = 'catppuccin' } }
+        require('lualine').setup { options = { theme = 'auto' } }
     end
 }
