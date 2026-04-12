@@ -9,7 +9,16 @@ return {
         "folke/which-key.nvim",
         event = "VeryLazy",
         opts = {
-            preset = "helix"
+            preset = "helix",
+            spec = {
+                { "<leader>c",  group = "Code" },
+                { "<leader>cp", group = "Competitive Programming" },
+                { "<leader>d",  group = "Debug" },
+                { "<leader>g",  group = "Git" },
+                { "<leader>h",  group = "Hunks" },
+                { "<leader>s",  group = "Search" },
+                { "<leader>t",  group = "Tests" },
+            },
         },
         keys = {
             {
@@ -17,7 +26,7 @@ return {
                 function()
                     require("which-key").show({ global = false })
                 end,
-                desc = "Buffer Local Keymaps (which-key)",
+                desc = "Show Buffer Keymaps",
             },
         },
     }

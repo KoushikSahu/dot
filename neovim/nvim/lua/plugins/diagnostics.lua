@@ -74,7 +74,7 @@ return {
             {
                 "<leader>tt",
                 "<cmd>Trouble diagnostics toggle focus=true<cr>",
-                desc = "Diagnostics (Trouble)",
+                desc = "Toggle Diagnostics List",
             },
         },
     }

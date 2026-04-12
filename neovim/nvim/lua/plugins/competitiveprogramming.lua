@@ -1,13 +1,14 @@
-map('n', '<leader>cpp', ':CompetiTest receive testcases<CR>')
-map('n', '<leader>cpr', ':CompetiTest run<CR>')
-map('n', '<leader>cpa', ':CompetiTest add_testcase<CR>')
-map('n', '<leader>cpd', ':CompetiTest delete_testcase<CR>')
-map('n', '<leader>cpe', ':CompetiTest edit_testcase<CR>')
-
 return {
     'xeluxee/competitest.nvim',
     dependencies = 'MunifTanjim/nui.nvim',
     cmd = { 'CompetiTest' },
+    keys = {
+        { '<leader>cpp', '<cmd>CompetiTest receive testcases<CR>', desc = 'Receive Test Cases' },
+        { '<leader>cpr', '<cmd>CompetiTest run<CR>',               desc = 'Run Competitive Program' },
+        { '<leader>cpa', '<cmd>CompetiTest add_testcase<CR>',      desc = 'Add Test Case' },
+        { '<leader>cpd', '<cmd>CompetiTest delete_testcase<CR>',   desc = 'Delete Test Case' },
+        { '<leader>cpe', '<cmd>CompetiTest edit_testcase<CR>',     desc = 'Edit Test Case' },
+    },
     config = function()
         require 'competitest'.setup {
             compile_command = {

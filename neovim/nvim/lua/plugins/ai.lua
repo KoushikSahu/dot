@@ -58,7 +58,7 @@ return {
                     end
                 end,
                 expr = true,
-                desc = "Goto/Apply Next Edit Suggestion",
+                desc = "Go To Or Apply Next Edit Suggestion",
             },
         },
     }

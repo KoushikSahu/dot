@@ -2,9 +2,20 @@ return {
     {
         'mfussenegger/nvim-dap',
         dependencies = { 'nvim-neotest/nvim-nio', 'rcarriga/nvim-dap-ui', 'theHamsta/nvim-dap-virtual-text' },
+        keys = {
+            { '<leader>dc', function() require('dap').continue() end,                    desc = 'Continue Debugging' },
+            { '<leader>de', function() require('dap').terminate() end,                   desc = 'Stop Debugging' },
+            { '<leader>db', function() require('dap').toggle_breakpoint() end,           desc = 'Toggle Breakpoint' },
+            { '<leader>dj', function() require('dap').step_over() end,                   desc = 'Step Over' },
+            { '<leader>dl', function() require('dap').step_into() end,                   desc = 'Step Into' },
+            { '<leader>dk', function() require('dap').step_out() end,                    desc = 'Step Out' },
+            { '<leader>dh', function() require('dap').run_to_cursor() end,               desc = 'Run To Cursor' },
+            { '<leader>du', function() require('dapui').eval(nil, { enter = true }) end, desc = 'Evaluate Expression' },
+        },
         config = function()
             local dap = require('dap')
             local ui = require('dapui')
+            local utils = require('utils')
             local mason_dir = vim.fs.joinpath(vim.fn.stdpath("data"), "mason", "packages")
 
             require('dapui').setup()
@@ -24,7 +35,7 @@ return {
                     name = 'Python: Launch file',
                     program = '${file}',
                     pythonPath = venv_path
-                        and ((vim.fn.has('win32') == 1 and venv_path .. '/Scripts/python') or venv_path .. '/bin/python')
+                        and ((utils.is_windows and venv_path .. '/Scripts/python') or venv_path .. '/bin/python')
                         or nil,
                     console = 'integratedTerminal',
                 },
@@ -132,18 +143,6 @@ return {
                     port = 5005,
                 },
             }
-
-            -- keybindings
-            vim.keymap.set("n", "<leader>dc", dap.continue, { noremap = true, silent = true })
-            vim.keymap.set("n", "<leader>de", dap.terminate, { noremap = true, silent = true })
-            vim.keymap.set("n", "<leader>db", dap.toggle_breakpoint, { noremap = true, silent = true })
-            vim.keymap.set("n", "<leader>dj", dap.step_over, { noremap = true, silent = true })
-            vim.keymap.set("n", "<leader>dl", dap.step_into, { noremap = true, silent = true })
-            vim.keymap.set("n", "<leader>dk", dap.step_out, { noremap = true, silent = true })
-            vim.keymap.set("n", "<leader>dh", dap.run_to_cursor, { noremap = true, silent = true })
-            vim.keymap.set("n", "<space>?", function()
-                ui.eval(nil, { enter = true })
-            end)
 
             -- open dap ui automatically
             dap.listeners.before.attach.dapui_config = function()

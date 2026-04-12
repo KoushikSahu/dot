@@ -24,6 +24,43 @@ return {
       'vim-test/vim-test',
       'nvim-neotest/neotest-vim-test',
     },
+    keys = {
+      {
+        '<leader>tr',
+        function() require('neotest').run.run() end,
+        desc = 'Run Nearest Test',
+      },
+      {
+        '<leader>ts',
+        function() require('neotest').run.stop() end,
+        desc = 'Stop Test Run',
+      },
+      {
+        '<leader>tf',
+        function() require('neotest').run.run(vim.fn.expand('%')) end,
+        desc = 'Run Current Test File',
+      },
+      {
+        '<leader>ta',
+        function() require('neotest').run.attach() end,
+        desc = 'Attach To Test Run',
+      },
+      {
+        '<leader>te',
+        function() require('neotest').summary.toggle() end,
+        desc = 'Toggle Test Summary',
+      },
+      {
+        '<leader>to',
+        function() require('neotest').output.open() end,
+        desc = 'Open Test Output',
+      },
+      {
+        '<leader>tdc',
+        function() require('neotest').run.run({ strategy = 'dap' }) end,
+        desc = 'Start Debugging Nearest Test',
+      },
+    },
     config = function()
       require('neotest').setup({
         adapters = {
@@ -55,14 +92,6 @@ return {
           require("neotest-vim-test")({ ignore_filetypes = { "cs", } }),
         }
       })
-
-      map('n', '<leader>tr', '<cmd>lua require("neotest").run.run()<CR>')
-      map('n', '<leader>ts', '<cmd>lua require("neotest").run.stop()<CR>')
-      map('n', '<leader>tf', '<cmd>lua require("neotest").run.run(vim.fn.expand("%"))<CR>')
-      map('n', '<leader>ta', '<cmd>lua require("neotest").run.attach()<CR>')
-      map('n', '<leader>te', '<cmd>lua require("neotest").summary.toggle()<CR>')
-      map('n', '<leader>to', '<cmd>lua require("neotest").output.open()<CR>')
-      map('n', '<leader>tdc', '<cmd>lua require("neotest").run.run({strategy = "dap"})<CR>')
     end
   },
   {

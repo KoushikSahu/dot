@@ -3,6 +3,16 @@
 return {
     'stevearc/conform.nvim',
     event = { "BufReadPre", "BufNewFile", "BufEnter" },
+    keys = {
+        {
+            '<leader>f',
+            function()
+                require('conform').format({ lsp_format = 'fallback', async = true })
+            end,
+            mode = { 'n', 'x' },
+            desc = 'Format Buffer/Selection',
+        },
+    },
     config = function()
         -- vim.api.nvim_create_user_command('FormatDocument', function(details)
         --     local format = require("conform").format
@@ -42,10 +52,6 @@ return {
         --         require("conform").format({ lsp_fallback = true, async = false, timeout_ms = 1000 })
         --     end,
         -- })
-
-        vim.keymap.set({ 'n', 'x' }, '<leader>f',
-            '<cmd>lua require("conform").format({ lsp_format = "fallback", async = true })<cr>',
-            { noremap = true, silent = true })
 
         require("conform").setup({
             formatters_by_ft = {

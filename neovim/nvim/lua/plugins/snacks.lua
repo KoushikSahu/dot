@@ -1,3 +1,10 @@
+local function toggle_snack(id, factory)
+  return function()
+    local toggle = Snacks.toggle.get(id) or factory()
+    toggle:toggle()
+  end
+end
+
 return {
   "folke/snacks.nvim",
   priority = 1000,
@@ -109,7 +116,7 @@ return {
   }, {
     "<leader>n",
     function() Snacks.notifier.show_history() end,
-    desc = "Notification History"
+    desc = "Show Notification History"
   },
     {
       "<leader>bd",
@@ -120,40 +127,40 @@ return {
     function() Snacks.rename.rename_file() end,
     desc = "Rename File"
   },
-    { "<leader>gB", function() Snacks.gitbrowse() end, desc = "Git Browse" },
+    { "<leader>gB", function() Snacks.gitbrowse() end, desc = "Open Git Browser" },
     {
       "<leader>gb",
       function() Snacks.git.blame_line() end,
-      desc = "Git Blame Line"
+      desc = "Show Git Blame"
     }, {
     "<leader>gf",
     function() Snacks.lazygit.log_file() end,
-    desc = "Lazygit Current File History"
-  }, { "<leader>gg", function() Snacks.lazygit() end, desc = "Lazygit" },
+    desc = "Open File Git History"
+  }, { "<leader>gg", function() Snacks.lazygit() end, desc = "Open Lazygit" },
     {
       "<leader>gl",
       function() Snacks.lazygit.log() end,
-      desc = "Lazygit Log (cwd)"
+      desc = "Open Git Log"
     }, {
     "<leader>un",
     function() Snacks.notifier.hide() end,
-    desc = "Dismiss All Notifications"
+    desc = "Dismiss Notifications"
   },
     { "<c-/>", function() Snacks.terminal() end, desc = "Toggle Terminal" },
     { "<c-_>", function() Snacks.terminal() end, desc = "which_key_ignore" },
     {
       "]]",
       function() Snacks.words.jump(vim.v.count1) end,
-      desc = "Next Reference",
+      desc = "Go To Next Reference",
       mode = { "n", "t" }
     }, {
     "[[",
     function() Snacks.words.jump(-vim.v.count1) end,
-    desc = "Prev Reference",
+    desc = "Go To Previous Reference",
     mode = { "n", "t" }
   }, {
     "<leader>N",
-    desc = "Neovim News",
+    desc = "Show Neovim News",
     function()
       Snacks.win({
         file = vim.api.nvim_get_runtime_file("doc/news.txt", false)[1],
@@ -169,15 +176,44 @@ return {
       })
     end
   },
-    { "<C-p>",      function() Snacks.picker.files() end,                desc = "Find Files" },
-    { "<C-f>",      function() Snacks.picker.grep() end,                 desc = "Grep" },
-    { "<C-n>",      function() Snacks.explorer() end,                    desc = "File Explorer" },
-    { "gd",         function() Snacks.picker.lsp_definitions() end,      desc = "Goto Definition" },
-    { "gD",         function() Snacks.picker.lsp_declarations() end,     desc = "Goto Declaration" },
-    { "gr",         function() Snacks.picker.lsp_references() end,       nowait = true,                  desc = "References" },
-    { "gi",         function() Snacks.picker.lsp_implementations() end,  desc = "Goto Implementation" },
-    { "gy",         function() Snacks.picker.lsp_type_definitions() end, desc = "Goto T[y]pe Definition" },
-    { "<leader>ss", function() Snacks.picker.lsp_symbols() end,          desc = "LSP Symbols" },
+    { "<C-p>",      function() Snacks.picker.files() end,                                                                                       desc = "Find Files" },
+    { "<C-f>",      function() Snacks.picker.grep() end,                                                                                        desc = "Grep Files" },
+    { "<C-n>",      function() Snacks.explorer() end,                                                                                           desc = "Toggle File Explorer" },
+    { "gd",         function() Snacks.picker.lsp_definitions() end,                                                                             desc = "Go To Definition" },
+    { "gD",         function() Snacks.picker.lsp_declarations() end,                                                                            desc = "Go To Declaration" },
+    { "gr",         function() Snacks.picker.lsp_references() end,                                                                              nowait = true,                  desc = "Show References" },
+    { "gi",         function() Snacks.picker.lsp_implementations() end,                                                                         desc = "Go To Implementation" },
+    { "gy",         function() Snacks.picker.lsp_type_definitions() end,                                                                        desc = "Go To Type Definition" },
+    { "<leader>ss", function() Snacks.picker.lsp_symbols() end,                                                                                 desc = "Search Symbols" },
+    { "<leader>us", toggle_snack("spell", function() return Snacks.toggle.option("spell", { name = "Spelling" }) end),                          desc = "Toggle Spelling" },
+    { "<leader>uw", toggle_snack("wrap", function() return Snacks.toggle.option("wrap", { name = "Wrap" }) end),                                desc = "Toggle Wrap" },
+    { "<leader>uL", toggle_snack("relativenumber", function() return Snacks.toggle.option("relativenumber",
+        { name = "Relative Number" }) end),                                                                                                     desc = "Toggle Relative Number" },
+    { "<leader>ud", toggle_snack("diagnostics", function() return Snacks.toggle.diagnostics() end),                                             desc = "Toggle Diagnostics" },
+    { "<leader>ul", toggle_snack("line_number", function() return Snacks.toggle.line_number() end),                                             desc = "Toggle Line Numbers" },
+    {
+      "<leader>uc",
+      toggle_snack("conceallevel", function()
+        return Snacks.toggle.option("conceallevel", {
+          off = 0,
+          on = vim.o.conceallevel > 0 and vim.o.conceallevel or 2,
+        })
+      end),
+      desc = "Toggle Conceal"
+    },
+    { "<leader>uT", toggle_snack("treesitter", function() return Snacks.toggle.treesitter() end),   desc = "Toggle Treesitter Highlighting" },
+    {
+      "<leader>ub",
+      toggle_snack("background", function()
+        return Snacks.toggle.option("background", {
+          off = "light",
+          on = "dark",
+          name = "Dark Background",
+        })
+      end),
+      desc = "Toggle Background Theme"
+    },
+    { "<leader>uh", toggle_snack("inlay_hints", function() return Snacks.toggle.inlay_hints() end), desc = "Toggle Inlay Hints" },
   },
   init = function()
     vim.api.nvim_create_autocmd("User", {
@@ -187,27 +223,6 @@ return {
         _G.dd = function(...) Snacks.debug.inspect(...) end
         _G.bt = function() Snacks.debug.backtrace() end
         vim.print = _G.dd -- Override print to use snacks for `:=` command
-
-        -- Create some toggle mappings
-        Snacks.toggle.option("spell", { name = "Spelling" }):map(
-          "<leader>us")
-        Snacks.toggle.option("wrap", { name = "Wrap" }):map("<leader>uw")
-        Snacks.toggle.option("relativenumber",
-          { name = "Relative Number" }):map(
-          "<leader>uL")
-        Snacks.toggle.diagnostics():map("<leader>ud")
-        Snacks.toggle.line_number():map("<leader>ul")
-        Snacks.toggle.option("conceallevel", {
-          off = 0,
-          on = vim.o.conceallevel > 0 and vim.o.conceallevel or 2
-        }):map("<leader>uc")
-        Snacks.toggle.treesitter():map("<leader>uT")
-        Snacks.toggle.option("background", {
-          off = "light",
-          on = "dark",
-          name = "Dark Background"
-        }):map("<leader>ub")
-        Snacks.toggle.inlay_hints():map("<leader>uh")
       end
     })
   end

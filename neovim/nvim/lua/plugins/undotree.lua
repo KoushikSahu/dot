@@ -1,6 +1,7 @@
-map('n', '<leader>u', ':UndotreeToggle <CR>', { noremap = true, silent = true })
-
 return {
   'mbbill/undotree',
   cmd = { 'UndotreeToggle' },
+  keys = {
+    { '<leader>u', '<cmd>UndotreeToggle<CR>', desc = 'Toggle Undotree' },
+  },
 }
