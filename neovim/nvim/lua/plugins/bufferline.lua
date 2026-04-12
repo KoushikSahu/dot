@@ -11,8 +11,8 @@ return {
         color_icons = true,
         get_element_icon = function(element)
           local icon, hl =
-          require('nvim-web-devicons').get_icon_by_filetype(
-            element.filetype, { default = true })
+              require('nvim-web-devicons').get_icon_by_filetype(
+                element.filetype, { default = true })
           return icon, hl
         end,
         separator_style = "slope",

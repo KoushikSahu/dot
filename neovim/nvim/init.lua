@@ -9,4 +9,3 @@ require('lazy').setup('plugins')
 require('settings.colorscheme')
 require('settings.lsp')
 require('settings.suppress')
-

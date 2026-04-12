@@ -28,7 +28,8 @@ set.background = "dark"
 -- indentations
 set.tabstop = 4
 set.shiftwidth = 4
-set.softtabstop = 4
+set.softtabstop = -1
+set.autoindent = true
 
 -- highlights
 set.hlsearch = false
@@ -36,8 +37,8 @@ set.incsearch = true
 
 -- debugging on windows does not working without this
 if vim.fn.has("win32") == 1 or vim.fn.has("win64") == 1 then
-    vim.opt.shellslash = false             -- Enable shellslash for Windows compatibility
-    vim.defer_fn(function()
-        vim.opt.shellslash = false
-    end, 5000)
+	vim.opt.shellslash = false -- Enable shellslash for Windows compatibility
+	vim.defer_fn(function()
+		vim.opt.shellslash = false
+	end, 5000)
 end
