@@ -49,6 +49,12 @@ local function format_names(icon, names, max_items)
 	return label
 end
 
+local function has_names(getter)
+	return function()
+		return #getter() > 0
+	end
+end
+
 local function get_lsp_names()
 	local names = {}
 	for _, client in ipairs(vim.lsp.get_clients({ bufnr = 0 })) do
@@ -112,6 +118,7 @@ return {
 	config = function()
 		local lsp_status = {
 			lsp_component,
+			cond = has_names(get_lsp_names),
 			color = {
 				fg = "#61AFEF",
 				gui = "bold"
@@ -120,6 +127,7 @@ return {
 
 		local formatter_status = {
 			formatter_component,
+			cond = has_names(get_formatter_names),
 			color = {
 				fg = "#98C379",
 			}
@@ -127,6 +135,7 @@ return {
 
 		local linter_status = {
 			linter_component,
+			cond = has_names(get_linter_names),
 			color = {
 				fg = "#E5C07B",
 			}
