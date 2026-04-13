@@ -28,6 +28,18 @@ return {
 	},
 	{
 		'nmac427/guess-indent.nvim',
-		config = function() require('guess-indent').setup {} end,
+		config = function()
+			local guess_indent = require('guess-indent')
+			guess_indent.setup {}
+
+			local group = vim.api.nvim_create_augroup("GuessIndentOnSave", { clear = true })
+			vim.api.nvim_create_autocmd("BufWritePost", {
+				group = group,
+				pattern = "*",
+				callback = function(args)
+					guess_indent.set_from_buffer(args.buf, true, true)
+				end,
+			})
+		end,
 	}
 }

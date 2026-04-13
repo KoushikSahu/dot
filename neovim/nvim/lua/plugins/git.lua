@@ -44,12 +44,14 @@ end
 return {
     {
         'tpope/vim-fugitive',
-        keys = {
-            { 'dp', function() diffput_and_refresh(false) end, desc = 'Put Diff And Save' },
-            { 'do', function() diffget_and_refresh(false) end, desc = 'Get Diff And Save' },
-            { 'dp', function() diffput_and_refresh(true) end,  mode = 'v',                desc = 'Put Diff Range And Save' },
-            { 'do', function() diffget_and_refresh(true) end,  mode = 'v',                desc = 'Get Diff Range And Save' },
-        },
+        config = function()
+            local map = require('utils').map
+
+            map('n', 'dp', function() diffput_and_refresh(false) end, { desc = 'Put Diff And Save' })
+            map('n', 'do', function() diffget_and_refresh(false) end, { desc = 'Get Diff And Save' })
+            map('v', 'dp', function() diffput_and_refresh(true) end, { desc = 'Put Diff Range And Save' })
+            map('v', 'do', function() diffget_and_refresh(true) end, { desc = 'Get Diff Range And Save' })
+        end,
     },
     {
         'akinsho/git-conflict.nvim',
