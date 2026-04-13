@@ -31,22 +31,12 @@ local function collect_unique(items)
 	return names
 end
 
-local function format_names(icon, names, max_items)
+local function format_names(icon, names)
 	if #names == 0 then
 		return nil
 	end
 
-	local visible = {}
-	for index = 1, math.min(#names, max_items) do
-		visible[#visible + 1] = names[index]
-	end
-
-	local label = string.format("%s  %s", icon, table.concat(visible, ", "))
-	if #names > max_items then
-		label = string.format("%s +%d", label, #names - max_items)
-	end
-
-	return label
+	return string.format("%s  %s", icon, table.concat(names, ", "))
 end
 
 local function has_names(getter)
@@ -100,15 +90,15 @@ local function get_formatter_names()
 end
 
 local function lsp_component()
-	return format_names("", get_lsp_names(), 2)
+	return format_names("", get_lsp_names())
 end
 
 local function formatter_component()
-	return format_names("", get_formatter_names(), 1)
+	return format_names("", get_formatter_names())
 end
 
 local function linter_component()
-	return format_names("", get_linter_names(), 1)
+	return format_names("", get_linter_names())
 end
 
 return {
