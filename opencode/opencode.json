@@ -1,9 +1,27 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "theme": "gruvbox",
+  "provider": {
+    "lmstudio": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "LM Studio (local)",
+      "options": {
+        "baseURL": "http://127.0.0.1:1234/v1"
+      },
+      "models": {
+        "qwen/qwen3.5-9b": {
+          "name": "Qwen3.5 9B",
+          "tool_call": true,
+          "reasoning": true,
+          "limit": {
+            "context": 128000,
+            "output": 128000
+          }
+        }
+      }
+    }
+  },
   "default_agent": "plan",
-  "small_model": "github-copilot/gpt-5-mini",
-  "tools": {},
+  "small_model": "gpt-5-mini",
   "mcp": {
     "time": {
       "type": "local",
@@ -16,12 +34,10 @@
   },
   "agent": {
     "plan": {
-      "model": "github-copilot/gpt-5.4",
-      "variant": "high"
+      "model": "github-copilot/claude-opus-4.7"
     },
     "build": {
-      "model": "github-copilot/gpt-5.4",
-      "variant": "high"
+      "model": "github-copilot/gpt-5.5"
     }
   }
 }
