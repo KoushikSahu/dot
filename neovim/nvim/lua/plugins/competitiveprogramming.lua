@@ -39,7 +39,7 @@ return {
                 kotlin = { exec = 'java', args = { '-jar', 'a.jar' } }
             },
             -- runner_ui = {
-            -- interface = 'split',
+            --     interface = 'split',
             -- },
             testcases_directory = "./.nvim",
             testcases_use_single_file = true
