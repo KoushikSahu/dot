@@ -10,9 +10,4 @@ return {
       { "<leader>td", "<cmd>TodoQuickFix<CR>",                                                               desc = "Open Todo Quickfix" },
     },
   },
-  {
-    'numToStr/Comment.nvim',
-    event = { "BufReadPre", "BufNewFile", "BufEnter" },
-    config = function() require('Comment').setup() end
-  }
 }
