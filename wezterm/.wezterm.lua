@@ -1,8 +1,10 @@
 local wezterm = require 'wezterm'
 
 return {
-  front_end = "OpenGL",
   automatically_reload_config = true,
+  front_end = "OpenGL",
+  max_fps = 144,
+  term = "wezterm",
   color_scheme = "GruvboxDarkHard",
   colors = {
     tab_bar = {
@@ -73,5 +75,4 @@ return {
     { key = "d",  mods = "LEADER",       action = wezterm.action { CloseCurrentPane = { confirm = true } } },
     { key = "x",  mods = "LEADER",       action = wezterm.action { CloseCurrentPane = { confirm = true } } },
   },
-  max_fps = 144,
 }
