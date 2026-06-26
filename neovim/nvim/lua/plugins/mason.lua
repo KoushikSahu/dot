@@ -48,7 +48,6 @@ return {
                     "netcoredbg",
                     "prettier",
                     "rust-analyzer",
-                    "rustfmt",
                     "ty",
                     "vtsls",
                 },
