@@ -34,7 +34,7 @@ return {
   window_frame = {
     inactive_titlebar_bg = "rgba(0,0,0,0)",
     active_titlebar_bg = "rgba(0,0,0,0)",
-    font_size = 10.0,
+    font_size = 11.0,
   },
   window_close_confirmation = "NeverPrompt",
   font = wezterm.font("JetBrainsMono Nerd Font"),
@@ -46,7 +46,7 @@ return {
   switch_to_last_active_tab_when_closing_tab = true,
   use_fancy_tab_bar = true,
   keys = {
-    { key = "a",  mods = "LEADER|CTRL",  action = wezterm.action.ActivateLastTab },
+    { key = "a",  mods = "LEADER",       action = wezterm.action.ActivateLastTab },
     { key = "-",  mods = "LEADER",       action = wezterm.action { SplitVertical = { domain = "CurrentPaneDomain" } } },
     { key = "\\", mods = "LEADER",       action = wezterm.action { SplitHorizontal = { domain = "CurrentPaneDomain" } } },
     { key = "s",  mods = "LEADER",       action = wezterm.action { SplitVertical = { domain = "CurrentPaneDomain" } } },
