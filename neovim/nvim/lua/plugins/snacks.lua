@@ -181,8 +181,8 @@ return {
         })
       end
     },
-      { "<C-p>",      function() Snacks.picker.files() end,                                                              desc = "Find Files" },
-      { "<C-f>",      function() Snacks.picker.grep() end,                                                               desc = "Grep Files" },
+      -- { "<C-p>",      function() Snacks.picker.files() end,                                                              desc = "Find Files" },
+      -- { "<C-f>",      function() Snacks.picker.grep() end,                                                               desc = "Grep Files" },
       { "<C-n>",      function() Snacks.explorer() end,                                                                  desc = "Toggle File Explorer" },
       { "gd",         function() Snacks.picker.lsp_definitions() end,                                                    desc = "Go To Definition" },
       { "gD",         function() Snacks.picker.lsp_declarations() end,                                                   desc = "Go To Declaration" },
@@ -238,4 +238,49 @@ return {
       })
     end
   },
+  {
+    "so1ve/snacks-fff.nvim",
+    dependencies = {
+      "folke/snacks.nvim",
+      {
+        "dmtrKovalenko/fff.nvim",
+        build = function()
+          require("fff.download").download_or_build_binary()
+        end,
+      },
+    },
+    keys = {
+      {
+        "<C-p>",
+        function()
+          require("snacks-fff").find_files()
+        end,
+        desc = "FFF find files",
+      },
+      {
+        "fg",
+        function()
+          require("snacks-fff").live_grep()
+        end,
+        desc = "FFF live grep",
+      },
+      {
+        mode = "v",
+        "fw",
+        function()
+          require("snacks-fff").grep_word()
+        end,
+        desc = "FFF grep word",
+      },
+      {
+        "<C-f>",
+        function()
+          require("snacks-fff").live_grep({
+            grep_mode = { "fuzzy", "plain", "regex" },
+          })
+        end,
+        desc = "FFF live grep (fuzzy)",
+      },
+    },
+  }
 }
