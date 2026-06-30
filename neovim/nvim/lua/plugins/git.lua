@@ -1,62 +1,23 @@
-local function save_all_visible()
-    local windows = vim.api.nvim_list_wins()
-    local saved_buffers = {}
-
-    for _, win in ipairs(windows) do
-        local buf = vim.api.nvim_win_get_buf(win)
-        if not saved_buffers[buf] and vim.api.nvim_buf_get_option(buf, 'modified') then
-            vim.api.nvim_buf_call(buf, function()
-                vim.cmd('silent! write')
-            end)
-            saved_buffers[buf] = true
-        end
-    end
-end
-
-local function reload_fugitive_status()
-    if vim.fn.exists('*fugitive#ReloadStatus') == 1 then
-        vim.cmd('call fugitive#ReloadStatus()')
-    end
-end
-
-local function diffput_and_refresh(range)
-    if range then
-        vim.cmd("'<,'>diffput")
-    else
-        vim.cmd('diffput')
-    end
-
-    save_all_visible()
-    reload_fugitive_status()
-end
-
-local function diffget_and_refresh(range)
-    if range then
-        vim.cmd("'<,'>diffget")
-    else
-        vim.cmd('diffget')
-    end
-
-    save_all_visible()
-    reload_fugitive_status()
-end
-
 return {
     {
-        'tpope/vim-fugitive',
-        config = function()
-            local map = require('utils').map
-
-            map('n', 'dp', function() diffput_and_refresh(false) end, { desc = 'Put Diff And Save' })
-            map('n', 'do', function() diffget_and_refresh(false) end, { desc = 'Get Diff And Save' })
-            map('v', 'dp', function() diffput_and_refresh(true) end, { desc = 'Put Diff Range And Save' })
-            map('v', 'do', function() diffget_and_refresh(true) end, { desc = 'Get Diff Range And Save' })
-        end,
+        "NeogitOrg/neogit",
+        lazy = true,
+        dependencies = {
+            "esmuellert/codediff.nvim",
+            "folke/snacks.nvim"
+        },
+        cmd = "Neogit",
+        keys = {
+            { "<leader>gg", "<cmd>Neogit<cr>",     desc = "Show Neogit UI" },
+            { "<leader>gl", "<cmd>Neogit log<cr>", desc = "Show Neogit Log" },
+        }
     },
     {
         'akinsho/git-conflict.nvim',
-        event = { "BufReadPre", "BufNewFile", "BufEnter" },
-        cond = function() return vim.fn.finddir(".git", ".;") ~= "" end
+        version = "*",
+        config = function()
+            require('git-conflict').setup()
+        end
     },
     {
         'lewis6991/gitsigns.nvim',
@@ -150,11 +111,6 @@ return {
                         vim.tbl_extend('force', opts, { desc = 'Select Hunk' }))
                 end,
             }
-
-            vim.api.nvim_create_autocmd('User', {
-                pattern = 'GitSignsChanged',
-                callback = reload_fugitive_status,
-            })
         end,
         event = { "BufReadPre", "BufNewFile", "BufEnter" }
     }

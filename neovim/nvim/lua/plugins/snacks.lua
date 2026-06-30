@@ -139,18 +139,20 @@ return {
       "<leader>gf",
       function() Snacks.lazygit.log_file() end,
       desc = "Open File Git History"
-    }, { "<leader>gg", function() Snacks.lazygit() end, desc = "Open Lazygit" },
-      {
-        "<leader>gl",
-        function() Snacks.lazygit.log() end,
-        desc = "Open Git Log"
-      }, {
-      "<leader>un",
-      function() Snacks.notifier.hide() end,
-      desc = "Dismiss Notifications"
     },
-      { "<c-/>", function() Snacks.terminal() end, desc = "Toggle Terminal" },
-      { "<c-_>", function() Snacks.terminal() end, desc = "which_key_ignore" },
+      -- { "<leader>gg", function() Snacks.lazygit() end,   desc = "Open Lazygit" },
+      -- {
+      --   "<leader>gl",
+      --   function() Snacks.lazygit.log() end,
+      --   desc = "Open Git Log"
+      -- },
+      {
+        "<leader>un",
+        function() Snacks.notifier.hide() end,
+        desc = "Dismiss Notifications"
+      },
+      { "<c-/>",      function() Snacks.terminal() end,  desc = "Toggle Terminal" },
+      { "<c-_>",      function() Snacks.terminal() end,  desc = "which_key_ignore" },
       {
         "]]",
         function() Snacks.words.jump(vim.v.count1) end,
