@@ -7,7 +7,7 @@ end
 
 return {
   {
-    'LunarVim/bigfile.nvim',
+    'pteroctopus/faster.nvim',
   },
   {
     "folke/snacks.nvim",
