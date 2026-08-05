@@ -3,6 +3,7 @@ return {
 		'nvim-treesitter/nvim-treesitter',
 		build = ':TSUpdate',
 		branch = 'main',
+		lazy = false,
 		init = function()
 			vim.api.nvim_create_autocmd('FileType', {
 				callback = function()
@@ -12,7 +13,7 @@ return {
 					-- vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
 				end,
 			})
-		end
+		end,
 	},
 	{
 		'nvim-treesitter/nvim-treesitter-context',

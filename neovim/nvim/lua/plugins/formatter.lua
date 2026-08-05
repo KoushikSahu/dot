@@ -2,7 +2,8 @@
 -- vim.api.nvim_command("autocmd BufWritePre * FormatDocument")
 return {
     'stevearc/conform.nvim',
-    event = { "BufReadPre", "BufNewFile", "BufEnter" },
+    event = { "BufWritePre" },
+    cmd = { "ConformInfo" },
     keys = {
         {
             '<leader>f',

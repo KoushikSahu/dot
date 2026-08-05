@@ -36,10 +36,7 @@ set.autoindent = true
 set.hlsearch = false
 set.incsearch = true
 
--- debugging on windows does not working without this
+-- shellslash is only modifiable on Windows.
 if utils.is_windows then
-	vim.opt.shellslash = false -- Enable shellslash for Windows compatibility
-	vim.defer_fn(function()
-		vim.opt.shellslash = false
-	end, 5000)
+	vim.opt.shellslash = false
 end

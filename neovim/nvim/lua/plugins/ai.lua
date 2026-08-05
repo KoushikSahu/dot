@@ -44,7 +44,8 @@ return {
     },
     {
         "folke/sidekick.nvim",
-        lazy = false,
+        event = "InsertEnter",
+        cmd = "Sidekick",
         opts = {
             nes = { enabled = true },
         },
