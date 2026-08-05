@@ -2,6 +2,16 @@ local ignored_tools = {
 	copilot = true,
 }
 
+local provider_cache = {}
+
+local function clear_provider_cache(bufnr)
+	if bufnr then
+		provider_cache[bufnr] = nil
+	else
+		provider_cache = {}
+	end
+end
+
 local function sanitize_name(name)
 	if type(name) ~= "string" or name == "" then
 		return nil
@@ -45,48 +55,69 @@ local function has_names(getter)
 	end
 end
 
-local function get_lsp_names()
-	local names = {}
-	for _, client in ipairs(vim.lsp.get_clients({ bufnr = 0 })) do
-		names[#names + 1] = client.name
+local function cached_names(provider, discover)
+	local bufnr = vim.api.nvim_get_current_buf()
+	local cache = provider_cache[bufnr]
+	if not cache then
+		cache = {}
+		provider_cache[bufnr] = cache
 	end
-	return collect_unique(names)
+
+	if not cache[provider] then
+		cache[provider] = discover(bufnr)
+	end
+
+	return cache[provider]
+end
+
+local function get_lsp_names()
+	return cached_names("lsp", function(bufnr)
+		local names = {}
+		for _, client in ipairs(vim.lsp.get_clients({ bufnr = bufnr })) do
+			names[#names + 1] = client.name
+		end
+		return collect_unique(names)
+	end)
 end
 
 local function get_linter_names()
-	local ok, lint = pcall(require, "lint")
-	if not ok then
-		return {}
-	end
+	return cached_names("linter", function(bufnr)
+		local ok, lint = pcall(require, "lint")
+		if not ok then
+			return {}
+		end
 
-	local linters = lint.linters_by_ft[vim.bo.filetype]
-	if not linters then
-		return {}
-	end
+		local linters = lint.linters_by_ft[vim.bo[bufnr].filetype]
+		if not linters then
+			return {}
+		end
 
-	if type(linters) == "string" then
-		return collect_unique({ linters })
-	end
+		if type(linters) == "string" then
+			return collect_unique({ linters })
+		end
 
-	return collect_unique(linters)
+		return collect_unique(linters)
+	end)
 end
 
 local function get_formatter_names()
-	local ok, conform = pcall(require, "conform")
-	if not ok then
-		return {}
-	end
-
-	local names = {}
-	for _, formatter in ipairs(conform.list_formatters_for_buffer(0)) do
-		if type(formatter) == "table" then
-			names[#names + 1] = formatter.name
-		else
-			names[#names + 1] = formatter
+	return cached_names("formatter", function(bufnr)
+		local ok, conform = pcall(require, "conform")
+		if not ok then
+			return {}
 		end
-	end
 
-	return collect_unique(names)
+		local names = {}
+		for _, formatter in ipairs(conform.list_formatters_for_buffer(bufnr)) do
+			if type(formatter) == "table" then
+				names[#names + 1] = formatter.name
+			else
+				names[#names + 1] = formatter
+			end
+		end
+
+		return collect_unique(names)
+	end)
 end
 
 local function lsp_component()
@@ -106,6 +137,33 @@ return {
 	dependencies = { 'nvim-tree/nvim-web-devicons' },
 	event = { "VimEnter", "BufReadPost", "BufNewFile" },
 	config = function()
+		local group = vim.api.nvim_create_augroup("StatuslineProviderCache", { clear = true })
+		vim.api.nvim_create_autocmd({ "BufEnter", "FileType", "BufWritePost", "LspAttach", "LspDetach" }, {
+			group = group,
+			callback = function(args)
+				clear_provider_cache(args.buf)
+			end,
+		})
+		vim.api.nvim_create_autocmd("DirChanged", {
+			group = group,
+			callback = function()
+				clear_provider_cache()
+			end,
+		})
+		vim.api.nvim_create_autocmd("User", {
+			group = group,
+			pattern = "MasonToolsUpdateCompleted",
+			callback = function()
+				clear_provider_cache()
+			end,
+		})
+		vim.api.nvim_create_autocmd("BufWipeout", {
+			group = group,
+			callback = function(args)
+				clear_provider_cache(args.buf)
+			end,
+		})
+
 		local lsp_status = {
 			lsp_component,
 			cond = has_names(get_lsp_names),

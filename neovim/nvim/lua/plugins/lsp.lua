@@ -5,6 +5,7 @@ return {
         dependencies = {
             'saghen/blink.cmp',
             'mason-org/mason-lspconfig.nvim',
+            'mason-org/mason.nvim',
         },
         config = function()
             local map = require('utils').map

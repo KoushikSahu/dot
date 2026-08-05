@@ -1,6 +1,7 @@
 return {
     {
         'mason-org/mason.nvim',
+        event = "VeryLazy",
         config = function()
             require("mason").setup({
                 registries = {
@@ -13,6 +14,7 @@ return {
     },
     {
         'WhoIsSethDaniel/mason-tool-installer.nvim',
+        event = "VeryLazy",
         dependencies = {
             'mason-org/mason.nvim'
         },
