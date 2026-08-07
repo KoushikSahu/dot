@@ -40,3 +40,4 @@ set.incsearch = true
 if utils.is_windows then
 	vim.opt.shellslash = false
 end
+

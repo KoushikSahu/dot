@@ -17,3 +17,17 @@ map("v", "<A-k>", ":m '<-2<CR>gv=gv", { desc = "Move Selection Up" })
 
 -- using ctrl backspace to delete previous words
 map("i", "<C-H>", "<C-W>", { desc = "Delete Previous Word" })
+
+-- native diagnostics list toggle (replaces folke/trouble.nvim)
+local diagnostics_open = false
+map("n", "<leader>tt", function()
+	diagnostics_open = not diagnostics_open
+	if diagnostics_open then
+		vim.diagnostic.setloclist({ open = true })
+	else
+		vim.cmd.lclose()
+	end
+end, { desc = "Toggle Diagnostics List" })
+
+-- native document symbols (replaces hedyhli/outline.nvim)
+map("n", "<leader>o", "gO", { desc = "Show Document Symbols" })

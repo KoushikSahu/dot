@@ -40,8 +40,6 @@ return {
                 end
             })
 
-            vim.diagnostic.config({ virtual_text = true, underline = true })
-
             require('mason-lspconfig').setup({
                 -- Replace the language servers listed here
                 -- with the ones you want to install
@@ -75,6 +73,10 @@ return {
                     end
                 }
             })
+
+            vim.diagnostic.config({ virtual_text = true, underline = true })
+            -- Native code lenses (0.12+), replaces lsp-lens.nvim
+            vim.lsp.codelens.enable(true)
         end
     },
     {
@@ -91,8 +93,6 @@ return {
                     require('luasnip.loaders.from_snipmate').lazy_load()
                 end
             },
-            -- TODO: use suggestion from https://github.com/Saghen/blink.cmp/issues/836 after it is closed
-            'saghen/blink.compat'
         },
         version = '*',
         opts = {
@@ -116,32 +116,8 @@ return {
                     'snippets',
                     'lsp',
                     'path',
-                    'buffer',
-                    'avante_commands',
-                    'avante_mentions',
-                    'avante_files'
+                    'buffer'
                 },
-
-                providers = {
-                    avante_commands = {
-                        name = "avante_commands",
-                        module = "blink.compat.source",
-                        score_offset = 90,
-                        opts = {},
-                    },
-                    avante_files = {
-                        name = "avante_files",
-                        module = "blink.compat.source",
-                        score_offset = 100,
-                        opts = {},
-                    },
-                    avante_mentions = {
-                        name = "avante_mentions",
-                        module = "blink.compat.source",
-                        score_offset = 1000,
-                        opts = {},
-                    }
-                }
             },
 
             completion = {
@@ -173,12 +149,6 @@ return {
 
         },
         opts_extend = { "sources.default" }
-    },
-    {
-        'VidocqH/lsp-lens.nvim',
-        event = { "BufReadPre", "BufNewFile", "BufEnter" },
-        config = function() require 'lsp-lens'.setup({}) end,
-        enabled = false
     },
     {
         'seblyng/roslyn.nvim',

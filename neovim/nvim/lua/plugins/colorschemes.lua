@@ -1,5 +1,4 @@
 return {
-  { 'rafi/awesome-vim-colorschemes', event = 'VimEnter' },
   {
     "catppuccin/nvim",
     name = "catppuccin",
@@ -79,7 +78,6 @@ return {
         cmp = true,
         gitsigns = true,
         hop = true,
-        illuminate = { enabled = true },
         native_lsp = { enabled = true, inlay_hints = { background = true } },
         neogit = true,
         neotree = true,

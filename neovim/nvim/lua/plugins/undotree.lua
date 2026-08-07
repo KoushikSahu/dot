@@ -1,7 +1,6 @@
-return {
-  'mbbill/undotree',
-  cmd = { 'UndotreeToggle' },
-  keys = {
-    { '<leader>u', '<cmd>UndotreeToggle<CR>', desc = 'Toggle Undotree' },
-  },
-}
+vim.cmd.packadd("nvim.undotree")
+
+local map = require("utils").map
+map("n", "<leader>u", "<cmd>Undotree<CR>", { desc = "Toggle Undotree" })
+
+return {}
