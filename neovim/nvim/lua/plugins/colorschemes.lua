@@ -5,8 +5,8 @@ return {
     name = "catppuccin",
     event = "VimEnter",
     priority = 1000,
-    background = { dark = "mocha" },
     opts = {
+      auto_integrations = true,
       background = { light = "latte", dark = "mocha" },
       color_overrides = {
         latte = {

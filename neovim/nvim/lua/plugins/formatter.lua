@@ -67,11 +67,11 @@ return {
                 json = { "prettier" },
                 go = { "gofumpt" },
                 kotlin = { "ktfmt" }
-            },
-            format_on_save = {
-                timeout_ms = 1000,
-                lsp_format = "fallback",
             }
+            -- format_on_save = {
+            --     timeout_ms = 1000,
+            --     lsp_format = "fallback",
+            -- }
         })
     end,
 }
