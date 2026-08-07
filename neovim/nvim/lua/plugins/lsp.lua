@@ -40,7 +40,7 @@ return {
                 end
             })
 
-            vim.diagnostic.config({ virtual_text = false, underline = true })
+            vim.diagnostic.config({ virtual_text = true, underline = true })
 
             require('mason-lspconfig').setup({
                 -- Replace the language servers listed here
