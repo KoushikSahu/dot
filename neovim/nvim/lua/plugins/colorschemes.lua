@@ -8,6 +8,10 @@ return {
       background = "hard",
       float_style = "dim",
       inlay_hints_background = "dimmed",
+      on_highlights = function(groups, palette)
+        groups.LspCodeLens = { link = "Grey" }
+        groups.LspCodeLensSeparator = { link = "Grey" }
+      end,
     })
   end,
 }
