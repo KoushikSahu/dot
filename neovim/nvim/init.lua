@@ -1,11 +1,16 @@
--- required to be loaded before plugin configurations
-require('settings')
-require('settings.plugins')
-require('settings.keybindings')
+require("config")
 
-require('lazy').setup('plugins')
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.uv.fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable",
+    lazypath,
+  })
+end
+vim.opt.rtp:prepend(lazypath)
 
--- required to be loaded after plugin configurations
-require('settings.colorscheme')
-require('settings.lsp')
-require('settings.suppress')
+require("lazy").setup("plugins")

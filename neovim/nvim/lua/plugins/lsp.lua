@@ -1,194 +1,93 @@
 return {
-    {
-        'neovim/nvim-lspconfig',
-        event = { "BufReadPre", "BufNewFile", "BufEnter" },
-        dependencies = {
-            'saghen/blink.cmp',
-            'mason-org/mason-lspconfig.nvim',
-            'mason-org/mason.nvim',
-        },
-        config = function()
-            local map = require('utils').map
-            vim.opt.signcolumn = 'yes'
-
-            local lspconfig_defaults = require('lspconfig').util.default_config
-            local capabilities = vim.lsp.protocol.make_client_capabilities()
-            capabilities = require('blink.cmp').get_lsp_capabilities(
-                capabilities)
-            lspconfig_defaults.capabilities = capabilities
-
-            vim.api.nvim_create_autocmd('LspAttach', {
-                desc = 'Set Up LSP Keymaps',
-                callback = function(event)
-                    local bufnr = event.buf
-                    local client = vim.lsp.get_client_by_id(event.data.client_id)
-
-                    if client.server_capabilities.inlayHintProvider then
-                        vim.lsp.inlay_hint.enable(true, { buffer = bufnr })
-                    end
-
-                    local opts = { buffer = bufnr }
-
-                    map('n', 'K', function() vim.lsp.buf.hover() end,
-                        vim.tbl_extend('force', opts, { desc = 'Show Hover' }))
-                    map('n', 'gs', function() vim.lsp.buf.signature_help() end,
-                        vim.tbl_extend('force', opts, { desc = 'Show Signature Help' }))
-                    map('n', '<leader>rn', function() vim.lsp.buf.rename() end,
-                        vim.tbl_extend('force', opts, { desc = 'Rename Symbol' }))
-                    map('n', '<leader>ca', function() vim.lsp.buf.code_action() end,
-                        vim.tbl_extend('force', opts, { desc = 'Code Action' }))
-                end
-            })
-
-            require('mason-lspconfig').setup({
-                -- Replace the language servers listed here
-                -- with the ones you want to install
-                -- ensure_installed = { 'lua_ls', 'rust_analyzer' },
-                automatic_enable = {
-                    exclude = {
-                        'jdtls',
-                    },
-                },
-                handlers = {
-                    function(server_name)
-                        require('lspconfig')[server_name].setup({})
-                    end,
-                    clangd = function()
-                        require("lspconfig").clangd.setup {
-                            capabilities = capabilities,
-                            cmd = { "clangd", "--offset-encoding=utf-16" }
-                        }
-                    end,
-                    basedpyright = function()
-                        require("lspconfig").basedpyright.setup({
-                            settings = {
-                                basedpyright = {
-                                    analysis = {
-                                        autoImportCompletions = true,
-                                        diagnosticMode = "workspace"
-                                    }
-                                }
-                            }
-                        })
-                    end
-                }
-            })
-
-            vim.diagnostic.config({ virtual_text = true, underline = true })
-            -- Native code lenses (0.12+), replaces lsp-lens.nvim
-            vim.lsp.codelens.enable(true)
-        end
+  {
+    'neovim/nvim-lspconfig',
+    event = { 'BufReadPre', 'BufNewFile' },
+    dependencies = {
+      'saghen/blink.cmp',
+      { 'mason-org/mason-lspconfig.nvim', dependencies = { 'mason-org/mason.nvim' } },
+      'WhoIsSethDaniel/mason-tool-installer.nvim',
     },
-    {
-        'saghen/blink.cmp',
-        event = "LspAttach",
-        dependencies = { 'rafamadriz/friendly-snippets',
-            {
-                "L3MON4D3/LuaSnip",
-                -- follow latest release.
-                version = "v2.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
-                -- install jsregexp (optional!).
-                build = "make install_jsregexp",
-                config = function()
-                    require('luasnip.loaders.from_snipmate').lazy_load()
-                end
-            },
+    config = function()
+      local map = require('config.keymaps').map
+      vim.opt.signcolumn = 'yes'
+
+      vim.lsp.config('*', {
+        capabilities = require('blink.cmp').get_lsp_capabilities(vim.lsp.protocol.make_client_capabilities()),
+      })
+
+      vim.api.nvim_create_autocmd('LspAttach', {
+        callback = function(event)
+          local bufnr = event.buf
+          local client = vim.lsp.get_client_by_id(event.data.client_id)
+
+          if client.server_capabilities.inlayHintProvider then
+            vim.lsp.inlay_hint.enable(true, { buffer = bufnr })
+          end
+
+          map('n', 'K', function() vim.lsp.buf.hover() end,
+            { buffer = bufnr, desc = 'Show Hover' })
+          map('n', 'gs', function() vim.lsp.buf.signature_help() end,
+            { buffer = bufnr, desc = 'Show Signature Help' })
+          map('n', '<leader>rn', function() vim.lsp.buf.rename() end,
+            { buffer = bufnr, desc = 'Rename Symbol' })
+          map('n', '<leader>ca', function() vim.lsp.buf.code_action() end,
+            { buffer = bufnr, desc = 'Code Action' })
+        end,
+      })
+
+      require('mason').setup({
+        registries = {
+          'github:mason-org/mason-registry',
+          'github:Crashdummyy/mason-registry',
+          'github:nvim-java/mason-registry',
         },
-        version = '*',
-        opts = {
-            enabled = function()
-                return vim.bo.buftype ~= "prompt" and vim.b.completion ~= false and vim.bo.filetype ~= "DressingInput"
-            end,
+      })
 
-            keymap = { preset = 'default', ['<CR>'] = { 'accept', 'fallback' } },
-
-            appearance = {
-                use_nvim_cmp_as_default = true,
-                nerd_font_variant = 'normal'
-            },
-
-            snippets = {
-                preset = 'luasnip'
-            },
-
-            sources = {
-                default = {
-                    'snippets',
-                    'lsp',
-                    'path',
-                    'buffer'
-                },
-            },
-
-            completion = {
-                keyword = { range = 'full' },
-
-                accept = { auto_brackets = { enabled = false }, },
-
-                list = { selection = { preselect = false, auto_insert = true } },
-
-                documentation = { auto_show = true, auto_show_delay_ms = 100 },
-
-                ghost_text = { enabled = true },
-
-                menu = {
-                    draw = {
-                        columns = {
-                            { "label",     "label_description", gap = 1 },
-                            { "kind_icon", "kind" }
-                        }
-                    }
-                },
-
-                trigger = {
-                    show_on_blocked_trigger_characters = {}
-                }
-            },
-
-            signature = { enabled = true },
-
+      require('mason-tool-installer').setup({
+        ensure_installed = {
+          'autopep8', 'clang-format', 'clangd', 'codelldb', 'cpplint', 'csharpier', 'debugpy',
+          'delve', 'eslint_d', 'gofumpt', 'golangci-lint', 'gopls', 'isort',
+          'java-debug-adapter', 'java-test', 'jdtls', 'jsonlint', 'kotlin-debug-adapter',
+          'kotlin-lsp', 'ktfmt', 'ktlint', 'lua-language-server', 'luacheck', 'luaformatter',
+          'marksman', 'mypy', 'netcoredbg', 'prettier', 'rust-analyzer', 'tsc', 'ty',
         },
-        opts_extend = { "sources.default" }
-    },
-    {
-        'seblyng/roslyn.nvim',
-        ft = { 'cs' },
-        config = function()
-            require("roslyn").setup({
-                ft = "cs",
-                config = {
-                    settings = {
-                        ["csharp|inlay_hints"] = {
-                            csharp_enable_inlay_hints_for_implicit_object_creation = true,
-                            csharp_enable_inlay_hints_for_implicit_variable_types = true,
-                            csharp_enable_inlay_hints_for_lambda_parameter_types = true,
-                            csharp_enable_inlay_hints_for_types = true,
-                            dotnet_enable_inlay_hints_for_indexer_parameters = true,
-                            dotnet_enable_inlay_hints_for_literal_parameters = true,
-                            dotnet_enable_inlay_hints_for_object_creation_parameters = true,
-                            dotnet_enable_inlay_hints_for_other_parameters = true,
-                            dotnet_enable_inlay_hints_for_parameters = true,
-                            dotnet_suppress_inlay_hints_for_parameters_that_differ_only_by_suffix = true,
-                            dotnet_suppress_inlay_hints_for_parameters_that_match_argument_name = true,
-                            dotnet_suppress_inlay_hints_for_parameters_that_match_method_intent = false
-                        },
-                        ["csharp|code_lens"] = {
-                            dotnet_enable_tests_code_lens = true
-                        },
-                        ["csharp|completion"] = {
-                            dotnet_show_name_completion_suggestions = true,
-                            dotnet_provide_regex_completions = true
-                        }
-                    }
-                }
-            })
-        end
-    },
-    {
-        'mfussenegger/nvim-jdtls',
-        dependencies = {
-            'mfussenegger/nvim-dap'
+        auto_update = true,
+        run_on_start = true,
+        debounce_hours = 24,
+      })
+
+      require('mason-lspconfig').setup({
+        automatic_enable = {
+          exclude = {
+            'jdtls',
+          },
         },
-        ft = { 'java' }
+      })
+
+      vim.lsp.config('clangd', {
+        cmd = { 'clangd', '--offset-encoding=utf-16' },
+      })
+      vim.lsp.codelens.enable(true)
+    end,
+  },
+  {
+    'seblyng/roslyn.nvim',
+    ft = 'cs',
+  },
+  {
+    'mfussenegger/nvim-jdtls',
+    dependencies = { 'mfussenegger/nvim-dap' },
+    ft = 'java',
+  },
+  {
+    'j-hui/fidget.nvim',
+    event = 'LspAttach',
+    opts = {
+      notification = {
+        window = {
+          winblend = 0,
+        },
+      },
     },
+  },
 }

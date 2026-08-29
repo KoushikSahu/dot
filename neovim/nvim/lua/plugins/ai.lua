@@ -1,66 +1,36 @@
 return {
-    {
-        'zbirenbaum/copilot.lua',
-        cmd = "Copilot",
-        event = "InsertEnter",
-        config = function()
-            require("copilot").setup({
-                suggestion = {
-                    enabled = true,
-                    auto_trigger = true
-                },
-                panel = {
-                    enabled = false,
-                },
-            })
-        end,
+  {
+    'zbirenbaum/copilot.lua',
+    cmd = 'Copilot',
+    event = 'InsertEnter',
+    opts = {
+      suggestion = {
+        enabled = true,
+        auto_trigger = true,
+      },
+      panel = {
+        enabled = false,
+      },
     },
-    {
-        "sudo-tee/opencode.nvim",
-        config = function()
-            require("opencode").setup({
-                default_mode = "plan",
-                context = {
-                    diagnostics = {
-                        enabled = false,
-                    },
-                },
-                keymap = {
-                    input_window = {
-                        ["<esc>"] = false,
-                    },
-                    output_window = {
-                        ["<esc>"] = false,
-                    }
-                }
-            })
-        end,
-        dependencies = {
-            "nvim-lua/plenary.nvim",
-            "MeanderingProgrammer/render-markdown.nvim",
-            'saghen/blink.cmp',
-            'folke/snacks.nvim',
-        },
+  },
+  {
+    'folke/sidekick.nvim',
+    event = 'InsertEnter',
+    cmd = 'Sidekick',
+    opts = {
+      nes = { enabled = true },
     },
-    {
-        "folke/sidekick.nvim",
-        event = "InsertEnter",
-        cmd = "Sidekick",
-        opts = {
-            nes = { enabled = true },
-        },
-        keys = {
-            {
-                "<tab>",
-                function()
-                    -- if there is a next edit, jump to it, otherwise apply it if any
-                    if not require("sidekick").nes_jump_or_apply() then
-                        return "<Tab>" -- fallback to normal tab
-                    end
-                end,
-                expr = true,
-                desc = "Go To Or Apply Next Edit Suggestion",
-            },
-        },
-    }
+    keys = {
+      {
+        '<tab>',
+        function()
+          if not require('sidekick').nes_jump_or_apply() then
+            return '<Tab>'
+          end
+        end,
+        expr = true,
+        desc = 'Go To Or Apply Next Edit Suggestion',
+      },
+    },
+  },
 }

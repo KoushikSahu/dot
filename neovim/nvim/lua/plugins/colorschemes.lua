@@ -1,17 +1,18 @@
 return {
-  "neanias/everforest-nvim",
+  'neanias/everforest-nvim',
   version = false,
   lazy = false,
   priority = 1000,
   config = function()
-    require("everforest").setup({
-      background = "hard",
-      float_style = "dim",
-      inlay_hints_background = "dimmed",
+    require('everforest').setup({
+      background = 'hard',
+      float_style = 'dim',
+      inlay_hints_background = 'dimmed',
       on_highlights = function(groups, palette)
-        groups.LspCodeLens = { link = "Grey" }
-        groups.LspCodeLensSeparator = { link = "Grey" }
+        groups.LspCodeLens = { link = 'Grey' }
+        groups.LspCodeLensSeparator = { link = 'Grey' }
       end,
     })
+    vim.cmd.colorscheme('everforest')
   end,
 }
