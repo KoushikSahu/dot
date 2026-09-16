@@ -67,6 +67,7 @@ return {
       vim.lsp.config('clangd', {
         cmd = { 'clangd', '--offset-encoding=utf-16' },
       })
+      vim.diagnostic.config({ virtual_text = true, underline = true })
       vim.lsp.codelens.enable(true)
     end,
   },
