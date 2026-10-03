@@ -1,10 +1,3 @@
-local function toggle_snack(id, factory)
-  return function()
-    local toggle = Snacks.toggle.get(id) or factory()
-    toggle:toggle()
-  end
-end
-
 return {
   {
     'folke/snacks.nvim',
@@ -145,15 +138,15 @@ return {
       { 'gi', function() Snacks.picker.lsp_implementations() end, desc = 'Go To Implementation' },
       { 'gy', function() Snacks.picker.lsp_type_definitions() end, desc = 'Go To Type Definition' },
       { '<leader>ss', function() Snacks.picker.lsp_symbols() end, desc = 'Search Symbols' },
-      { '<leader>us', toggle_snack('spell', function() return Snacks.toggle.option('spell', { name = 'Spelling' }) end), desc = 'Toggle Spelling' },
-      { '<leader>uw', toggle_snack('wrap', function() return Snacks.toggle.option('wrap', { name = 'Wrap' }) end), desc = 'Toggle Wrap' },
-      { '<leader>uL', toggle_snack('relativenumber', function() return Snacks.toggle.option('relativenumber', { name = 'Relative Number' }) end), desc = 'Toggle Relative Number' },
-      { '<leader>ud', toggle_snack('diagnostics', function() return Snacks.toggle.diagnostics() end), desc = 'Toggle Diagnostics' },
-      { '<leader>ul', toggle_snack('line_number', function() return Snacks.toggle.line_number() end), desc = 'Toggle Line Numbers' },
-      { '<leader>uc', toggle_snack('conceallevel', function() return Snacks.toggle.option('conceallevel', { off = 0, on = vim.o.conceallevel > 0 and vim.o.conceallevel or 2 }) end), desc = 'Toggle Conceal' },
-      { '<leader>uT', toggle_snack('treesitter', function() return Snacks.toggle.treesitter() end), desc = 'Toggle Treesitter Highlighting' },
-      { '<leader>ub', toggle_snack('background', function() return Snacks.toggle.option('background', { off = 'light', on = 'dark', name = 'Dark Background' }) end), desc = 'Toggle Background Theme' },
-      { '<leader>uh', toggle_snack('inlay_hints', function() return Snacks.toggle.inlay_hints() end), desc = 'Toggle Inlay Hints' },
+      { '<leader>us', '<cmd>setlocal spell!<cr>', desc = 'Toggle Spelling' },
+      { '<leader>uw', '<cmd>setlocal wrap!<cr>', desc = 'Toggle Wrap' },
+      { '<leader>uL', '<cmd>setlocal relativenumber!<cr>', desc = 'Toggle Relative Number' },
+      { '<leader>ud', function() vim.diagnostic.enable(not vim.diagnostic.is_enabled(), { bufnr = 0 }) end, desc = 'Toggle Diagnostics' },
+      { '<leader>ul', '<cmd>setlocal number!<cr>', desc = 'Toggle Line Numbers' },
+      { '<leader>uc', function() local c = vim.wo.conceallevel if c == 0 then vim.wo.conceallevel = vim.o.conceallevel > 0 and vim.o.conceallevel or 2 else vim.wo.conceallevel = 0 end end, desc = 'Toggle Conceal' },
+      { '<leader>uT', function() local buf = vim.api.nvim_get_current_buf() if vim.treesitter.highlighter.active[buf] then vim.treesitter.stop(buf) else vim.treesitter.start(buf) end end, desc = 'Toggle Treesitter Highlighting' },
+      { '<leader>ub', function() vim.o.background = vim.o.background == 'dark' and 'light' or 'dark' end, desc = 'Toggle Background Theme' },
+      { '<leader>uh', function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = 0 }), { bufnr = 0 }) end, desc = 'Toggle Inlay Hints' },
     },
     init = function()
       vim.api.nvim_create_autocmd('User', {

@@ -16,8 +16,6 @@ map('v', '<A-k>', ":m '<-2<CR>gv=gv", { desc = 'Move Selection Up' })
 
 map('i', '<C-H>', '<C-W>', { desc = 'Delete Previous Word' })
 
-map('n', '<leader>u', '<cmd>Undotree<CR>', { desc = 'Toggle Undotree' })
-
 local diagnostics_open = false
 map('n', '<leader>tt', function()
   diagnostics_open = not diagnostics_open
