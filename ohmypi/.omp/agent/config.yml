@@ -1,0 +1,85 @@
+setupVersion: 2
+modelRoles:
+  default: opencode-go/muse-spark-1.3-contributor
+  smol: commandcode/deepseek/deepseek-v4.1-flash:auto
+  web: web/parallel
+  speech: local/kokoro
+  dictation: local/parakeet-tdt-0.6b-v3
+  judge: commandcode/typesafe/jev
+  slow: opencode-go/muse-spark-1.3-contributor:auto
+  vision: commandcode/deepseek/deepseek-v4.1-flash:auto
+  plan: opencode-go/muse-spark-1.3-contributor:auto
+  commit: commandcode/deepseek/deepseek-v4.1-flash:auto
+  tiny: commandcode/deepseek/deepseek-v4.1-flash:auto
+  memory: commandcode/deepseek/deepseek-v4.1-flash:auto
+  task: commandcode/deepseek/deepseek-v4.1-flash:auto
+  advisor: commandcode/deepseek/deepseek-v4.1-flash:auto
+defaultThinkingLevel: auto
+retry:
+  fallbackChains:
+    default:
+      - commandcode/meta/muse-spark-1.3-contributor
+      - commandcode/xiaomi/mimo-v2.6-pro
+      - opencode-go/mimo-v2.6-pro
+      - commandcode/gpt-5.6-sol
+    smol:
+      - opencode-go/deepseek-v4.1-flash
+      - commandcode/z-ai/glm-5.3-flash
+      - opencode-go/glm-5.3-flash
+      - opencode-go/mimo-v2.6-flash
+      - commandcode/xiaomi/mimo-v2.6-flash
+    slow:
+      - commandcode/meta/muse-spark-1.3-contributor
+      - commandcode/xiaomi/mimo-v2.6-pro
+      - opencode-go/mimo-v2.6-pro
+      - commandcode/gpt-5.6-sol
+    vision:
+      - opencode-go/deepseek-v4.1-flash
+      - commandcode/z-ai/glm-5.3-flash
+      - opencode-go/glm-5.3-flash
+      - opencode-go/mimo-v2.6-flash
+      - commandcode/xiaomi/mimo-v2.6-flash
+    plan:
+      - commandcode/meta/muse-spark-1.3-contributor
+      - commandcode/xiaomi/mimo-v2.6-pro
+      - opencode-go/mimo-v2.6-pro
+      - commandcode/gpt-5.6-sol
+    commit:
+      - opencode-go/deepseek-v4.1-flash
+      - commandcode/z-ai/glm-5.3-flash
+      - opencode-go/glm-5.3-flash
+      - opencode-go/mimo-v2.6-flash
+      - commandcode/xiaomi/mimo-v2.6-flash
+    tiny:
+      - opencode-go/deepseek-v4.1-flash
+      - commandcode/z-ai/glm-5.3-flash
+      - opencode-go/glm-5.3-flash
+      - opencode-go/mimo-v2.6-flash
+      - commandcode/xiaomi/mimo-v2.6-flash
+    memory:
+      - opencode-go/deepseek-v4.1-flash
+      - commandcode/z-ai/glm-5.3-flash
+      - opencode-go/glm-5.3-flash
+      - opencode-go/mimo-v2.6-flash
+      - commandcode/xiaomi/mimo-v2.6-flash
+    task:
+      - opencode-go/deepseek-v4.1-flash
+      - commandcode/z-ai/glm-5.3-flash
+      - opencode-go/glm-5.3-flash
+      - opencode-go/mimo-v2.6-flash
+      - commandcode/xiaomi/mimo-v2.6-flash
+    advisor:
+      - opencode-go/deepseek-v4.1-flash
+      - commandcode/z-ai/glm-5.3-flash
+      - opencode-go/glm-5.3-flash
+      - opencode-go/mimo-v2.6-flash
+      - commandcode/xiaomi/mimo-v2.6-flash
+theme:
+  dark: dark-gruvbox
+composer:
+  shape: pi
+statusLine:
+  preset: default
+task:
+  eager: always
+  enableLsp: true
