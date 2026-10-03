@@ -4,6 +4,12 @@ return {
     build = ':TSUpdate',
     branch = 'main',
     lazy = false,
+    config = function()
+      -- Parsers backing neotest discovery. No-op when already installed.
+      require('nvim-treesitter').install({
+        'c', 'cpp', 'c_sharp', 'go', 'java', 'javascript', 'python', 'rust', 'typescript',
+      })
+    end,
     init = function()
       vim.api.nvim_create_autocmd('FileType', {
         pattern = { 'c', 'cpp', 'lua', 'python', 'rust', 'go', 'java', 'typescript', 'javascript', 'markdown', 'json', 'yaml', 'toml', 'bash', 'cs' },

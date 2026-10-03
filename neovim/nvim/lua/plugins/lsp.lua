@@ -45,11 +45,11 @@ return {
 
       require('mason-tool-installer').setup({
         ensure_installed = {
-          'autopep8', 'clang-format', 'clangd', 'codelldb', 'cpplint', 'csharpier', 'debugpy',
-          'delve', 'eslint_d', 'gofumpt', 'golangci-lint', 'gopls', 'isort',
+          'autopep8', 'cargo-nextest', 'clang-format', 'clangd', 'codelldb', 'cpplint', 'csharpier',
+          'debugpy', 'delve', 'eslint_d', 'gofumpt', 'golangci-lint', 'gopls', 'gotestsum', 'isort',
           'java-debug-adapter', 'java-test', 'jdtls', 'jsonlint', 'kotlin-debug-adapter',
           'kotlin-lsp', 'ktfmt', 'ktlint', 'lua-language-server', 'luacheck', 'luaformatter',
-          'marksman', 'mypy', 'netcoredbg', 'prettier', 'rust-analyzer', 'tsc', 'ty',
+          'marksman', 'mypy', 'netcoredbg', 'prettier', 'pytest', 'rust-analyzer', 'tsc', 'ty',
         },
         auto_update = true,
         run_on_start = true,
