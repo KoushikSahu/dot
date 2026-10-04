@@ -18,7 +18,7 @@ return {
     config = function()
       local dap = require('dap')
       local ui = require('dapui')
-      local utils = require('config.utils')
+      local is_windows = vim.fn.has('win32') == 1
       local mason_dir = vim.fs.joinpath(vim.fn.stdpath('data'), 'mason', 'packages')
 
       require('dapui').setup()
@@ -37,7 +37,7 @@ return {
           name = 'Python: Launch file',
           program = '${file}',
           pythonPath = venv_path
-              and ((utils.is_windows and venv_path .. '/Scripts/python') or venv_path .. '/bin/python')
+              and ((is_windows and venv_path .. '/Scripts/python') or venv_path .. '/bin/python')
               or nil,
           console = 'integratedTerminal',
         },
