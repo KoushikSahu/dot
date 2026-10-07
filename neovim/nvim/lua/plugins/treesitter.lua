@@ -14,7 +14,8 @@ return {
       vim.api.nvim_create_autocmd('FileType', {
         pattern = { 'c', 'cpp', 'lua', 'python', 'rust', 'go', 'java', 'typescript', 'javascript', 'markdown', 'json', 'yaml', 'toml', 'bash', 'cs' },
         callback = function(args)
-          if pcall(vim.treesitter.start, args.buf, args.match) then
+          -- no lang arg: resolve parser from filetype (e.g. cs -> c_sharp)
+          if pcall(vim.treesitter.start, args.buf) then
             vim.wo.foldmethod = 'expr'
             vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
           end
