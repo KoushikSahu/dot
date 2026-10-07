@@ -21,6 +21,8 @@ set.tabstop = 4
 set.shiftwidth = 4
 set.softtabstop = -1
 
+set.foldlevelstart = 99
+
 set.hlsearch = false
 set.undofile = true
 set.undodir = vim.fn.stdpath("state") .. "/undo"
